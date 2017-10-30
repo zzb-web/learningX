@@ -1,0 +1,15 @@
+.star{
+    position: relative;
+    height: 50px;
+}
+.star span{
+    position: absolute;
+    left: 50px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+}
+.star ul{
+    position: absolute;
+    left: 150px;
+}

@@ -1,0 +1,12 @@
+.select-info-h2{
+    color: #108ee9;
+    text-align: center;
+}
+
+th.column-position, td.column-position, td.column-status, td.column-result,td.column-status, th.column-result{
+    text-align: center !important;
+}
+.btn-content{
+    text-align:center;
+    margin-top: 40px;
+}

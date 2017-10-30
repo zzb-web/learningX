@@ -1,0 +1,37 @@
+.growth{
+    /* height: 400px; */
+}
+.growth-img{
+    width: 192px;
+    height: 232px;
+    margin: 0 auto;
+    margin-top : 5%;
+}
+.growth-select{
+    margin: 0 auto; 
+    text-align: center;
+    margin-top: 40px;
+}
+.ant-badge-count{
+    top: -20px !important;
+    left: 70px;
+}
+.part{
+    width: 100%;
+}
+.part-img{
+    width: 130px;
+    height: 120px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+.part-content{
+    width: 131px;
+    height: 50px;
+    margin:0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+.mian-content{
+    /* margin-top: 80px; */
+}
