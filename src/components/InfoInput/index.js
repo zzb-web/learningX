@@ -9,7 +9,9 @@ class InfoInput extends Component {
         super();
         this.state = {
            showDetail : false,
-           showSaveSuc : false
+           showSaveSuc : false,
+           hasSave : [],
+           current : ''
         }
     }
 
@@ -19,9 +21,12 @@ class InfoInput extends Component {
        })
     }
     handleDetail(){
+        let hasSave = this.state.hasSave;
+        hasSave.push(this.state.current);
         this.setState({
             showDetail : false,
-            showSaveSuc : true
+            showSaveSuc : true,
+            hasSave : hasSave
         })
         // setTimeout(()=>this.setState({showSaveSuc : false}),2000)
     }
@@ -29,6 +34,11 @@ class InfoInput extends Component {
       this.setState({
         showDetail : false
       })
+    }
+    change(value){
+        this.setState({
+            current : value
+        })
     }
     render(){
         return(
@@ -44,7 +54,7 @@ class InfoInput extends Component {
                                 </div>
                                 <div className='select-category'>
                                     <span>学习资料名称&nbsp;&nbsp;:</span>
-                                    <Select placeholder='作业在哪一本书上？' style={{ width: 180, marginLeft:'10px'}}>
+                                    <Select placeholder='作业在哪一本书上？' style={{ width: 180, marginLeft:'10px'}} onChange={this.change.bind(this)}>
                                         <Option value="0">七上基础训练通用版s</Option>
                                         <Option value="1">第二节 数轴</Option>
                                         <Option value="2">xxxxxxx2</Option>
@@ -63,10 +73,14 @@ class InfoInput extends Component {
                                 </div>
                             </div>
                             {
-                                this.state.showSaveSuc ?<div className='save-success'>
-                                <span>xxxxxxxxxxxxxxxxxxxxxxxxx</span>
-                                <span style={{color:'#108ee9'}}>保存成功</span>
-                            </div> : null
+                                this.state.showSaveSuc ? <div className='save-success'>{
+                                    this.state.hasSave.map((item,index)=>{
+                                        return <div>
+                                                    <span>{item}</span>
+                                                    <span style={{color:'#108ee9'}}>保存成功</span>
+                                            </div> 
+                                    
+                                    })}</div> : null
                             }
                         </div>
                     </Col>

@@ -9,8 +9,8 @@ class TopicResult extends Component{
         {
           key: '1',
           position: 'P55/基础夯实/5 (1)',
-          status: true,
-          result : true
+          status: false,
+          result : false
         },
         {
           key: '2',
@@ -89,7 +89,11 @@ class TopicResult extends Component{
         className: 'column-result',
         dataIndex: 'result',
         width : '40%',
-        render : (text, record, index)=><div onClick={()=>this.tdClick2(index)}>{text}</div>
+        render : (text, record, index)=>{console.log(text, record)
+                                          return(
+                                          <div onClick={()=>this.tdClick2(index)}>{text}</div>
+                                          )
+                                        }
       },
     ];
       let data1=[];
@@ -137,6 +141,17 @@ class TopicResult extends Component{
                         pagination={false}
                         scroll={{ y: 240 }}
                         style={{marginTop:20}}
+                        rowClassName={(record, index)=>{
+                          if(record.result){
+                            if(record.result.props.checked){
+                              return ''
+                            }else{
+                              return 'wrong-row'
+                            }
+                          }else{
+                            return ''
+                          }
+                        }}
                     />
                     <div className='btn-content'>
                         <Button type="primary"

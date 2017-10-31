@@ -10,3 +10,9 @@ th.column-position, td.column-position, td.column-status, td.column-result,td.co
     text-align:center;
     margin-top: 40px;
 }
+.wrong-row {
+    background-color: #ffbf00;
+}
+.wrong-row:hover > td{
+    background-color:#ffbf00 !important;
+}
