@@ -65,6 +65,7 @@
   right: 10px;
   top: 75px;
   background-color: #fff;
+  z-index: 100;
 }
 .user-content li {
   height: 40px;

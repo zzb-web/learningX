@@ -23,21 +23,6 @@ class RegistrationForm extends Component {
         const value = e.target.value;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     }
-    checkPassword = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && value !== form.getFieldValue('password')) {
-            callback('Two passwords that you enter is inconsistent!');
-        } else {
-            callback();
-        }
-    }
-    checkConfirm = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && this.state.confirmDirty) {
-            form.validateFields(['confirm'], { force: true });
-        }
-        callback();
-    }
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -89,52 +74,6 @@ class RegistrationForm extends Component {
                                 {...formItemLayout}
                                 label={(
                                     <span>
-                                        昵称
-                                    </span>
-                                )}
-                                hasFeedback
-                            >
-                                {getFieldDecorator('nickname', {
-                                    rules: [{ required: true, message: '请输入您的昵称!', whitespace: true }],
-                                })(
-                                    <Input />
-                                    )}
-                            </FormItem>
-                            <FormItem
-                                {...formItemLayout}
-                                label="新密码"
-                                hasFeedback
-                            >
-                                {getFieldDecorator('password', {
-                                    rules: [{
-                                        required: true, message: '请输入新密码!',
-                                    }, {
-                                        validator: this.checkConfirm,
-                                    }],
-                                })(
-                                    <Input type="password" />
-                                    )}
-                            </FormItem>
-                            <FormItem
-                                {...formItemLayout}
-                                label="确认新密码"
-                                hasFeedback
-                            >
-                                {getFieldDecorator('confirm', {
-                                    rules: [{
-                                        required: true, message: '请再次输入密码!',
-                                    }, {
-                                        validator: this.checkPassword,
-                                    }],
-                                })(
-                                    <Input type="password" onBlur={this.handleConfirmBlur} />
-                                    )}
-                            </FormItem>
-
-                            <FormItem
-                                {...formItemLayout}
-                                label={(
-                                    <span>
                                         学校
                                     </span>
                                 )}
@@ -143,7 +82,7 @@ class RegistrationForm extends Component {
                                 {getFieldDecorator('school', {
                                     rules: [{ required: true, message: '请输入您的学校!', whitespace: true }],
                                 })(
-                                    <Input />
+                                    <Input disabled/>
                                     )}
                             </FormItem>
 
@@ -159,7 +98,7 @@ class RegistrationForm extends Component {
                                 {getFieldDecorator('grade', {
                                     rules: [{ required: true, message: '请输入您的年级!', whitespace: true }],
                                 })(
-                                    <Input />
+                                    <Input disabled/>
                                     )}
                             </FormItem>
 
@@ -175,7 +114,7 @@ class RegistrationForm extends Component {
                                 {getFieldDecorator('class', {
                                     rules: [{ required: true, message: '请输入您的班级!', whitespace: true }],
                                 })(
-                                    <Input />
+                                    <Input disabled/>
                                     )}
                             </FormItem>
 

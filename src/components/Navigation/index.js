@@ -4,13 +4,14 @@ import { Layout, Menu, Icon } from 'antd';
 import ErrorSum from '../ErrorSum/index.js';
 import InfoInput from '../InfoInput/index.js';
 import UserMsgForm from '../UserMsg/index.js';
+import PassWordForm from '../PassWord/index.js';
 import './style.css';
 const { Header, Sider, Content, Footer } = Layout;
 class Navigation extends Component {
   state = {
     collapsed: true,
     key: '0',
-    showUser : false,
+    showUser : 'none',
     contentHeight :　0
   };
   toggle = () => {
@@ -23,25 +24,24 @@ class Navigation extends Component {
       key: e.key
     })
   }
-  userHandle(){
+  usermsgHandle(){
     this.setState({
-      key : 3,
-      // showUser : false
+      key : '3'
     })
   }
-  userMouseEnter(){
+  passwordHandle(){
     this.setState({
-      showUser : true
+      key : '4'
     })
   }
-  userMouseLeave(){
+  userMouseEnter(e){
     this.setState({
-      showUser : false
+      showUser : 'block'
     })
   }
-  userClick(){
+  userMouseLeave(e){
     this.setState({
-      showUser : !this.state.showUser
+      showUser : 'none'
     })
   }
   render() {
@@ -77,20 +77,31 @@ class Navigation extends Component {
           <Header style={{ /*position: 'fixed',*/ width: '100%', padding: 0 }}>
             <div className='user-msg' onMouseEnter={this.userMouseEnter.bind(this)}>
               <div className='user-icon-content'>
-                <Icon type="user" className='user-icon' />
+                <Icon type="user" className='user-icon'/>
               </div>
               <div className='user-name'>李婷</div>
             </div>
-          </Header>
-          <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight:this.state.contentHeight,/*marginTop:80 */ }}>
-            <ul className='user-content' onMouseLeave={this.userMouseLeave.bind(this)} style={this.state.showUser ? {display:'block'} : {display:'none'}}>
-              <li onClick={this.userHandle.bind(this)}>个人信息</li>
+            <ul className='user-content' onMouseEnter={this.userMouseEnter.bind(this)} onMouseLeave={this.userMouseLeave.bind(this)} style={{display:this.state.showUser}}>
+              <li onClick={this.usermsgHandle.bind(this)}>个人信息</li>
+              <li onClick={this.passwordHandle.bind(this)}>修改密码</li>
               <li>退出登录</li>
             </ul>
+          </Header>
+          <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight:this.state.contentHeight,/*marginTop:80 */ }}>
             {
-              this.state.key === '0' ? <div>0000</div> :
-                this.state.key === '1' ? <InfoInput /> :
-                  this.state.key === '2' ? <ErrorSum /> : <UserMsgForm/>
+                 this.state.key === '0' ? <Test/> : null
+            }
+            {
+                 this.state.key === '1' ? <InfoInput /> : null
+            }
+            {
+                this.state.key === '2' ? <ErrorSum /> : null
+            }
+            {
+                 this.state.key === '3' ? <UserMsgForm/> : null
+            }
+            {
+                 this.state.key === '4' ? <PassWordForm/> : null
             }
           </Content>
           {/* <Footer style={{ textAlign: 'center' }}>
@@ -116,4 +127,14 @@ class Navigation extends Component {
   }
 }
 
+class Test extends Component{
+  render(){
+    return(
+      <div>
+        <div>1111</div>
+        <div>2222</div>
+      </div>
+    )
+  }
+}
 export default Navigation;
