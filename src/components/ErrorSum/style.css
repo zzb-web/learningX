@@ -4,23 +4,32 @@
 }
 .select-info-h2{
     color: #108ee9;
-    text-align: center;
+    width: 200px;
+    margin-left: 100px;
 }
 .select-info-content{
     margin-top: 15px;
 }
 .select-category-1{
     width: 100%;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
+    height: 45px;
+    position: relative;
 }
 .select-category-1>span {
-    width: 60px;
+    width: 85px;
     height: 40px;
     line-height: 40px;
     display: inline-block;
     text-align: right;
 }
-.category-detail{
-    width: 100%;
+.select-category-1>button{
+    position: absolute;
+    top: 5px;
+}
+.error-sum .category-detail{
+    /* width: 100%; */
+    width: 698px;
     height:500px;
+    float: right;
 }

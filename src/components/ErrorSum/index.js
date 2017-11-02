@@ -28,9 +28,9 @@ class ErrorSum extends Component {
     }
     render(){
         return(
-            <div>
+            <div className='error-sum'>
                 <Row>
-                    <Col span={7}>
+                    <Col span={8}>
                         <div className='select-info'>
                             <h2 className='select-info-h2'>选择归类信息</h2>
                             <div className='select-info-content'>
@@ -65,7 +65,7 @@ class ErrorSum extends Component {
                         </div>
                     </Col>
                     <Col span={2}></Col>
-                    <Col span={14}>
+                    <Col span={13}>
                         <div className='category-detail'>
                             {
                                 this.state.category === '1' ? <AccordingTime/> :

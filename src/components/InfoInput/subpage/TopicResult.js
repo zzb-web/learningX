@@ -23,6 +23,30 @@ class TopicResult extends Component{
           position: 'P55/基础夯实/6',
           status: false,
           result : false
+        },
+        {
+          key: '4',
+          position: 'P55/基础夯实/7',
+          status: false,
+          result : false
+        },
+        {
+          key: '5',
+          position: 'P55/基础夯实/8',
+          status: false,
+          result : false
+        },
+        {
+          key: '6',
+          position: 'P55/基础夯实/9',
+          status: false,
+          result : false
+        },
+        {
+          key: '7',
+          position: 'P55/基础夯实/10',
+          status: false,
+          result : false
         }
       ]
      }
@@ -76,19 +100,18 @@ class TopicResult extends Component{
         title: '题目位置',
         className: 'column-position',
         dataIndex: 'position',
-        width : '30%'
+        width:280
       }, {
         title: <Switch checkedChildren="全布置了" unCheckedChildren="全没布置" onChange={this.change.bind(this)}/>,
         className: 'column-status',
         dataIndex: 'status',
-        width : '30%',
+        width:200,
         render : (text, record, index)=><div onClick={()=>this.tdClick(index)}>{text}</div>
       },
       {
         title: '做题结果',
         className: 'column-result',
         dataIndex: 'result',
-        width : '40%',
         render : (text, record, index)=>{console.log(text, record)
                                           return(
                                           <div onClick={()=>this.tdClick2(index)}>{text}</div>
@@ -132,14 +155,14 @@ class TopicResult extends Component{
       }
       ];
         return(
-                <div>
+                <div className='topic-result'>
                     <h2 className='select-info-h2'>选择做题结果</h2>
                     <Table
                         columns={columns}
                         dataSource={data1}
                         bordered
                         pagination={false}
-                        scroll={{ y: 240 }}
+                        scroll={{ y: 255 }}
                         style={{marginTop:20}}
                         rowClassName={(record, index)=>{
                           if(record.result){

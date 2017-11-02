@@ -75,17 +75,19 @@ class Navigation extends Component {
         </Sider>
         <Layout>
           <Header style={{ /*position: 'fixed',*/ width: '100%', padding: 0 }}>
+           <div className='user-main' onMouseLeave={this.userMouseLeave.bind(this)}>
             <div className='user-msg' onMouseEnter={this.userMouseEnter.bind(this)}>
               <div className='user-icon-content'>
                 <Icon type="user" className='user-icon'/>
               </div>
               <div className='user-name'>李婷</div>
             </div>
-            <ul className='user-content' onMouseEnter={this.userMouseEnter.bind(this)} onMouseLeave={this.userMouseLeave.bind(this)} style={{display:this.state.showUser}}>
+            <ul className='user-content' onMouseLeave={this.userMouseLeave.bind(this)} style={{display:this.state.showUser}}>
               <li onClick={this.usermsgHandle.bind(this)}>个人信息</li>
               <li onClick={this.passwordHandle.bind(this)}>修改密码</li>
               <li>退出登录</li>
             </ul>
+          </div>
           </Header>
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight:this.state.contentHeight,/*marginTop:80 */ }}>
             {

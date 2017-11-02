@@ -18,7 +18,7 @@ class Tables extends Component{
                             pageSizeOptions:['5','10']
                         }
                     }
-                    scroll={{ y: 380 }}
+                    scroll={{ y: 255 }}
                 />
             </div>
         )
