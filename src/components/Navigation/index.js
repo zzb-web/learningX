@@ -51,6 +51,7 @@ class Navigation extends Component {
           trigger={null}
           collapsible
           collapsed={this.state.collapsed}
+          width={130}
         >
           <div className="logo" />
           <Icon

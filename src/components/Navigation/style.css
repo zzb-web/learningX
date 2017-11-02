@@ -83,3 +83,6 @@
   color: #108ee9;
   cursor: pointer;
 }
+.ant-layout-content{
+  margin: 16px !important;
+}
