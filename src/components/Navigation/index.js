@@ -5,6 +5,7 @@ import ErrorSum from '../ErrorSum/index.js';
 import InfoInput from '../InfoInput/index.js';
 import UserMsgForm from '../UserMsg/index.js';
 import PassWordForm from '../PassWord/index.js';
+import Test from '../Test/index.js';
 import './style.css';
 const { Header, Sider, Content, Footer } = Layout;
 class Navigation extends Component {
@@ -127,17 +128,6 @@ class Navigation extends Component {
         contentHeight :　allHeight-112
       })
     }
-  }
-}
-
-class Test extends Component{
-  render(){
-    return(
-      <div>
-        <div>1111</div>
-        <div>2222</div>
-      </div>
-    )
   }
 }
 export default Navigation;
