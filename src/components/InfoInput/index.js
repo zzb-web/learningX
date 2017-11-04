@@ -3,7 +3,7 @@ import {Row , Col, Select, Button ,DatePicker, InputNumber} from 'antd';
 import TopicResult from './subpage/TopicResult.js';
 import './style.css';
 const {Option} = Select;
-const { MonthPicker, RangePicker } = DatePicker;
+// const { MonthPicker, RangePicker } = DatePicker;
 class InfoInput extends Component {
     constructor(){
         super();

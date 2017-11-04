@@ -1,6 +1,7 @@
 {
   "name": "work",
   "version": "0.1.0",
+  "proxy" : "http://118.31.16.70",
   "private": true,
   "dependencies": {
     "antd": "^2.13.6",

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import {Get} from '../../fetch/data.js';
 class Test extends Component{
     render(){
       return(
@@ -10,14 +10,10 @@ class Test extends Component{
       )
     }
     componentDidMount(){
-        axios.get('http://118.31.16.70/api/v2/problems/')
-        .then(function(response){
+        var data = Get('/api/v2/problems/');
+        data.then(function(response){
           console.log(response);
         })
-        .catch(function(err){
-          console.log(err);
-        });
     }
-  }
-
+}
   export default Test;

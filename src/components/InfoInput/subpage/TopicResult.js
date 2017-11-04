@@ -137,7 +137,7 @@ class TopicResult extends Component{
         }
         data1.push(a)
       })
-      const data = [{
+     /* const data = [{
         key: '1',
         position: 'P55/基础夯实/5 (1)',
         status: <Switch checkedChildren="布置了" unCheckedChildren="没布置" defaultChecked/>,
@@ -153,7 +153,7 @@ class TopicResult extends Component{
         status: <Switch checkedChildren="布置了" unCheckedChildren="没布置" />,
         result : <Switch checkedChildren="做对了" unCheckedChildren="做错了" />
       }
-      ];
+      ];*/
         return(
                 <div className='topic-result'>
                     <h2 className='select-info-h2'>选择做题结果</h2>

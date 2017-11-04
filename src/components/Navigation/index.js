@@ -7,7 +7,7 @@ import UserMsgForm from '../UserMsg/index.js';
 import PassWordForm from '../PassWord/index.js';
 import Test from '../Test/index.js';
 import './style.css';
-const { Header, Sider, Content, Footer } = Layout;
+const { Header, Sider, Content} = Layout;
 class Navigation extends Component {
   state = {
     collapsed: true,
@@ -91,7 +91,7 @@ class Navigation extends Component {
             </ul>
           </div>
           </Header>
-          <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight:this.state.contentHeight,/*marginTop:80 */ }}>
+          <Content style={{ margin: '16px 16px', padding: 24, background: '#fff', minHeight:this.state.contentHeight,/*marginTop:80 */ }}>
             {
                  this.state.key === '0' ? <Test/> : null
             }

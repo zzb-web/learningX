@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,Radio } from 'antd';
+// import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,Radio } from 'antd';
+import { Form, Input,Row, Col, Button} from 'antd';
 const FormItem = Form.Item;
-const Option = Select.Option;
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
-const AutoCompleteOption = AutoComplete.Option;
+// const Option = Select.Option;
+// const RadioButton = Radio.Button;
+// const RadioGroup = Radio.Group;
+// const AutoCompleteOption = AutoComplete.Option;
 
 class RegistrationForm extends Component {
     state = {
@@ -41,7 +42,7 @@ class RegistrationForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { autoCompleteResult } = this.state;
+        // const { autoCompleteResult } = this.state;
 
         const formItemLayout = {
             labelCol: {
