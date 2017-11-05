@@ -4,6 +4,7 @@ import AccordingTime from './subpage/AccordingTime.js';
 import AccordingTopicTypes from './subpage/AccordingTopicTypes.js';
 import AccordingMasteryLevel from './subpage/AccordingMasteryLevel.js';
 import AccordingReview from './subpage/AccordingReview.js';
+import {Get} from '../../fetch/data.js';
 import './style.css';
 const Option = Select.Option;
 class ErrorSum extends Component {
@@ -11,7 +12,8 @@ class ErrorSum extends Component {
         super();
         this.state = {
             category : '0',
-            selectValue : '0'
+            selectValue : '0',
+            books : ''
         }
     }
     changeCategory(value){
@@ -27,6 +29,7 @@ class ErrorSum extends Component {
         } 
     }
     render(){
+        console.log(this.state.books)
         return(
             <div className='error-sum'>
                 <Row>
@@ -80,12 +83,17 @@ class ErrorSum extends Component {
             </div>
         )
     }
-    shouldComponentUpdate(nextProps, nextState) {
-        if(nextState.category === this.state.category){
-            return false
-        }
-        return true
+    componentDidMount(){
+        let that = this;
+        const data = Get('http://118.31.16.70/api/v3/students/me/books/');
+        data.then((response)=>this.setState({books:response}))
     }
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     if(nextState.category === this.state.category){
+    //         return false
+    //     }
+    //     return true
+    // }
 }
 
 export default ErrorSum;

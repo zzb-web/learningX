@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Row , Col, Select, Button ,DatePicker, InputNumber} from 'antd';
 import TopicResult from './subpage/TopicResult.js';
+import {Get} from '../../fetch/data.js';
 import './style.css';
 const {Option} = Select;
 // const { MonthPicker, RangePicker } = DatePicker;
@@ -11,14 +12,35 @@ class InfoInput extends Component {
            showDetail : false,
            showSaveSuc : false,
            hasSave : [],
-           current : ''
+           current : '',
+           books : [],
+           page : 0,
+           date : '',
+           topicAll : [],
         }
     }
 
     sureBtnHandle(){
-       this.setState({
-           showDetail : true
+       const {current, page, topicAll} = this.state;
+       let url = 'http://118.31.16.70/api/v3/problems/?book='+current+'&page='+page;
+       let data = Get(url);
+       data.then((response)=>{
+           if(response.length>0){
+            this.setState({
+                topicAll :response,
+                showDetail : true
+                })
+            }
        })
+       console.log(topicAll)
+    //    setTimeout(()=>{
+    //        console.log(topicAll)
+    //     if(topicAll.length>0){
+    //         this.setState({
+    //             showDetail : true
+    //         })
+    //        }
+    //    },2000)
     }
     handleDetail(){
         let hasSave = this.state.hasSave;
@@ -35,12 +57,26 @@ class InfoInput extends Component {
         showDetail : false
       })
     }
-    change(value){
+    bookChange(value){
         this.setState({
             current : value
         })
     }
+    pageChange(value){
+        this.setState({
+            page : value
+        })
+    }
+    dateChange(date, dateString){
+        console.log(date, dateString)
+        var timestamp = Date.parse(new Date(dateString));
+        timestamp = timestamp / 1000;
+        this.setState({
+            date : timestamp
+        })
+    }
     render(){
+        const {books, topicAll, page, date} = this.state
         return(
             <div className='info-input'>
                 <Row>
@@ -50,19 +86,17 @@ class InfoInput extends Component {
                             <div className='select-info-content'>
                                 <div className='select-category'>
                                     <span>作业布置日期&nbsp;&nbsp;:</span>
-                                    <DatePicker placeholder='作业是哪一天布置的？' style={{ width: 240, marginLeft:'10px',lineHeight:'28' }}/>
+                                    <DatePicker placeholder='作业是哪一天布置的？' style={{ width: 240, marginLeft:'10px',lineHeight:'28' }} onChange={this.dateChange.bind(this)}/>
                                 </div>
                                 <div className='select-category'>
                                     <span>学习资料名称&nbsp;&nbsp;:</span>
-                                    <Select placeholder='作业在哪一本书上？' style={{ width: 240, marginLeft:'10px'}} onChange={this.change.bind(this)}>
-                                        <Option value="0">七上基础训练通用版s</Option>
-                                        <Option value="1">第二节 数轴</Option>
-                                        <Option value="2">xxxxxxx2</Option>
+                                    <Select placeholder='作业在哪一本书上？' style={{ width: 240, marginLeft:'10px'}} onChange={this.bookChange.bind(this)}>
+                                        {books.map((item,index)=><Option value={item} key={index}>{item}</Option>)}
                                     </Select>
                                 </div>
                                 <div className='select-category'>
                                     <span>页码&nbsp;&nbsp;:</span>
-                                    <InputNumber placeholder='作业是哪一页？' min={1} max={100} style={{ width: 240, marginLeft:'10px'}}/>
+                                    <InputNumber placeholder='作业是哪一页？' min={1} max={100} style={{ width: 240, marginLeft:'10px'}} onChange={this.pageChange.bind(this)}/>
                                 </div>
                                 <div className='select-category'>
                                     <span></span>
@@ -88,7 +122,12 @@ class InfoInput extends Component {
                     <Col span={13}>
                         <div className='category-detail'>
                             {
-                                this.state.showDetail ? <TopicResult handleDetail={this.handleDetail.bind(this)} handleCancel={this.handleCancel.bind(this)}/> : null
+                                this.state.showDetail ? <TopicResult 
+                                                            handleDetail={this.handleDetail.bind(this)} 
+                                                            handleCancel={this.handleCancel.bind(this)} 
+                                                            topicAll={topicAll}
+                                                            page={page}
+                                                            date={date}/> : null
                             }
                         </div>
                     </Col>
@@ -96,6 +135,11 @@ class InfoInput extends Component {
                 </Row>
             </div>
         )
+    }
+    componentDidMount(){
+        let that = this;
+        const data = Get('http://118.31.16.70/api/v3/students/me/books/');
+        data.then((response)=>this.setState({books:response}))
     }
 }
 

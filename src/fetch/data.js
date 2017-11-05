@@ -1,7 +1,7 @@
 import axios from 'axios';
 async function Get(api){
   var data;
-  var url = api+'?t='+(new Date()).getTime().toString();
+  var url = api;
   await axios.get(url)
     .then(function (response) {
       data = response.data;
@@ -11,14 +11,15 @@ async function Get(api){
     });
   return data;
 }
-function Post(url, param){
-  var url = url+'?t='+(new Date()).getTime().toString();
-  axios.post(url, param)
+async function Post(url, param){
+  var status;
+  await axios.post(url, param)
   .then(function (response) {
-    console.log(response)
+   status = response.status;
   })
   .catch(function (error) {
     console.log(error);
   });
+  return status;
 }
 export {Get, Post}

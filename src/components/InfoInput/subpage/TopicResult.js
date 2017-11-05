@@ -1,58 +1,51 @@
 import React, { Component } from 'react';
 import {Table, Switch, Button} from 'antd';
+import {Post} from '../../../fetch/data.js';
 import './style.css';
 class TopicResult extends Component{
    constructor(){
      super();
      this.state={
-       data : [
-        {
-          key: '1',
-          position: 'P55/基础夯实/5 (1)',
-          status: false,
-          result : false
-        },
-        {
-          key: '2',
-          position: 'P55/基础夯实/5 (2)',
-          status: false,
-          result : false
-        },
-        {
-          key: '3',
-          position: 'P55/基础夯实/6',
-          status: false,
-          result : false
-        },
-        {
-          key: '4',
-          position: 'P55/基础夯实/7',
-          status: false,
-          result : false
-        },
-        {
-          key: '5',
-          position: 'P55/基础夯实/8',
-          status: false,
-          result : false
-        },
-        {
-          key: '6',
-          position: 'P55/基础夯实/9',
-          status: false,
-          result : false
-        },
-        {
-          key: '7',
-          position: 'P55/基础夯实/10',
-          status: false,
-          result : false
-        }
-      ]
+       data : []
      }
    }
     saveBtnHandle(){
-        this.props.handleDetail();
+        // setTimeout(()=>{
+        //   console.log('save');
+        //   this.props.handleDetail();
+        // },3000)
+        let msg = [];
+        this.state.data.map((item,index)=>{
+          if(item.status){
+            let position = item.position.split('/');
+            if(position.length === 3){
+              msg.push({
+                  isCorrect : item.isCorrect,
+                  problemId: item.problemId,
+                  subIdx : -1
+                })
+            }else{
+              var subIdx = Number(position[3].split('')[1]);
+              msg.push({
+                isCorrect : item.isCorrect,
+                problemId: item.problemId,
+                subIdx : subIdx
+              })
+            }
+          }
+        })
+        const url = 'http://118.31.16.70/api/v3/students/me/problems/';
+        var params = {
+          time : this.props.date,
+          problems : msg
+        }
+        var response = Post(url,params);
+        response.then((status)=>{
+          if(status === 200){
+            this.props.handleDetail();
+          }
+        })
+        
      }
     cancelBtnHandle(){
       this.props.handleCancel();
@@ -62,7 +55,7 @@ class TopicResult extends Component{
       if(e){
         data.forEach((item,index)=>{
           data[index].status = true;
-          data[index].result = true;
+          data[index].isCorrect = true;
         })
       }else{
         data.forEach((item,index)=>{
@@ -86,14 +79,42 @@ class TopicResult extends Component{
     }
     tdClick2(index){
       let data = this.state.data;
-      if(data[index].result){
-        data[index].result  = false
+      if(data[index].isCorrect){
+        data[index].isCorrect  = false
       }else{
-        data[index].result  = true
+        data[index].isCorrect  = true
       }
       this.setState({
         data : data
       })
+    }
+    componentWillMount(){
+      const {page,topicAll} = this.props;
+      let data = [];
+   
+      topicAll.map((item,index)=>{
+        if(item.subIdx===-1){
+          data.push({
+            key : index +1,
+            position : `P${page}/${item.column}/${item.idx}`,
+            status : false,
+            isCorrect : false,
+            problemId : item.problemId,
+          })
+        }else{
+          data.push({
+            problemId : item.problemId,
+            key : index +1,
+            position : `P${page}/${item.column}/${item.idx}/(${item.subIdx})`,
+            status : false,
+            isCorrect : false,
+            problemId : item.problemId,
+          })
+        }
+      })
+     this.setState({
+       data : data
+     })
     }
     render(){
       const columns = [{
@@ -111,8 +132,8 @@ class TopicResult extends Component{
       {
         title: '做题结果',
         className: 'column-result',
-        dataIndex: 'result',
-        render : (text, record, index)=>{console.log(text, record)
+        dataIndex: 'isCorrect',
+        render : (text, record, index)=>{
                                           return(
                                           <div onClick={()=>this.tdClick2(index)}>{text}</div>
                                           )
@@ -126,34 +147,17 @@ class TopicResult extends Component{
         a.position = data.position;
         if(!data.status){
           a.status = <Switch checkedChildren="布置了" unCheckedChildren="没布置" checked={false}/>
-          a.result = null
+          a.isCorrect = null
         } else{
           a.status = <Switch checkedChildren="布置了" unCheckedChildren="没布置" checked/>
-          if(!data.result){
-            a.result = <Switch checkedChildren="做对了" unCheckedChildren="做错了" checked={false}/>
+          if(!data.isCorrect){
+            a.isCorrect = <Switch checkedChildren="做对了" unCheckedChildren="做错了" checked={false}/>
           } else{
-            a.result = <Switch checkedChildren="做对了" unCheckedChildren="做错了" checked/>
+            a.isCorrect = <Switch checkedChildren="做对了" unCheckedChildren="做错了" checked/>
           }
         }
         data1.push(a)
       })
-     /* const data = [{
-        key: '1',
-        position: 'P55/基础夯实/5 (1)',
-        status: <Switch checkedChildren="布置了" unCheckedChildren="没布置" defaultChecked/>,
-        result : <Switch checkedChildren="做对了" unCheckedChildren="做错了" />
-      }, {
-        key: '2',
-        position: 'P55/基础夯实/5 (2)',
-        status: <Switch checkedChildren="布置了" unCheckedChildren="没布置" />,
-        result : <Switch checkedChildren="做对了" unCheckedChildren="做错了" />
-      }, {
-        key: '3',
-        position: 'P55/基础夯实/6',
-        status: <Switch checkedChildren="布置了" unCheckedChildren="没布置" />,
-        result : <Switch checkedChildren="做对了" unCheckedChildren="做错了" />
-      }
-      ];*/
         return(
                 <div className='topic-result'>
                     <h2 className='select-info-h2'>选择做题结果</h2>
@@ -165,8 +169,8 @@ class TopicResult extends Component{
                         scroll={{ y: 255 }}
                         style={{marginTop:20}}
                         rowClassName={(record, index)=>{
-                          if(record.result){
-                            if(record.result.props.checked){
+                          if(record.isCorrect){
+                            if(record.isCorrect.props.checked){
                               return ''
                             }else{
                               return 'wrong-row'
