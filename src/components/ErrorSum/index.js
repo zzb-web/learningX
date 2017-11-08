@@ -16,34 +16,66 @@ class ErrorSum extends Component {
             chapters : [],
             chapters_sections : {},
             currentSections : [],
-            defaultSections : ''
+            defaultSections : '',
+            currentChapterNum : 0,
+            currentSectionNum : 0,
+            checkWay : '',
+            detailData : []
         }
     }
     changeCategory(value){
         this.setState({
             selectValue : value
         })
+        if(value === '1'){
+            this.setState({
+                checkWay : 'problemsSortByTime'
+            })
+        }else if(value === '2'){
+            this.setState({
+                checkWay : 'problemsSortByType'
+            })
+        }else if(value === '3'){
+            this.setState({
+                checkWay : 'problemsSortByAccuracy'
+            })
+        }else if(value === '4'){
+            this.setState({
+                checkWay : 'problemsSortByType'
+            })
+        }
     }
     sureBtnHandle(){
-        if(this.state.category !== this.state.selectValue){
-            this.setState({
-                category : this.state.selectValue
-            }) 
-        } 
+        this.setState({
+            category : this.state.selectValue
+        })
+        const {selectValue ,currentChapterNum ,currentSectionNum, checkWay} = this.state;
+        if(selectValue !== '0' && currentChapterNum !== 0 && currentSectionNum !==0){
+            let url = `http://118.31.16.70/api/v3/students/me/${checkWay}/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
+            let data = Get(url);
+            data.then((response)=>{
+                this.setState({
+                    detailData : response
+                })
+            })
+        }
     }
     chaptersChange(value){
         this.setState({
             currentSections : this.state.chapters_sections[value],
-            defaultSections : ''
+            defaultSections : '',
+            currentChapterNum : Number(value.split('_')[1]),
+            currentSectionNum : 1
         })
     }
     sectionChange(value){
         this.setState({
-            defaultSections : value
+            defaultSections : value,
+            currentSectionNum : Number(value.split('_')[1])
         })
     }
     render(){
-        const {chapters, currentSections,chapters_sections,defaultSections} = this.state;
+        const {chapters, currentSections,chapters_sections,defaultSections,currentChapterNum,currentSectionNum, detailData} = this.state;
         return(
             <div className='error-sum'>
                 <Row>
@@ -54,13 +86,13 @@ class ErrorSum extends Component {
                                 <div className='select-category-1'>
                                     <span>章&nbsp;&nbsp;:</span>
                                     <Select placeholder='分析哪一章?' style={{ width: 240, marginLeft:'10px' }} onChange={this.chaptersChange.bind(this)}>
-                                        {chapters.map((item,index)=><Option value={item} key={index}>{item}</Option>)}
+                                        {chapters.map((item,index)=><Option value={item} key={index}>{item.split('_')[0]}</Option>)}
                                     </Select>
                                 </div>
                                 <div className='select-category-1'>
                                     <span>节&nbsp;&nbsp;:</span>
                                     <Select placeholder='分析哪一节?' style={{ width: 240, marginLeft:'10px' }} value={defaultSections===''?currentSections[0]:defaultSections} onChange={this.sectionChange.bind(this)}>
-                                        {currentSections.map((item,index)=><Option value={item} key={index}>{item}</Option>)}
+                                        {currentSections.map((item,index)=><Option value={item} key={index}>{item.split('_')[0]}</Option>)}
                                     </Select>
                                 </div>
                                 <div className='select-category-1'>
@@ -83,10 +115,10 @@ class ErrorSum extends Component {
                     <Col span={13}>
                         <div className='category-detail'>
                             {
-                                this.state.category === '1' ? <AccordingTime/> :
-                                this.state.category === '2' ? <AccordingTopicTypes/> :
-                                this.state.category === '3' ? <AccordingMasteryLevel/> :
-                                this.state.category === '4' ? <AccordingReview/> : null
+                                this.state.category === '1' ? <AccordingTime data={detailData}/> :
+                                this.state.category === '2' ? <AccordingTopicTypes data={detailData}/> :
+                                this.state.category === '3' ? <AccordingMasteryLevel data={detailData}/> :
+                                this.state.category === '4' ? <AccordingReview data={detailData}/> : null
                             }
                         </div>
                     </Col>
@@ -101,17 +133,19 @@ class ErrorSum extends Component {
             let chapters = [];
             let chapters_sections = {};
             response.map((item,index)=>{
-                if(chapters.indexOf(item.chapterName)===-1){
-                    chapters.push(item.chapterName);
+                if(chapters.indexOf(`${item.chapterName}_${item.chapter}`)===-1){
+                    chapters.push(`${item.chapterName}_${item.chapter}`);
                 }
                 chapters.push();
-                if(chapters_sections[item.chapterName] === undefined){
-                    chapters_sections[item.chapterName] = [];
-                    chapters_sections[item.chapterName].push(item.sectionName);
+                if(chapters_sections[`${item.chapterName}_${item.chapter}`] === undefined){
+                    chapters_sections[`${item.chapterName}_${item.chapter}`] = [];
+                    chapters_sections[`${item.chapterName}_${item.chapter}`].push(`${item.sectionName}_${item.section}`);
                 }else{
-                    chapters_sections[item.chapterName].push(item.sectionName);
+                    chapters_sections[`${item.chapterName}_${item.chapter}`].push(`${item.sectionName}_${item.section}`);
                 }
             })
+            console.log(chapters)
+            console.log(chapters_sections)
             this.setState({
                 chapters : chapters,
                 chapters_sections : chapters_sections

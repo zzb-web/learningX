@@ -11,100 +11,54 @@ const columns = [{
     className: 'column-status',
     dataIndex: 'status',
   }];
-  
-  const data = [{
-    key: '1',
-    name: '一元一次方程的识别',
-    status: <div>
-              <div className='status-content'>
-                <b className='status wrong'></b>
-                <span className='status-date'>09-05</span>
-              </div>
-              <div className='status-content'>
-                <b className='status right'></b>
-                <span className='status-date'>09-06</span>
-              </div>
-              <div className='status-content'>
-                <b className='status wrong'></b>
-                <span className='status-date'>09-08</span>
-              </div>
-            </div>,
-  }, {
-    key: '2',
-    name: '解一元一次方程',
-    status: <div>
-              <div className='status-content'>
-                <b className='status wrong'></b>
-                <span className='status-date'>09-05</span>
-              </div>
-              <div className='status-content'>
-                <b className='status right'></b>
-                <span className='status-date'>09-06</span>
-              </div>
-              <div className='status-content'>
-                <b className='status wrong'></b>
-                <span className='status-date'>09-08</span>
-              </div>
-            </div>,
-  }, {
-    key: '3',
-    name: '一元一次方程的应用',
-    status: <div>
-              <div className='status-content'>
-                <b className='status wrong'></b>
-                <span className='status-date'>09-05</span>
-              </div>
-              <div className='status-content'>
-                <b className='status right'></b>
-                <span className='status-date'>09-06</span>
-              </div>
-              <div className='status-content'>
-                <b className='status wrong'></b>
-                <span className='status-date'>09-08</span>
-              </div>
-            </div>,
-  },
-  {
-    key: '4',
-    name: '新定义',
-    status: <div>
-    <div className='status-content'>
-      <b className='status wrong'></b>
-      <span className='status-date'>09-05</span>
-    </div>
-    <div className='status-content'>
-      <b className='status right'></b>
-      <span className='status-date'>09-06</span>
-    </div>
-    <div className='status-content'>
-      <b className='status wrong'></b>
-      <span className='status-date'>09-08</span>
-    </div>
-  </div>,
-  }, {
-    key: '5',
-    name: '规律探索',
-    status: <div>
-              <div className='status-content'>
-                <b className='status wrong'></b>
-                <span className='status-date'>09-05</span>
-              </div>
-              <div className='status-content'>
-                <b className='status right'></b>
-                <span className='status-date'>09-06</span>
-              </div>
-              <div className='status-content'>
-                <b className='status wrong'></b>
-                <span className='status-date'>09-08</span>
-              </div>
-            </div>,
-  },
-  ];
 class AccordingTocpicTypes extends Component{
+  _add(m){return m<10?'0'+m:m }  
+  _getDate(timeStamp) {   
+    var time = new Date(timeStamp*1000);  
+    var y = time.getFullYear();  
+    var m = time.getMonth()+1;  
+    var d = time.getDate();  
+    return this._add(m)+'-'+this._add(d); 
+  }
     render(){
+      const data = this.props.data || [];
+      let detailData = [];
+      data.map((item,index)=>{
+        var single = {
+          key: index,
+          name: item.type,
+          status: <div>
+                  {item.problems.map((problem,i)=>{
+                    if(problem.isCorrect){
+                      return (
+                        <div className='status-content'>
+                          <b className='status right'></b>
+                          <span className='status-date'>{
+                            this._getDate(problem.assignDate)
+                          }</span>
+                        </div>)
+                    }else{
+                      return (
+                        <div className='status-content'>
+                          <b className='status wrong'></b>
+                          <span className='status-date'>{
+                            this._getDate(problem.assignDate)
+                          }</span>
+                       </div>
+                      )
+                    }
+                  })}
+                  </div>,
+        }
+        detailData.push(single);
+      })
+      console.log(detailData)
         return(
             <div className='table'>
-                 <Tables columns={columns} data={data}/>
+                 <Tables 
+                    columns={columns}
+                    data={detailData}
+                     />
             </div>
         )
     }
