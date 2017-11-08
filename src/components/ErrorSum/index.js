@@ -144,8 +144,6 @@ class ErrorSum extends Component {
                     chapters_sections[`${item.chapterName}_${item.chapter}`].push(`${item.sectionName}_${item.section}`);
                 }
             })
-            console.log(chapters)
-            console.log(chapters_sections)
             this.setState({
                 chapters : chapters,
                 chapters_sections : chapters_sections
