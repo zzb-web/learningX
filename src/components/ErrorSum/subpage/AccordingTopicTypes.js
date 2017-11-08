@@ -31,7 +31,7 @@ class AccordingTocpicTypes extends Component{
                   {item.problems.map((problem,i)=>{
                     if(problem.isCorrect){
                       return (
-                        <div className='status-content'>
+                        <div key={i} className='status-content'>
                           <b className='status right'></b>
                           <span className='status-date'>{
                             this._getDate(problem.assignDate)
@@ -39,7 +39,7 @@ class AccordingTocpicTypes extends Component{
                         </div>)
                     }else{
                       return (
-                        <div className='status-content'>
+                        <div key={i} className='status-content'>
                           <b className='status wrong'></b>
                           <span className='status-date'>{
                             this._getDate(problem.assignDate)
@@ -52,7 +52,7 @@ class AccordingTocpicTypes extends Component{
         }
         detailData.push(single);
       })
-      console.log(detailData)
+      // console.log(detailData)
         return(
             <div className='table'>
                  <Tables 

@@ -136,7 +136,7 @@ class ErrorSum extends Component {
                 if(chapters.indexOf(`${item.chapterName}_${item.chapter}`)===-1){
                     chapters.push(`${item.chapterName}_${item.chapter}`);
                 }
-                chapters.push();
+                // chapters.push();
                 if(chapters_sections[`${item.chapterName}_${item.chapter}`] === undefined){
                     chapters_sections[`${item.chapterName}_${item.chapter}`] = [];
                     chapters_sections[`${item.chapterName}_${item.chapter}`].push(`${item.sectionName}_${item.section}`);

@@ -32,7 +32,7 @@ class InfoInput extends Component {
                 })
             }
        })
-       console.log(topicAll)
+    //    console.log(topicAll)
     //    setTimeout(()=>{
     //        console.log(topicAll)
     //     if(topicAll.length>0){
