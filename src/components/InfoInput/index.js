@@ -25,7 +25,7 @@ class InfoInput extends Component {
        let url = 'http://118.31.16.70/api/v3/problems/?book='+current+'&page='+page;
        let data = Get(url);
        data.then((response)=>{
-           if(response.length>0){
+           if(response !==null && response.length>0){
             this.setState({
                 topicAll :response,
                 showDetail : true
