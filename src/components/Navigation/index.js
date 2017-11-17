@@ -54,7 +54,7 @@ class Navigation extends Component {
           collapsed={this.state.collapsed}
           width={130}
         >
-          <div className="logo" />
+          <div className='head-font'>达摩纠错本</div>
           <Icon
             className="trigger trigger-icon"
             type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
@@ -63,7 +63,7 @@ class Navigation extends Component {
           <Menu theme="dark" mode="inline" onClick={this.clickHandle.bind(this)}>
             <Menu.Item key="1">
               <Icon type="book" />
-              <span>信息录入</span>
+              <span>错题标记</span>
             </Menu.Item>
             <Menu.Item key="2">
               <Icon type="appstore" />

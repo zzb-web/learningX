@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {Row , Col, Select, Button} from 'antd';
 import AccordingTime from './subpage/AccordingTime.js';
 import AccordingTopicTypes from './subpage/AccordingTopicTypes.js';
-import AccordingMasteryLevel from './subpage/AccordingMasteryLevel.js';
-import AccordingReview from './subpage/AccordingReview.js';
+// import AccordingMasteryLevel from './subpage/AccordingMasteryLevel.js';
+// import AccordingReview from './subpage/AccordingReview.js';
 import {Get} from '../../fetch/data.js';
 import './style.css';
 const Option = Select.Option;
@@ -98,10 +98,8 @@ class ErrorSum extends Component {
                                 <div className='select-category-1'>
                                     <span>归类方法&nbsp;&nbsp;:</span>
                                     <Select placeholder='如何分析?' style={{ width: 240, marginLeft:'10px' }} onChange={this.changeCategory.bind(this)}>
-                                        <Option value="1">按作业布置时间</Option>
-                                        <Option value="2">按题目类型</Option>
-                                        <Option value="3">按掌握程度</Option>
-                                        <Option value="4">按复习顺序</Option>
+                                        <Option value="1">按时间</Option>
+                                        <Option value="2">按类型</Option>
                                     </Select>
                                 </div>
                                 <div className='select-category-1'>
@@ -116,9 +114,9 @@ class ErrorSum extends Component {
                         <div className='category-detail'>
                             {
                                 this.state.category === '1' ? <AccordingTime data={detailData}/> :
-                                this.state.category === '2' ? <AccordingTopicTypes data={detailData}/> :
-                                this.state.category === '3' ? <AccordingMasteryLevel data={detailData}/> :
-                                this.state.category === '4' ? <AccordingReview data={detailData}/> : null
+                                this.state.category === '2' ? <AccordingTopicTypes data={detailData}/> :null
+                                // this.state.category === '3' ? <AccordingMasteryLevel data={detailData}/> :
+                                // this.state.category === '4' ? <AccordingReview data={detailData}/> : null
                             }
                         </div>
                     </Col>

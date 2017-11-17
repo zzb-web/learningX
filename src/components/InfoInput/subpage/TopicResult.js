@@ -10,10 +10,6 @@ class TopicResult extends Component{
      }
    }
     saveBtnHandle(){
-        // setTimeout(()=>{
-        //   console.log('save');
-        //   this.props.handleDetail();
-        // },3000)
         let msg = [];
         this.state.data.map((item,index)=>{
           if(item.status){

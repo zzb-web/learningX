@@ -32,25 +32,15 @@ class InfoInput extends Component {
                 })
             }
        })
-    //    console.log(topicAll)
-    //    setTimeout(()=>{
-    //        console.log(topicAll)
-    //     if(topicAll.length>0){
-    //         this.setState({
-    //             showDetail : true
-    //         })
-    //        }
-    //    },2000)
     }
     handleDetail(){
         let hasSave = this.state.hasSave;
-        hasSave.push(this.state.current);
+        hasSave.push(this.state.current+' '+this.state.page+'页');
         this.setState({
             showDetail : false,
             showSaveSuc : true,
             hasSave : hasSave
         })
-        // setTimeout(()=>this.setState({showSaveSuc : false}),2000)
     }
     handleCancel(){
       this.setState({

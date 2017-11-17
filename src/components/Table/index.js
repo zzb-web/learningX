@@ -9,16 +9,17 @@ class Tables extends Component{
                     columns={this.props.columns}
                     dataSource={this.props.data}
                     bordered
-                    pagination={{
-                            total: 50,
-                            pageSize: 10,
-                            defaultPageSize:5,
-                            showQuickJumper : true,
-                            showSizeChanger: true,
-                            pageSizeOptions:['5','10']
-                        }
-                    }
-                    scroll={{ y: 255 }}
+                    pagination={false}
+                    // pagination={{
+                    //         total: 50,
+                    //         pageSize: 10,
+                    //         defaultPageSize:5,
+                    //         showQuickJumper : true,
+                    //         showSizeChanger: true,
+                    //         pageSizeOptions:['5','10']
+                    //     }
+                    // }
+                    scroll={{ y: 387 }}
                 />
             </div>
         )

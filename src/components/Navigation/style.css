@@ -9,18 +9,13 @@
   #components-layout-demo-custom-trigger .trigger:hover {
     color: #108ee9;
   }
-
-  #components-layout-demo-custom-trigger .logo {
+  .head-font{
     height: 32px;
-    background: #333;
-    border-radius: 6px;
     margin: 16px;
-  }
-  .logo{
-    height: 32px;
-    background: #333;
-    border-radius: 6px;
-    margin: 16px;
+    font-size: 29px;
+    line-height: 32px;
+    width: 200px;
+    color: #3B7FD4;
   }
   .trigger-icon {
       width: 100%;
