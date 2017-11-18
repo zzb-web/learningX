@@ -69,6 +69,7 @@ class TopicResult extends Component{
       }else{
         data[index].status  = true
       }
+      data[index].isCorrect = true;
       this.setState({
         data : data
       })
@@ -87,7 +88,6 @@ class TopicResult extends Component{
     componentWillMount(){
       const {page,topicAll} = this.props;
       let data = [];
-   
       topicAll.map((item,index)=>{
         if(item.subIdx===-1){
           data.push({
