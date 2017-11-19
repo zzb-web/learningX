@@ -92,7 +92,7 @@ class TopicResult extends Component{
         if(item.subIdx===-1){
           data.push({
             key : index +1,
-            position : `P${page}/${item.column}/${item.idx}`,
+            position : `${item.column}/${item.idx}`,
             status : false,
             isCorrect : false,
             problemId : item.problemId,
@@ -101,7 +101,7 @@ class TopicResult extends Component{
           data.push({
             problemId : item.problemId,
             key : index +1,
-            position : `P${page}/${item.column}/${item.idx}/(${item.subIdx})`,
+            position : `${item.column}/${item.idx}/(${item.subIdx})`,
             status : false,
             isCorrect : false,
             problemId : item.problemId,

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Icon } from 'antd';
+import {Get, Post} from '../../fetch/data.js';
 // import ErrorSum from '../ErrorSum/index.js';
 import ErrorSum from '../ErrorSum/index.js';
 import InfoInput from '../InfoInput/index.js';
@@ -13,7 +14,9 @@ class Navigation extends Component {
     collapsed: true,
     key: '0',
     showUser : 'none',
-    contentHeight :　0
+    contentHeight :　0,
+    userMsg : {},
+    userName : ''
   };
   toggle = () => {
     this.setState({
@@ -45,7 +48,22 @@ class Navigation extends Component {
       showUser : 'none'
     })
   }
+  logoutHandle(){
+    var result =Post('http://118.31.16.70/api/v3/students/me/logout/');
+    result.then((response)=>{
+      if(response.status === 200){
+        // sessionStorage.removeItem('userId');
+        this.props.history.push('/')
+      }
+    })
+  }
+  componentWillMount(){
+     if(sessionStorage.userId === undefined){
+        this.props.history.push('/');
+     }
+  }
   render() {
+    const {userMsg,userName} = this.state;
     return (
       <Layout>
         <Sider
@@ -82,12 +100,12 @@ class Navigation extends Component {
               <div className='user-icon-content'>
                 <Icon type="user" className='user-icon'/>
               </div>
-              <div className='user-name'>李婷</div>
+              <div className='user-name'>{userName ||userMsg.learnId}</div>
             </div>
             <ul className='user-content' onMouseLeave={this.userMouseLeave.bind(this)} style={{display:this.state.showUser}}>
               <li onClick={this.usermsgHandle.bind(this)}>个人信息</li>
               <li onClick={this.passwordHandle.bind(this)}>修改密码</li>
-              <li>退出登录</li>
+              <li onClick={this.logoutHandle.bind(this)}>退出登录</li>
             </ul>
           </div>
           </Header>
@@ -102,7 +120,7 @@ class Navigation extends Component {
                 this.state.key === '2' ? <ErrorSum /> : null
             }
             {
-                 this.state.key === '3' ? <UserMsgForm/> : null
+                 this.state.key === '3' ? <UserMsgForm userMsg={this.state.userMsg} modifyUserMsg={this.modifyUserMsg.bind(this)}/> : null
             }
             {
                  this.state.key === '4' ? <PassWordForm/> : null
@@ -115,7 +133,11 @@ class Navigation extends Component {
       </Layout>
     );
   }
-
+  modifyUserMsg(value){
+    this.setState({
+      userName : value
+    })
+  }
   componentDidMount(){
     let that = this;
     let allHeight = document.documentElement.clientHeight;
@@ -128,6 +150,13 @@ class Navigation extends Component {
         contentHeight :　allHeight-112
       })
     }
+    var msg =Get('http://118.31.16.70/api/v3/students/me/profile/');
+    msg.then((response)=>{
+        this.setState({
+            userMsg : response,
+            userName : response.realName
+        })
+    })
   }
 }
 export default Navigation;

@@ -76,6 +76,7 @@ class ErrorSum extends Component {
     }
     render(){
         const {chapters, currentSections,chapters_sections,defaultSections,currentChapterNum,currentSectionNum, detailData} = this.state;
+        console.log(currentSections)
         return(
             <div className='error-sum'>
                 <Row>
@@ -86,13 +87,13 @@ class ErrorSum extends Component {
                                 <div className='select-category-1'>
                                     <span>章&nbsp;&nbsp;:</span>
                                     <Select placeholder='分析哪一章?' style={{ width: 240, marginLeft:'10px' }} onChange={this.chaptersChange.bind(this)}>
-                                        {chapters.map((item,index)=><Option value={item} key={index}>{item.split('_')[0]}</Option>)}
+                                        {chapters.map((item,index)=><Option value={item} key={index}>{`第${item.split('_')[1]}章`}<span style={{marginLeft:10}}>{item.split('_')[0]}</span></Option>)}
                                     </Select>
                                 </div>
                                 <div className='select-category-1'>
                                     <span>节&nbsp;&nbsp;:</span>
                                     <Select placeholder='分析哪一节?' style={{ width: 240, marginLeft:'10px' }} value={defaultSections===''?currentSections[0]:defaultSections} onChange={this.sectionChange.bind(this)}>
-                                        {currentSections.map((item,index)=><Option value={item} key={index}>{item.split('_')[0]}</Option>)}
+                                        {currentSections.map((item,index)=><Option value={item} key={index}>{`第${item.split('_')[1]}节`}<span style={{marginLeft:10}}>{item.split('_')[0]}</span></Option>)}
                                     </Select>
                                 </div>
                                 <div className='select-category-1'>
@@ -130,6 +131,9 @@ class ErrorSum extends Component {
         data.then((response)=>{
             let chapters = [];
             let chapters_sections = {};
+            if(response === null){
+                response = []
+            }
             response.map((item,index)=>{
                 if(chapters.indexOf(`${item.chapterName}_${item.chapter}`)===-1){
                     chapters.push(`${item.chapterName}_${item.chapter}`);

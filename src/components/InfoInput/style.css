@@ -48,3 +48,6 @@
 /*.ant-input-number-input{
   color: #bfbfbf !important;
 }*/
+.select-category .ant-input-number-handler-wrap{
+    opacity: 1 !important;
+}

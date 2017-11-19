@@ -12,10 +12,13 @@ class NormalLoginForm extends React.Component {
         values.learnId = Number(values.learnId);
         let status = Post('http://118.31.16.70/api/v3/students/login/',values);
         status.then(function(response){
-            if(response === 200){
+            if(response === undefined){
+                alert('用户名或者密码错误！')
+            }else if(response.status === 200){
+                sessionStorage.userId = values.learnId;	    
                 that.props.history.push('/index');
             }else{
-                alert('用户名或者密码错误！')
+                alert('用户名或者密码错误！');
             }
           })
       }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Popover} from 'antd';
+import {Popover,Icon} from 'antd';
 import Tables from '../../Table/index.js';
 import './style.css';
 const columns = [{
@@ -23,34 +23,40 @@ const columns = [{
     name: '2017-09-01',
     status: <div>
               <Popover content={content} title="Title">
-                <b className='status right'></b>
+                <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
               </Popover>
               <Popover content={content} title="Title">
-                <b className='status wrong'></b>
+                <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
               </Popover>
               <Popover content={content} title="Title">
-                <b className='status right'></b>
+                <b className='status'><Icon type="check-circle" style={{color:'#108ee9',fontSize:'20px'}}/></b>
               </Popover>
               <Popover content={content} title="Title">
-                <b className='status wrong'></b>
+               <b className='status'><Icon type="check-circle" style={{color:'#108ee9',fontSize:'20px'}}/></b>
               </Popover>
               <Popover content={content} title="Title">
-                <b className='status right'></b>
+                <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
               </Popover>
               <Popover content={content} title="Title">
-                <b className='status wrong'></b>
+               <b className='status'><Icon type="check-circle" style={{color:'#108ee9',fontSize:'20px'}}/></b>
               </Popover>
               <Popover content={content} title="Title">
-                <b className='status right'></b>
+                <b className='status'><Icon type="check-circle" style={{color:'#108ee9',fontSize:'20px'}}/></b>
               </Popover>
               <Popover content={content} title="Title">
-                <b className='status wrong'></b>
+                <b className='status'><Icon type="close-circle" style={{color:'#f04134',fontSize:'20px'}}/></b>
               </Popover>
               <Popover content={content} title="Title">
-                <b className='status right'></b>
+                <b className='status'><Icon type="close-circle" style={{color:'#f04134',fontSize:'20px'}}/></b>
               </Popover>
               <Popover content={content} title="Title">
-                <b className='status right'></b>
+                 <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
+              </Popover>
+              <Popover content={content} title="Title">
+                 <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
+              </Popover>
+              <Popover content={content} title="Title">
+                 <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
               </Popover>
             </div>,
   }, {

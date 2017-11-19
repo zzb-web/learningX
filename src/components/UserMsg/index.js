@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 // import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,Radio } from 'antd';
 import { Form, Input, Row, Col, Button, Radio } from 'antd';
+import {Patch} from '../../fetch/data.js'; 
+
 const FormItem = Form.Item;
 // const Option = Select.Option;
 // const RadioButton = Radio.Button;
@@ -11,12 +13,23 @@ class RegistrationForm extends Component {
     state = {
         confirmDirty: false,
         autoCompleteResult: [],
+        userMsg : {}
     };
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                var params = {
+                    realName: values.name,
+                    gender: values.gender,
+                    telephone: values.phone
+                }
+                console.log(params)
+                var result = Patch('http://118.31.16.70/api/v3/students/me/profile/',params)
+                result.then((response)=>{
+                    this.props.modifyUserMsg(values.name);
+                })
             }
         });
     }
@@ -24,11 +37,21 @@ class RegistrationForm extends Component {
         const value = e.target.value;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     }
-
+    componentDidMount(){
+        const {learnId, school, gender, grade, realName, telephone,classId} = this.props.userMsg
+            this.props.form.setFieldsValue({
+                studyNum: this.props.userMsg.learnId,
+                school:school,
+                grade :grade,
+                class: classId,
+                phone:telephone,
+                name:realName,
+                gender : gender
+            });
+    }
     render() {
         const { getFieldDecorator } = this.props.form;
         // const { autoCompleteResult } = this.state;
-
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -68,7 +91,7 @@ class RegistrationForm extends Component {
                                     //     required: true, message: 'Please input your E-mail!',
                                     // }],
                                 })(
-                                    <Input type='text' disabled placeholder='唯一固定值，用户不可更改。服务器发过来。' />
+                                        <Input type='text' disabled/>
                                     )}
                             </FormItem>
                             <FormItem
@@ -97,7 +120,7 @@ class RegistrationForm extends Component {
                                 hasFeedback
                             >
                                 {getFieldDecorator('grade', {
-                                    rules: [{ required: true, message: '请输入您的年级!', whitespace: true }],
+                                    // rules: [{ required: true, message: '请输入您的年级!', whitespace: true }],
                                 })(
                                     <Input disabled/>
                                     )}
@@ -113,7 +136,7 @@ class RegistrationForm extends Component {
                                 hasFeedback
                             >
                                 {getFieldDecorator('class', {
-                                    rules: [{ required: true, message: '请输入您的班级!', whitespace: true }],
+                                    // rules: [{ required: true, message: '请输入您的班级!', whitespace: true }],
                                 })(
                                     <Input disabled/>
                                     )}
@@ -139,10 +162,10 @@ class RegistrationForm extends Component {
                                 {...formItemLayout}
                                 label="性别"
                             >
-                                {getFieldDecorator('radio-group')(
+                                {getFieldDecorator('gender')(
                                     <RadioGroup>
-                                        <Radio value="man">男</Radio>
-                                        <Radio value="woman">女</Radio>
+                                        <Radio value="male">男</Radio>
+                                        <Radio value="female">女</Radio>
                                     </RadioGroup>
                                 )}
                             </FormItem>

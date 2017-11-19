@@ -15,11 +15,35 @@ async function Post(url, param){
   var status;
   await axios.post(url, param)
   .then(function (response) {
-   status = response.status;
+   status = response;
   })
   .catch(function (error) {
     console.log(error);
   });
   return status;
 }
-export {Get, Post}
+
+async function Put(url, param){
+  var status;
+  await axios.put(url, param)
+  .then(function (response) {
+   status = response;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  return status;
+}
+
+async function Patch(url, param){
+  var status;
+  await axios.patch(url, param)
+  .then(function (response) {
+   status = response;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  return status;
+}
+export {Get, Post, Put, Patch}

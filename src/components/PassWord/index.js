@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,Radio } from 'antd';
 import { Form, Input,Row, Col, Button} from 'antd';
+import {Put} from '../../fetch/data.js';
 const FormItem = Form.Item;
 // const Option = Select.Option;
 // const RadioButton = Radio.Button;
@@ -16,7 +17,13 @@ class RegistrationForm extends Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+                var params = {
+                    password : values.password
+                }
+                var result = Put('http://118.31.16.70/api/v3/students/me/password/',params)
+                result.then((response)=>{
+                    console.log(response.status)
+                })
             }
         });
     }

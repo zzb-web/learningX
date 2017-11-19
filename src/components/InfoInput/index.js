@@ -66,7 +66,11 @@ class InfoInput extends Component {
         })
     }
     render(){
-        const {books, topicAll, page, date} = this.state
+        const {topicAll, page, date} = this.state;
+        var books = this.state.books;
+        if(books === null){
+            books = []
+        }
         return(
             <div className='info-input'>
                 <Row>
@@ -86,7 +90,7 @@ class InfoInput extends Component {
                                 </div>
                                 <div className='select-category'>
                                     <span>页码&nbsp;&nbsp;:</span>
-                                    <InputNumber placeholder='作业是哪一页？' min={1} max={100} style={{ width: 240, marginLeft:'10px'}} onChange={this.pageChange.bind(this)}/>
+                                    <InputNumber placeholder='作业是哪一页？' min={1} style={{ width: 240, marginLeft:'10px'}} onChange={this.pageChange.bind(this)}/>
                                 </div>
                                 <div className='select-category'>
                                     <span></span>
