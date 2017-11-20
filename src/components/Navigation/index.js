@@ -6,6 +6,7 @@ import ErrorSum from '../ErrorSum/index.js';
 import InfoInput from '../InfoInput/index.js';
 import UserMsgForm from '../UserMsg/index.js';
 import PassWordForm from '../PassWord/index.js';
+import ReviewOfError from '../ReviewOfError/index.js';
 import Test from '../Test/index.js';
 import './style.css';
 const { Header, Sider, Content} = Layout;
@@ -87,10 +88,10 @@ class Navigation extends Component {
               <Icon type="appstore" />
               <span>错题归类</span>
             </Menu.Item>
-            {/* <Menu.Item key="3">
-              <Icon type="user" />
-              <span>个人信息</span>
-            </Menu.Item> */}
+            <Menu.Item key="5">
+              <Icon type="scan" />
+              <span>错题检验</span>
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
@@ -124,6 +125,9 @@ class Navigation extends Component {
             }
             {
                  this.state.key === '4' ? <PassWordForm/> : null
+            }
+            {
+                this.state.key === '5' ? <ReviewOfError/> : null
             }
           </Content>
           {/* <Footer style={{ textAlign: 'center' }}>

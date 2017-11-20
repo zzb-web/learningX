@@ -51,6 +51,7 @@ class ErrorSum extends Component {
         })
         const {selectValue ,currentChapterNum ,currentSectionNum, checkWay} = this.state;
         if(selectValue !== '0' && currentChapterNum !== 0 && currentSectionNum !==0){
+            // api/v3/students/me/problemsSortByType/
             let url = `http://118.31.16.70/api/v3/students/me/${checkWay}/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
             let data = Get(url);
             data.then((response)=>{

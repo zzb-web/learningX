@@ -22,7 +22,7 @@ class InfoInput extends Component {
 
     sureBtnHandle(){
        const {current, page, topicAll} = this.state;
-       let url = 'http://118.31.16.70/api/v3/problems/?book='+current+'&page='+page;
+       let url = 'http://118.31.16.70/api/v3/students/me/problems/?book='+current+'&page='+page;
        let data = Get(url);
        data.then((response)=>{
            if(response !==null && response.length>0){
