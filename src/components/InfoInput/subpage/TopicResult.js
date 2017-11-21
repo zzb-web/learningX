@@ -11,17 +11,20 @@ class TopicResult extends Component{
    }
     saveBtnHandle(){
         let msg = [];
+        console.log(this.state.data)
         this.state.data.map((item,index)=>{
           if(item.status){
+            console.log(item.position)
             let position = item.position.split('/');
-            if(position.length === 3){
+            console.log(position.length)
+            if(position.length === 2){
               msg.push({
                   isCorrect : item.isCorrect,
                   problemId: item.problemId,
                   subIdx : -1
                 })
             }else{
-              var subIdx = Number(position[3].split('')[1]);
+              var subIdx = Number(position[2].split('')[1]);
               msg.push({
                 isCorrect : item.isCorrect,
                 problemId: item.problemId,
@@ -36,8 +39,8 @@ class TopicResult extends Component{
           problems : msg
         }
         var response = Post(url,params);
-        response.then((status)=>{
-          if(status === 200){
+        response.then((resp)=>{
+          if(resp.status === 200){
             this.props.handleDetail();
           }
         })

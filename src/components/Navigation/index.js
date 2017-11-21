@@ -17,7 +17,9 @@ class Navigation extends Component {
     showUser : 'none',
     contentHeight :　0,
     userMsg : {},
-    userName : ''
+    userName : '',
+    phone:'',
+    gender:''
   };
   toggle = () => {
     this.setState({
@@ -64,7 +66,7 @@ class Navigation extends Component {
      }
   }
   render() {
-    const {userMsg,userName} = this.state;
+    const {userMsg,userName,phone,gender} = this.state;
     return (
       <Layout>
         <Sider
@@ -121,7 +123,11 @@ class Navigation extends Component {
                 this.state.key === '2' ? <ErrorSum /> : null
             }
             {
-                 this.state.key === '3' ? <UserMsgForm userMsg={this.state.userMsg} modifyUserMsg={this.modifyUserMsg.bind(this)}/> : null
+                 this.state.key === '3' ? <UserMsgForm userMsg={userMsg}
+                                                       name={userName}
+                                                       phone={phone}
+                                                       gender={gender}
+                                                       modifyUserMsg={this.modifyUserMsg.bind(this)}/> : null
             }
             {
                  this.state.key === '4' ? <PassWordForm/> : null
@@ -137,9 +143,11 @@ class Navigation extends Component {
       </Layout>
     );
   }
-  modifyUserMsg(value){
+  modifyUserMsg(name,phone,gender){
     this.setState({
-      userName : value
+      userName : name,
+      phone:phone,
+      gender:gender
     })
   }
   componentDidMount(){
@@ -158,7 +166,9 @@ class Navigation extends Component {
     msg.then((response)=>{
         this.setState({
             userMsg : response,
-            userName : response.realName
+            userName : response.realName,
+            phone : response.telephone,
+            gender:response.gender
         })
     })
   }

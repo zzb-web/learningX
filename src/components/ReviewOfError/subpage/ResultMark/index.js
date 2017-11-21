@@ -3,38 +3,12 @@ import {Table, Switch, Button,Radio} from 'antd';
 // import {Post} from '../../../fetch/data.js';
 import './style.css';
 const RadioGroup = Radio.Group;
-var dataTest = [
-    {
-        key : '1',
-        position : `1`,
-        result : false,
-        status : '',
-    },
-    {
-        key : '2',
-        position : `2`,
-        result : false,
-        status : '',
-    },
-    {
-        key : '3',
-        position : `3`,
-        result : false,
-        statust : '',
-    },
-    {
-        key : '4',
-        position : `4`,
-        result : false,
-        status : '',
-    }
 
-]
 class ResultMark extends Component{
-   constructor(){
+   constructor(props){
      super();
      this.state={
-       data : dataTest
+       data : props.dataTest,
      }
    }
     saveBtnHandle(){
@@ -83,7 +57,8 @@ class ResultMark extends Component{
     //   }
     //   data[index].isCorrect = true;
       this.setState({
-        data : data
+        data : data,
+        checked:e.target.value
       })
     }
     tdClick2(index){
@@ -148,65 +123,34 @@ class ResultMark extends Component{
         let a ={};
         a.key = data.key;
         a.position = data.position;
-        a.result = <RadioGroup onChange={this.resultClick.bind(this,i)}>
-                        <Radio value={true} ref='test'>做对了</Radio>
-                        <Radio value={false}>做错了</Radio>
-                    </RadioGroup>
+        a.result = <div>
+                        <RadioGroup onChange={this.resultClick.bind(this,i)}>
+                          <Radio value={true}>做对了</Radio>
+                          <Radio value={false}>做错了</Radio>
+                        </RadioGroup>
+                        <Switch checkedChildren="做对了" unCheckedChildren="做错了" checked={data.result} style={{display:'none'}}/>
+                    </div>
         if(data.status ==='' || data.status === undefined){
             a.status = null;
         }else if(!data.status){
-            a.status = <RadioGroup>
-                           <Radio value={true}>学懂了</Radio>
-                            <Radio value={false}>没学懂</Radio>
-                            </RadioGroup>
+            a.status =    <div>
+                                <span className='status-font'>学习答案: </span>
+                                <RadioGroup>
+                                  <Radio value={true}>学懂了</Radio>
+                                  <Radio value={false}>没学懂</Radio>
+                                </RadioGroup>
+                            </div>
         }else{
-                a.status = <RadioGroup>
-                        <Radio value={true}>顺利</Radio>
-                        <Radio value={false}>不顺利</Radio>
-                        </RadioGroup>
+                a.status = <div>
+                            <span className='status-font'>做题过程: </span>
+                            <RadioGroup>
+                              <Radio value={true}>顺利<span style={{visibility:'hidden'}}>了</span></Radio>
+                              <Radio value={false}>不顺利</Radio>
+                            </RadioGroup>
+                          </div>
         }
-        // if(!data.result){
-        //   a.result = <RadioGroup onChange={this.resultClick.bind(this,i)}>
-        //                 <Radio value={true}>做对了</Radio>
-        //                 <Radio value={false}>做错了</Radio>
-        //              </RadioGroup>
-        //   a.status = null
-        // } else{
-        //   a.result = <RadioGroup onChange={this.resultClick.bind(this,i)}>
-        //                 <Radio value={true}>做对了</Radio>
-        //                 <Radio value={false}>做错了</Radio>
-        //              </RadioGroup>
-        //   if(!data.status){
-        //     a.status = <RadioGroup>
-        //                 <Radio value={true}>学懂了</Radio>
-        //                 <Radio value={false}>没学懂</Radio>
-        //                 </RadioGroup>
-        //   } else{
-        //     a.status = <RadioGroup>
-        //                 <Radio value={true}>顺利</Radio>
-        //                 <Radio value={false}>不顺利</Radio>
-        //                 </RadioGroup>
-        //   }
-        // }
         data1.push(a)
       })
-    //   this.state.data.map((data, i)=>{
-    //     let a ={};
-    //     a.key = data.key;
-    //     a.position = data.position;
-    //     if(!data.status){
-    //       a.status = <Switch checkedChildren="布置了" unCheckedChildren="没布置" checked={false}/>
-    //       a.isCorrect = null
-    //     } else{
-    //       a.status = <Switch checkedChildren="布置了" unCheckedChildren="没布置" checked/>
-    //       if(!data.isCorrect){
-    //         a.isCorrect = <Switch checkedChildren="做对了" unCheckedChildren="做错了" checked={false}/>
-    //       } else{
-    //         a.isCorrect = <Switch checkedChildren="做对了" unCheckedChildren="做错了" checked/>
-    //       }
-    //     }
-    //     data1.push(a)
-    //   })
         return(
                 <div className='topic-result'>
                     <Table
@@ -217,23 +161,26 @@ class ResultMark extends Component{
                         scroll={{ y: 255 }}
                         style={{marginTop:20}}
                         rowClassName={(record, index)=>{
-                            console.log(record);
-
-                            //可以用switch来做替换，它switch 隐藏
-                        //   if(record.isCorrect){
-                        //     if(record.isCorrect.props.checked){
-                        //       return ''
-                        //     }else{
-                        //       return 'wrong-row'
-                        //     }
-                        //   }else{
-                        //     return ''
-                        //   }
+                            //可以用switch来做替换，switch 隐藏
+                          if(record.result){
+                            if(record.result.props.children[1].props.checked){
+                              return ''
+                            }else{
+                              return 'wrong-row'
+                            }
+                          }else{
+                            return ''
+                          }
                         }}
                     />
                    
                 </div>
         )
+    }
+    componentWillMount(){
+      this.setState({
+        data : this.props.dataTest
+      })
     }
 }
 

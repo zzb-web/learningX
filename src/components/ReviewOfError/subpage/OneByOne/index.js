@@ -2,6 +2,33 @@ import React from 'react';
 import {Radio} from 'antd';
 import ResultMark  from '../ResultMark/index.js';
 import './style.css';
+var dataTest = [
+    {
+        key : '1',
+        position : `1`,
+        result : true,
+        status : '',
+    },
+    {
+        key : '2',
+        position : `2`,
+        result : true,
+        status : '',
+    },
+    {
+        key : '3',
+        position : `3`,
+        result : true,
+        statust : '',
+    },
+    {
+        key : '4',
+        position : `4`,
+        result : true,
+        status : '',
+    }
+
+]
 class OneByOne extends React.Component{
     constructor(props) {
         super(props);
@@ -30,7 +57,7 @@ class OneByOne extends React.Component{
                     {mode === 'error'?<div>错题</div>:null}
                     {mode === 'knowledgePoint'?<div>知识点</div>:null}
                     {mode === 'answer'?<div>答案</div>:null}
-                    {mode === 'resultMark'?<ResultMark/>:null}
+                    {mode === 'resultMark'?<ResultMark dataTest={dataTest}/>:null}
                 </div>
             </div>
         )

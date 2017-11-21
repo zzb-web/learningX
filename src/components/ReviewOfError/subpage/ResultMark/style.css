@@ -14,6 +14,11 @@ th.column-position, td.column-position, td.column-status, td.column-result,th.co
 .ant-table-thead > tr > th, .ant-table-tbody > tr > td{
     padding: 14px 8px !important;
 }
+.status-font{
+    width: 80px;
+    /* text-align: left; */
+    display: inline-block;
+}
 /* .ant-table-row{
     height: 50px;
 } */

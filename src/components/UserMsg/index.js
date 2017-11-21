@@ -13,7 +13,6 @@ class RegistrationForm extends Component {
     state = {
         confirmDirty: false,
         autoCompleteResult: [],
-        userMsg : {}
     };
     handleSubmit = (e) => {
         e.preventDefault();
@@ -28,7 +27,7 @@ class RegistrationForm extends Component {
                 console.log(params)
                 var result = Patch('http://118.31.16.70/api/v3/students/me/profile/',params)
                 result.then((response)=>{
-                    this.props.modifyUserMsg(values.name);
+                    this.props.modifyUserMsg(values.name,values.phone,values.gender);
                 })
             }
         });
@@ -38,14 +37,15 @@ class RegistrationForm extends Component {
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     }
     componentDidMount(){
-        const {learnId, school, gender, grade, realName, telephone,classId} = this.props.userMsg
+        const {learnId, school, grade,classId} = this.props.userMsg;
+        const {name,phone,gender} = this.props;
             this.props.form.setFieldsValue({
                 studyNum: this.props.userMsg.learnId,
                 school:school,
                 grade :grade,
                 class: classId,
-                phone:telephone,
-                name:realName,
+                phone: phone,
+                name:name,
                 gender : gender
             });
     }
