@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Icon,Popover} from 'antd';
 import Tables from '../../Table/index.js';
 import './style.css';
 const columns = [{
@@ -29,18 +30,39 @@ class AccordingTocpicTypes extends Component{
           name: item.type,
           status: <div>
                   {item.problems.map((problem,i)=>{
-                    if(problem.isCorrect){
+                    var content ;
+                    if(problem.subIdx ===-1){
+                      content = `P${problem.page}/${problem.column}/${problem.idx}`;
+                    }else{
+                      content = `P${problem.page}/${problem.column}/${problem.idx}(${problem.subIdx})`;
+                    }
+                    if(problem.isCorrect ===1 ){
                       return (
                         <div key={i} className='status-content'>
-                          <b className='status right'></b>
+                        <Popover content={content} title={problem.book}>
+                          <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
+                          </Popover>
                           <span className='status-date'>{
                             this._getDate(problem.assignDate)
                           }</span>
                         </div>)
+                    }else if(problem.isCorrect ===2){
+                      return (
+                        <div key={i} className='status-content'>
+                        <Popover content={content} title={problem.book}>
+                          <b className='status'><Icon type="check-circle" style={{color:'#108ee9',fontSize:'20px'}}/></b>
+                        </Popover>
+                          <span className='status-date'>{
+                            this._getDate(problem.assignDate)
+                          }</span>
+                       </div>
+                      )
                     }else{
                       return (
                         <div key={i} className='status-content'>
-                          <b className='status wrong'></b>
+                        <Popover content={content} title={problem.book}>
+                          <b className='status'><Icon type="close-circle" style={{color:'#f04134',fontSize:'20px'}}/></b>
+                          </Popover>
                           <span className='status-date'>{
                             this._getDate(problem.assignDate)
                           }</span>

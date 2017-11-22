@@ -36,18 +36,22 @@
     margin-top: -13px !important;
 }
 .save-success{
-    width: 100%;
-    text-align: center;
-    margin-top: 20px;
-}
-.save-success>div{
-    width: 100%;
-    height: 30px;
-    line-height: 30px;
+    width: 240px;
+    /* text-align: center; */
+    margin-top: 65px;
+    margin-left: 95px;
+    border: 1px solid #d9d9d9;
+    height: 110px;
+    word-wrap:break-word;
+    border-radius: 5px;
+    overflow: hidden;
 }
 /*.ant-input-number-input{
   color: #bfbfbf !important;
 }*/
 .select-category .ant-input-number-handler-wrap{
     opacity: 1 !important;
+}
+.ant-calendar-picker-clear{
+    display: none !important;
 }

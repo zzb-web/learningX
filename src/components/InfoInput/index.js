@@ -11,7 +11,7 @@ class InfoInput extends Component {
         this.state = {
            showDetail : false,
            showSaveSuc : false,
-           hasSave : [],
+           hasSave : '',
            current : '',
            books : [],
            page : 0,
@@ -34,12 +34,12 @@ class InfoInput extends Component {
        })
     }
     handleDetail(){
-        let hasSave = this.state.hasSave;
-        hasSave.push(this.state.current+' '+this.state.page+'页');
+        // let hasSave = this.state.hasSave;
+        // hasSave.push(this.state.current+' '+this.state.page+'页');
         this.setState({
             showDetail : false,
             showSaveSuc : true,
-            hasSave : hasSave
+            hasSave : this.state.current+' '+this.state.page+'页'
         })
     }
     handleCancel(){
@@ -101,14 +101,10 @@ class InfoInput extends Component {
                                 </div>
                             </div>
                             {
-                                this.state.showSaveSuc ? <div className='save-success'>{
-                                    this.state.hasSave.map((item,index)=>{
-                                        return <div>
-                                                    <span>{item}</span>
-                                                    <span style={{color:'#108ee9'}}>保存成功</span>
-                                            </div> 
-                                    
-                                    })}</div> : null
+                                this.state.showSaveSuc ? <div className='save-success'>
+                                                            {this.state.hasSave} 
+                                                            <span style={{color:'#108ee9'}}>保存成功</span>
+                                                        </div> : null
                             }
                         </div>
                     </Col>
