@@ -4,10 +4,10 @@ async function Get(api){
   var url = api;
   await axios.get(url)
     .then(function (response) {
-      data = response.data;
+      data = response;
     })
     .catch(function (error) {
-      data = null;
+      data = error.response;
     });
   return data;
 }
@@ -18,7 +18,7 @@ async function Post(url, param){
    status = response;
   })
   .catch(function (error) {
-    console.log(error);
+    status= error.response;
   });
   return status;
 }
@@ -30,7 +30,7 @@ async function Put(url, param){
    status = response;
   })
   .catch(function (error) {
-    console.log(error);
+    status= error.response;
   });
   return status;
 }
@@ -42,7 +42,7 @@ async function Patch(url, param){
    status = response;
   })
   .catch(function (error) {
-    console.log(error);
+    status= error.response;
   });
   return status;
 }

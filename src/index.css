@@ -4,3 +4,6 @@ body {
   font-family: sans-serif;
   min-width: 1224px;
 }
+.ant-message-notice-content{
+  padding: 8px 220px 8px 16px !important;
+}

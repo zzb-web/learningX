@@ -11,7 +11,10 @@ class InfoInput extends Component {
         this.state = {
            showDetail : false,
            showSaveSuc : false,
+           showFail :false,
+           showNone : false,
            hasSave : '',
+           hasFail:'',
            current : '',
            books : [],
            page : 0,
@@ -25,12 +28,32 @@ class InfoInput extends Component {
        let url = 'http://118.31.16.70/api/v3/students/me/problems/?book='+current+'&page='+page;
        let data = Get(url);
        data.then((response)=>{
-           if(response !==null && response.length>0){
+           if(response.status ===200){
             this.setState({
-                topicAll :response,
-                showDetail : true
+                topicAll :response.data,
+                showDetail : true,
+                showFail : false,
+                showNone:false
+                })
+                if(response.data.length === 0){
+                    this.setState({
+                        showNone : true,
+                    })
+                }
+            }else if(response.status ===404){
+                this.setState({
+                    showFail : true,
+                    showNone:false,
+                    hasFail:'CS无数据'
+                })
+            }else{
+                this.setState({
+                    showFail : true,
+                    showNone:false,
+                    hasFail:'CS出故障'
                 })
             }
+            // if(response.)
        })
     }
     handleDetail(){
@@ -39,6 +62,7 @@ class InfoInput extends Component {
         this.setState({
             showDetail : false,
             showSaveSuc : true,
+            showNone:false,
             hasSave : this.state.current+' '+this.state.page+'页'
         })
     }
@@ -106,6 +130,16 @@ class InfoInput extends Component {
                                                             <span style={{color:'#108ee9'}}>保存成功</span>
                                                         </div> : null
                             }
+                            {
+                                this.state.showFail? <div className='save-success'>
+                                                           <span style={{color:'red'}}>{this.state.hasFail}</span>
+                                                        </div> : null
+                            }
+                            {
+                                this.state.showNone? <div className='save-success'>
+                                                           <span style={{color:'#108ee9'}}>本页所有题目已标记过</span>
+                                                        </div> : null
+                            }
                         </div>
                     </Col>
                     <Col span={2}></Col>
@@ -129,7 +163,7 @@ class InfoInput extends Component {
     componentDidMount(){
         let that = this;
         const data = Get('http://118.31.16.70/api/v3/students/me/books/');
-        data.then((response)=>this.setState({books:response}))
+        data.then((response)=>this.setState({books:response.data}))
     }
 }
 

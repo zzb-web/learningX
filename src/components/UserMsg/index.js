@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,Radio } from 'antd';
-import { Form, Input, Row, Col, Button, Radio } from 'antd';
+import { Form, Input, Row, Col, Button, Radio,message } from 'antd';
 import {Patch} from '../../fetch/data.js'; 
 
 const FormItem = Form.Item;
@@ -27,7 +27,12 @@ class RegistrationForm extends Component {
                 console.log(params)
                 var result = Patch('http://118.31.16.70/api/v3/students/me/profile/',params)
                 result.then((response)=>{
-                    this.props.modifyUserMsg(values.name,values.phone,values.gender);
+                    if(response.status ===200){
+                     this.props.modifyUserMsg(values.name,values.phone,values.gender);
+                     message.success('操作成功',200);
+                    }else{
+                        message.error('操作失败',1.5);
+                    }
                 })
             }
         });

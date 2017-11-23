@@ -56,7 +56,7 @@ class ErrorSum extends Component {
             let data = Get(url);
             data.then((response)=>{
                 this.setState({
-                    detailData : response
+                    detailData : response.data
                 })
             })
         }
@@ -135,7 +135,7 @@ class ErrorSum extends Component {
             if(response === null){
                 response = []
             }
-            response.map((item,index)=>{
+            response.data.map((item,index)=>{
                 if(chapters.indexOf(`${item.chapterName}_${item.chapter}`)===-1){
                     chapters.push(`${item.chapterName}_${item.chapter}`);
                 }

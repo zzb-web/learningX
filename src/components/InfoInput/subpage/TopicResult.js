@@ -40,6 +40,7 @@ class TopicResult extends Component{
         }
         var response = Post(url,params);
         response.then((resp)=>{
+          console.log(resp)
           if(resp.status === 200){
             this.props.handleDetail();
           }

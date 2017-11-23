@@ -46,13 +46,16 @@
     width: 80px;
     height: 30px;
     line-height: 30px;
-    text-align: center;
+    text-align: left;
     position: absolute;
     top: 16px;
-    /* right: 40px; */
+    right:25px;
     color:  rgba(255, 255, 255, 0.67);
     color: #fff;
     font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .user-msg {
   cursor: pointer;

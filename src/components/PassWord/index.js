@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,Radio } from 'antd';
-import { Form, Input,Row, Col, Button} from 'antd';
+import { Form, Input,Row, Col, Button,message} from 'antd';
 import {Put} from '../../fetch/data.js';
 const FormItem = Form.Item;
 // const Option = Select.Option;
@@ -22,7 +22,11 @@ class RegistrationForm extends Component {
                 }
                 var result = Put('http://118.31.16.70/api/v3/students/me/password/',params)
                 result.then((response)=>{
-                    console.log(response.status)
+                    if(response.status ===200){
+                        message.success('操作成功',1.5);
+                    }else{
+                        message.error('操作失败',1.5);
+                    }
                 })
             }
         });
