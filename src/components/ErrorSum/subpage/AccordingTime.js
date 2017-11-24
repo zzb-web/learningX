@@ -12,154 +12,95 @@ const columns = [{
     className: 'column-status',
     dataIndex: 'status',
   }];
-  const content = (
-   <div>
-     test test test
-   </div>
- );
-
-  const data = [{
-    key: '1',
-    name: '2017-09-01',
-    status: <div>
-              <Popover content={content} title="Title">
-                <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
-              </Popover>
-              <Popover content={content} title="Title">
-                <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
-              </Popover>
-              <Popover content={content} title="Title">
-                <b className='status'><Icon type="check-circle" style={{color:'#108ee9',fontSize:'20px'}}/></b>
-              </Popover>
-              <Popover content={content} title="Title">
-               <b className='status'><Icon type="check-circle" style={{color:'#108ee9',fontSize:'20px'}}/></b>
-              </Popover>
-              <Popover content={content} title="Title">
-                <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
-              </Popover>
-              <Popover content={content} title="Title">
-               <b className='status'><Icon type="check-circle" style={{color:'#108ee9',fontSize:'20px'}}/></b>
-              </Popover>
-              <Popover content={content} title="Title">
-                <b className='status'><Icon type="check-circle" style={{color:'#108ee9',fontSize:'20px'}}/></b>
-              </Popover>
-              <Popover content={content} title="Title">
-                <b className='status'><Icon type="close-circle" style={{color:'#f04134',fontSize:'20px'}}/></b>
-              </Popover>
-              <Popover content={content} title="Title">
-                <b className='status'><Icon type="close-circle" style={{color:'#f04134',fontSize:'20px'}}/></b>
-              </Popover>
-              <Popover content={content} title="Title">
-                 <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
-              </Popover>
-              <Popover content={content} title="Title">
-                 <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
-              </Popover>
-              <Popover content={content} title="Title">
-                 <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
-              </Popover>
-            </div>,
-  }, {
-    key: '2',
-    name: '2017-09-02',
-    status: <div>
-              <b className='status right'></b>
-              <b className='status wrong'></b>
-            </div>,
-  }, {
-    key: '3',
-    name: '2017-09-03',
-    status: <div>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-  </div>,
-  },
-  {
-    key: '4',
-    name: '2017-09-04',
-    status: <div>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-  </div>,
-  }, {
-    key: '5',
-    name: '2017-09-05',
-    status: <div>
-    <b className='status right'></b>
-    <b className='status wrong'></b>
-    <b className='status right'></b>
-  </div>,
-  },
-  {
-    key: '6',
-    name: '2017-09-06',
-    status: '6',
-  },
-  {
-    key: '7',
-    name: '2017-09-07',
-    status: '7',
-  },
-  {
-    key: '8',
-    name: '2017-09-08',
-    status: '8',
-  },
-  {
-    key: '9',
-    name: '2017-09-09',
-    status: '9',
-  },
-  {
-    key: '10',
-    name: '2017-09-10',
-    status: '10',
-  }];
 class AccordingTime extends Component{
+    _add(m){return m<10?'0'+m:m }  
+    _getDate(timeStamp) {   
+      var time = new Date(timeStamp*1000);  
+      var y = time.getFullYear();  
+      var m = time.getMonth()+1;  
+      var d = time.getDate();  
+      return y +'-'+this._add(m)+'-'+this._add(d); 
+    }
+    _split(arr,len){
+      var a_len = arr.length;
+      var result = [];
+      for(var i=0;i<a_len;i+=len){
+        result.push(arr.slice(i,i+len))
+      }
+      // console.log(result)
+      return result;
+    }
+    _handleData(detailData){
+      var data = detailData;
+      var num = data.length;
+      var shang = parseInt(num/10);
+      var remainder = num%10; 
+      var breakpoint = (shang+1)*remainder;
+      var arr = data.slice(0,breakpoint);
+      var arr2 = data.slice(breakpoint,num)
+      var a = this._split(arr,(shang+1));
+      var b = this._split(arr2,shang);
+      var finalArr = a.concat(b);
+      var result = [];
+      for(var i=0;i<(shang+1);i++){
+      finalArr.map((item,index)=>{
+          if(item[i] !==undefined){
+            result.push(item[i])
+          }
+        })
+      }
+      return result;
+    }
     render(){
+      // console.log(this.props.data)
+      const data = this.props.data || [];
+      let detailData = [];
+      data.map((item,index)=>{
+        var currentProblems = this._handleData(item.problems);
+        var single = {
+          key: index,
+          name: this._getDate(item.time),
+          status: <div>
+                  {currentProblems.map((problem,i)=>{
+                    var content ;
+                    // console.log(index,problem.problemId);
+                    if(problem.subIdx ===-1){
+                      content = `P${problem.page}/${problem.column}/${problem.idx}`;
+                    }else{
+                      content = `P${problem.page}/${problem.column}/${problem.idx}(${problem.subIdx})`;
+                    }
+                    if(problem.isCorrect ===1 ){
+                      return (
+                        <div key={i} className='status-content'>
+                        <Popover content={content} title={problem.book}>
+                          <b className='status'><Icon type="check-circle" style={{color:'#00a854',fontSize:'20px'}}/></b>
+                        </Popover>
+                        </div>)
+                    }else if(problem.isCorrect ===2){
+                      return (
+                        <div key={i} className='status-content'>
+                        <Popover content={content} title={problem.book}>
+                          <b className='status'><Icon type="check-circle" style={{color:'#108ee9',fontSize:'20px'}}/></b>
+                        </Popover>
+                       </div>
+                      )
+                    }else{
+                      return (
+                        <div key={i} className='status-content'>
+                        <Popover content={content} title={problem.book}>
+                          <b className='status'><Icon type="close-circle" style={{color:'#f04134',fontSize:'20px'}}/></b>
+                          </Popover>
+                       </div>
+                      )
+                    }
+                  })}
+                  </div>,
+        }
+        detailData.push(single);
+      })
         return(
                 <div className='table'>
-                  <Tables columns={columns} data={data}/>
+                  <Tables columns={columns} data={detailData}/>
                 </div>
         )
     }

@@ -20,7 +20,8 @@ class ErrorSum extends Component {
             currentChapterNum : 0,
             currentSectionNum : 0,
             checkWay : '',
-            detailData : []
+            detailData : [],
+            showFail:false,
         }
     }
     changeCategory(value){
@@ -51,13 +52,21 @@ class ErrorSum extends Component {
         })
         const {selectValue ,currentChapterNum ,currentSectionNum, checkWay} = this.state;
         if(selectValue !== '0' && currentChapterNum !== 0 && currentSectionNum !==0){
-            // api/v3/students/me/problemsSortByType/
             let url = `http://118.31.16.70/api/v3/students/me/${checkWay}/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
             let data = Get(url);
             data.then((response)=>{
-                this.setState({
-                    detailData : response.data
-                })
+                console.log(response)
+                if(response.status ===200){
+                    this.setState({
+                        detailData : response.data,
+                        showFail : false
+                    })
+                }else if(response.status ===404){
+                    this.setState({
+                        showFail : true,
+                        category:'0'
+                    })
+                }
             })
         }
     }
@@ -109,6 +118,11 @@ class ErrorSum extends Component {
                                     <Button type="primary" size='large' style={{width:240,height:35,marginLeft:'10px'}} onClick={this.sureBtnHandle.bind(this)}>确定</Button>
                                 </div>
                             </div>
+                            {
+                                this.state.showFail? <div className='save-success'>
+                                                           <span style={{color:'red'}}>CS无数据</span>
+                                                        </div> : null
+                            }
                         </div>
                     </Col>
                     <Col span={2}></Col>

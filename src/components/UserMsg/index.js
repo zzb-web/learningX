@@ -29,7 +29,7 @@ class RegistrationForm extends Component {
                 result.then((response)=>{
                     if(response.status ===200){
                      this.props.modifyUserMsg(values.name,values.phone,values.gender);
-                     message.success('操作成功',200);
+                     message.success('操作成功',1.5);
                     }else{
                         message.error('操作失败',1.5);
                     }

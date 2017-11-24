@@ -29,16 +29,19 @@ class InfoInput extends Component {
        let data = Get(url);
        data.then((response)=>{
            if(response.status ===200){
-            this.setState({
-                topicAll :response.data,
-                showDetail : true,
-                showFail : false,
-                showNone:false
-                })
                 if(response.data.length === 0){
                     this.setState({
                         showNone : true,
+                        showDetail : false,
+                        showFail : false
                     })
+                }else{
+                    this.setState({
+                        topicAll :response.data,
+                        showDetail : true,
+                        showFail : false,
+                        showNone:false
+                        })
                 }
             }else if(response.status ===404){
                 this.setState({
