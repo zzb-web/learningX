@@ -93,7 +93,7 @@ class ReviewOfError extends Component {
                                     </Select>
                                 </div>
                                 <div className='select-category-1'>
-                                    <span>复习形式&nbsp;&nbsp;:</span>
+                                    <span>方式&nbsp;&nbsp;:</span>
                                     <Select placeholder='选择文档形式' style={{ width: 240, marginLeft:'10px' }} onChange={this.changeCategory.bind(this)}>
                                         <Option value="1">按时间</Option>
                                         <Option value="2">按类型</Option>
@@ -103,6 +103,11 @@ class ReviewOfError extends Component {
                                     <span></span>
                                     <Button type="primary" size='large' style={{width:240,height:35,marginLeft:'10px'}} onClick={this.sureBtnHandle.bind(this)}>确定</Button>
                                 </div>
+                            </div>
+                            <div className='save-success'>
+                                测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+                                测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+                                测试测试测试测试测试测试测试测试测试测试测试测试
                             </div>
                         </div>
                     </Col>
@@ -120,29 +125,29 @@ class ReviewOfError extends Component {
         )
     }
     componentDidMount(){
-        // const data = Get('http://118.31.16.70/api/v3/students/me/info/?chapter=1&section=1');
-        // data.then((response)=>{
-        //     let chapters = [];
-        //     let chapters_sections = {};
-        //     if(response === null){
-        //         response = []
-        //     }
-        //     response.map((item,index)=>{
-        //         if(chapters.indexOf(`${item.chapterName}_${item.chapter}`)===-1){
-        //             chapters.push(`${item.chapterName}_${item.chapter}`);
-        //         }
-        //         if(chapters_sections[`${item.chapterName}_${item.chapter}`] === undefined){
-        //             chapters_sections[`${item.chapterName}_${item.chapter}`] = [];
-        //             chapters_sections[`${item.chapterName}_${item.chapter}`].push(`${item.sectionName}_${item.section}`);
-        //         }else{
-        //             chapters_sections[`${item.chapterName}_${item.chapter}`].push(`${item.sectionName}_${item.section}`);
-        //         }
-        //     })
-        //     this.setState({
-        //         chapters : chapters,
-        //         chapters_sections : chapters_sections
-        //     })
-        // })
+        const data = Get('http://118.31.16.70/api/v3/students/me/info/?chapter=1&section=1');
+        data.then((response)=>{
+            let chapters = [];
+            let chapters_sections = {};
+            if(response === null){
+                response.data = []
+            }
+            response.data.map((item,index)=>{
+                if(chapters.indexOf(`${item.chapterName}_${item.chapter}`)===-1){
+                    chapters.push(`${item.chapterName}_${item.chapter}`);
+                }
+                if(chapters_sections[`${item.chapterName}_${item.chapter}`] === undefined){
+                    chapters_sections[`${item.chapterName}_${item.chapter}`] = [];
+                    chapters_sections[`${item.chapterName}_${item.chapter}`].push(`${item.sectionName}_${item.section}`);
+                }else{
+                    chapters_sections[`${item.chapterName}_${item.chapter}`].push(`${item.sectionName}_${item.section}`);
+                }
+            })
+            this.setState({
+                chapters : chapters,
+                chapters_sections : chapters_sections
+            })
+        })
     }
 }
 
