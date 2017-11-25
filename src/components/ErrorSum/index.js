@@ -22,6 +22,8 @@ class ErrorSum extends Component {
             checkWay : '',
             detailData : [],
             showFail:false,
+            failMsg:'',
+            showDetail:false
         }
     }
     changeCategory(value){
@@ -57,16 +59,36 @@ class ErrorSum extends Component {
             data.then((response)=>{
                 console.log(response)
                 if(response.status ===200){
-                    this.setState({
-                        detailData : response.data,
-                        showFail : false
-                    })
+                    if(response.data.length === 0){
+                        this.setState({
+                            showFail : true,
+                            category:'0',
+                            failMsg:'CS无数据',
+                            showDetail:true
+                        })
+                    }else{
+                        this.setState({
+                            detailData : response.data,
+                            showFail : false,
+                            showDetail:true,
+                        })
+                 }
                 }else if(response.status ===404){
                     this.setState({
                         showFail : true,
                         category:'0'
                     })
                 }
+            })
+        }else if(currentChapterNum ===0){
+            this.setState({
+                showFail : true,
+                failMsg:'章信息不正常'
+            })
+        }else if(selectValue === '0' && this.state.showDetail ===false){
+            this.setState({
+                showFail : true,
+                failMsg:'归类方法不正常'
             })
         }
     }
@@ -120,7 +142,7 @@ class ErrorSum extends Component {
                             </div>
                             {
                                 this.state.showFail? <div className='save-success'>
-                                                           <span style={{color:'red'}}>CS无数据</span>
+                                                           <span style={{color:'red'}}>{this.state.failMsg}</span>
                                                         </div> : null
                             }
                         </div>
@@ -147,7 +169,7 @@ class ErrorSum extends Component {
             let chapters = [];
             let chapters_sections = {};
             if(response === null){
-                response = []
+                response.data = []
             }
             response.data.map((item,index)=>{
                 if(chapters.indexOf(`${item.chapterName}_${item.chapter}`)===-1){

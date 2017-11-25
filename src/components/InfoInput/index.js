@@ -24,40 +24,79 @@ class InfoInput extends Component {
     }
 
     sureBtnHandle(){
-       const {current, page, topicAll} = this.state;
-       let url = 'http://118.31.16.70/api/v3/students/me/problems/?book='+current+'&page='+page;
-       let data = Get(url);
-       data.then((response)=>{
-           if(response.status ===200){
-                if(response.data.length === 0){
-                    this.setState({
-                        showNone : true,
-                        showDetail : false,
-                        showFail : false
-                    })
-                }else{
-                    this.setState({
-                        topicAll :response.data,
-                        showDetail : true,
-                        showFail : false,
-                        showNone:false
+       const {current, page, topicAll,date} = this.state;
+       if(date === ''){
+                this.setState({
+                    showFail : true,
+                    showNone:false,
+                    showSaveSuc:false,
+                    hasFail:'作业日期不正常'
+                })
+       }else{
+        let url = 'http://118.31.16.70/api/v3/students/me/problems/?book='+current+'&page='+page;
+        let data = Get(url);
+        data.then((response)=>{
+            if(response.status ===200){
+                    if(response.data.length === 0){
+                        this.setState({
+                            showNone : true,
+                            showDetail : false,
+                            showSaveSuc:false,
+                            showFail : false
                         })
+                    }else{
+                        this.setState({
+                            topicAll :response.data,
+                            showDetail : true,
+                            showFail : false,
+                            showNone:false
+                            })
+                    }
+                }else if(response.status ===404){
+                    if(current === ''){
+                        this.setState({
+                            showFail : true,
+                            showNone:false,
+                            showSaveSuc:false,
+                            hasFail:'资料名称不正常'
+                        })
+                    }else if(page === 0){
+                        this.setState({
+                            showFail : true,
+                            showNone:false,
+                            showSaveSuc:false,
+                            hasFail:'页码不正常'
+                        })
+                    }else{
+                        this.setState({
+                            showFail : true,
+                            showNone:false,
+                            showSaveSuc:false,
+                            hasFail:'CS无数据'
+                        })
+                    }
+                    
+                }else{
+                    if(page === undefined){
+                        this.setState({
+                            showFail : true,
+                            showNone:false,
+                            showSaveSuc:false,
+                            hasFail:'页码不正常'
+                        })
+                    }else{
+                        this.setState({
+                            showFail : true,
+                            showNone:false,
+                            showSaveSuc:false,
+                            showDetail : false,
+                            hasFail:'CS出故障'
+                        })
+                    }
                 }
-            }else if(response.status ===404){
-                this.setState({
-                    showFail : true,
-                    showNone:false,
-                    hasFail:'CS无数据'
-                })
-            }else{
-                this.setState({
-                    showFail : true,
-                    showNone:false,
-                    hasFail:'CS出故障'
-                })
-            }
-            // if(response.)
-       })
+                // if(response.)
+        })
+        }
     }
     handleDetail(){
         // let hasSave = this.state.hasSave;
