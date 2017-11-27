@@ -17,7 +17,9 @@ class ReviewOfError extends Component {
             currentChapterNum : 0,
             currentSectionNum : 0,
             checkWay : '',
-            detailData : []
+            detailData : [],
+            showWarning:false,
+            warningMsg:''
         }
     }
     changeCategory(value){
@@ -47,15 +49,29 @@ class ReviewOfError extends Component {
             category : this.state.selectValue
         })
         const {selectValue ,currentChapterNum ,currentSectionNum, checkWay} = this.state;
-        // if(selectValue !== '0' && currentChapterNum !== 0 && currentSectionNum !==0){
-        //     let url = `http://118.31.16.70/api/v3/students/me/${checkWay}/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
-        //     let data = Get(url);
-        //     data.then((response)=>{
-        //         this.setState({
-        //             detailData : response
-        //         })
-        //     })
-        // }
+        if(currentChapterNum === 0){
+            this.setState({
+                showWarning:true,
+                warningMsg:'章信息不正常'
+            })
+        }else if(selectValue === '0'){
+            this.setState({
+                showWarning:true,
+                warningMsg:'归类方法不正常'
+            })
+        }else if(selectValue !== '0' && currentChapterNum !== 0 && currentSectionNum !==0){
+            console.log('xxxxx')
+            this.setState({
+                showWarning:false
+            })
+            // let url = `http://118.31.16.70/api/v3/students/me/${checkWay}/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
+            // let data = Get(url);
+            // data.then((response)=>{
+            //     this.setState({
+            //         detailData : response
+            //     })
+            // })
+        }
     }
     chaptersChange(value){
         this.setState({
@@ -104,11 +120,11 @@ class ReviewOfError extends Component {
                                     <Button type="primary" size='large' style={{width:240,height:35,marginLeft:'10px'}} onClick={this.sureBtnHandle.bind(this)}>确定</Button>
                                 </div>
                             </div>
-                            <div className='save-success'>
-                                测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                                测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                                测试测试测试测试测试测试测试测试测试测试测试测试
-                            </div>
+                            {
+                                this.state.showWarning ? <div className='save-success'>
+                                    <span style={{color:'red'}}>{this.state.warningMsg}</span>
+                                 </div> : null
+                            }
                         </div>
                     </Col>
                     <Col span={2}></Col>
