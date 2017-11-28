@@ -29,7 +29,7 @@ var dataTest = [
     }
 
 ]
-class OneByOne extends React.Component{
+class Result extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -63,4 +63,4 @@ class OneByOne extends React.Component{
         )
     }
 }
-export default OneByOne;
+export default Result;

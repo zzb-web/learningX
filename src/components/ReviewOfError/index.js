@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Row , Col, Select, Button} from 'antd';
-import OneByOne from './subpage/OneByOne/index.js';
+import Result from './subpage/Result/index.js';
 import {Get} from '../../fetch/data.js';
 import './style.css';
 const Option = Select.Option;
@@ -64,13 +64,14 @@ class ReviewOfError extends Component {
             this.setState({
                 showWarning:false
             })
-            // let url = `http://118.31.16.70/api/v3/students/me/${checkWay}/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
-            // let data = Get(url);
-            // data.then((response)=>{
-            //     this.setState({
-            //         detailData : response
-            //     })
-            // })
+            let url = `http://118.31.16.70/api/v3/students/me/wrongProblemsInfo/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
+            let data = Get(url);
+            data.then((response)=>{
+                console.log(response.data)
+                // this.setState({
+                //     detailData : response
+                // })
+            })
         }
     }
     chaptersChange(value){
@@ -131,7 +132,7 @@ class ReviewOfError extends Component {
                     <Col span={13}>
                         <div className='category-detail'>
                             {
-                               <OneByOne />
+                               <Result />
                             }
                         </div>
                     </Col>

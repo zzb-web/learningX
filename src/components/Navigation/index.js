@@ -93,7 +93,7 @@ class Navigation extends Component {
             </Menu.Item>
             <Menu.Item key="5">
               <Icon type="scan" />
-              <span>错题检验</span>
+              <span>错题复习</span>
             </Menu.Item>
           </Menu>
         </Sider>
