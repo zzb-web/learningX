@@ -165,12 +165,14 @@ class Navigation extends Component {
     }
     var msg =Get('http://118.31.16.70/api/v3/students/me/profile/');
     msg.then((response)=>{
+      if(response.status ===200){
         this.setState({
             userMsg : response.data,
             userName : response.data.realName,
             phone : response.data.telephone,
             gender:response.data.gender
         })
+      }
     })
   }
 }

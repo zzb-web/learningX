@@ -1,7 +1,8 @@
 import React from 'react';
-import {Radio} from 'antd';
+import {Radio, Button} from 'antd';
 import ResultMark  from '../ResultMark/index.js';
 import './style.css';
+// import { Button } from 'antd/lib/radio';
 var dataTest = [
     {
         key : '1',
@@ -34,6 +35,7 @@ class Result extends React.Component{
         super(props);
         this.state = {
           mode: 'resultMark',
+          currentIndex : 0
         };
       }
       handleModeChange(e){
@@ -41,8 +43,24 @@ class Result extends React.Component{
         console.log(mode)
         this.setState({ mode });
       }
+      nextOneHandle(){
+          this.setState({
+              currentIndex : this.state.currentIndex+1
+          })
+      }
     render(){
-        const { mode } = this.state;
+        const { mode, currentIndex } = this.state;
+        console.log(currentIndex)
+        const {category,data} = this.props;
+        var detailData;
+        if(category === '1'){
+            //显示全部的数据
+            detailData = data.problems;
+        }else if(category === '2'){
+            //只显示一条
+            detailData = data.problems[currentIndex]
+        }
+        console.log('11111111111',detailData)
         return(
             <div className='main-content'>
                 <div className='selects'>
@@ -58,6 +76,16 @@ class Result extends React.Component{
                     {mode === 'knowledgePoint'?<div>知识点</div>:null}
                     {mode === 'answer'?<div>答案</div>:null}
                     {mode === 'resultMark'?<ResultMark dataTest={dataTest}/>:null}
+                </div>
+                <div>
+                    {
+                        (this.props.category === '2' && mode === 'resultMark') ? <Button type="primary" size='large' style={{width:240,height:35}} onClick={this.nextOneHandle.bind(this)}> 下一题</Button>
+                                                     : null
+                    }
+                    {
+                        this.props.category === '1' ? <Button type="primary" size='large' style={{width:240,height:35}}>保存</Button>
+                        : null
+                    }
                 </div>
             </div>
         )

@@ -64,14 +64,42 @@ class ReviewOfError extends Component {
             this.setState({
                 showWarning:false
             })
-            let url = `http://118.31.16.70/api/v3/students/me/wrongProblemsInfo/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
-            let data = Get(url);
-            data.then((response)=>{
-                console.log(response.data)
-                // this.setState({
-                //     detailData : response
-                // })
-            })
+            // let url = `http://118.31.16.70/api/v3/students/me/wrongProblemsInfo/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
+            // let data = Get(url);
+            // data.then((response)=>{
+            //     console.log(response.data)
+            //     // this.setState({
+            //     //     detailData : response
+            //     // })
+            // })
+            const data = {
+                totalNum: 4,
+                problems: [
+                    {
+                    problemId: '1', 
+                    subIdx: '-1', 
+                    index: 1,
+                    },
+                    {
+                        problemId: '2', 
+                        subIdx: '-1', 
+                        index: 2,
+                    },
+                    {
+                        problemId: '3', 
+                        subIdx: '-1', 
+                        index: 3,
+                    },
+                    {
+                        problemId: '4', 
+                        subIdx: '-1', 
+                        index: 4,
+                    }        
+            ]
+            }
+            this.setState({
+                    detailData : data
+                })
         }
     }
     chaptersChange(value){
@@ -89,7 +117,7 @@ class ReviewOfError extends Component {
         })
     }
     render(){
-        const {chapters, currentSections,chapters_sections,defaultSections,currentChapterNum,currentSectionNum, detailData} = this.state;
+        const {chapters, currentSections,chapters_sections,defaultSections,currentChapterNum,currentSectionNum, detailData,category} = this.state;
         return(
             <div className='error-sum'>
                 <Row>
@@ -111,9 +139,9 @@ class ReviewOfError extends Component {
                                 </div>
                                 <div className='select-category-1'>
                                     <span>方式&nbsp;&nbsp;:</span>
-                                    <Select placeholder='选择文档形式' style={{ width: 240, marginLeft:'10px' }} onChange={this.changeCategory.bind(this)}>
-                                        <Option value="1">按时间</Option>
-                                        <Option value="2">按类型</Option>
+                                    <Select placeholder='选择复习方式' style={{ width: 240, marginLeft:'10px' }} onChange={this.changeCategory.bind(this)}>
+                                        <Option value="1">全部</Option>
+                                        <Option value="2">逐题</Option>
                                     </Select>
                                 </div>
                                 <div className='select-category-1'>
@@ -132,7 +160,7 @@ class ReviewOfError extends Component {
                     <Col span={13}>
                         <div className='category-detail'>
                             {
-                               <Result />
+                               <Result category={category} data={detailData}/>
                             }
                         </div>
                     </Col>
@@ -146,9 +174,7 @@ class ReviewOfError extends Component {
         data.then((response)=>{
             let chapters = [];
             let chapters_sections = {};
-            if(response === null){
-                response.data = []
-            }
+            if(response.status ===200){
             response.data.map((item,index)=>{
                 if(chapters.indexOf(`${item.chapterName}_${item.chapter}`)===-1){
                     chapters.push(`${item.chapterName}_${item.chapter}`);
@@ -160,6 +186,7 @@ class ReviewOfError extends Component {
                     chapters_sections[`${item.chapterName}_${item.chapter}`].push(`${item.sectionName}_${item.section}`);
                 }
             })
+            }
             this.setState({
                 chapters : chapters,
                 chapters_sections : chapters_sections

@@ -205,7 +205,13 @@ class InfoInput extends Component {
     componentDidMount(){
         let that = this;
         const data = Get('http://118.31.16.70/api/v3/students/me/books/');
-        data.then((response)=>this.setState({books:response.data}))
+        data.then((response)=>{
+            if(response.status === 200){
+                this.setState({books:response.data})
+            }else{
+                this.setState({books:[]})
+            }
+        })
     }
 }
 

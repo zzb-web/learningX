@@ -168,9 +168,7 @@ class ErrorSum extends Component {
         data.then((response)=>{
             let chapters = [];
             let chapters_sections = {};
-            if(response === null){
-                response.data = []
-            }
+            if(response.status ===200){
             response.data.map((item,index)=>{
                 if(chapters.indexOf(`${item.chapterName}_${item.chapter}`)===-1){
                     chapters.push(`${item.chapterName}_${item.chapter}`);
@@ -182,11 +180,12 @@ class ErrorSum extends Component {
                 }else{
                     chapters_sections[`${item.chapterName}_${item.chapter}`].push(`${item.sectionName}_${item.section}`);
                 }
-            })
-            this.setState({
-                chapters : chapters,
-                chapters_sections : chapters_sections
-            })
+            })  
+         }
+         this.setState({
+            chapters : chapters,
+            chapters_sections : chapters_sections
+        })
         })
     }
     // shouldComponentUpdate(nextProps, nextState) {
