@@ -77,7 +77,7 @@ class Result extends React.Component{
                     {mode === 'answer'?<div>答案</div>:null}
                     {mode === 'resultMark'?<ResultMark dataTest={dataTest}/>:null}
                 </div>
-                <div>
+                <div style={{width:240,margin:'0 auto'}}>
                     {
                         (this.props.category === '2' && mode === 'resultMark') ? <Button type="primary" size='large' style={{width:240,height:35}} onClick={this.nextOneHandle.bind(this)}> 下一题</Button>
                                                      : null

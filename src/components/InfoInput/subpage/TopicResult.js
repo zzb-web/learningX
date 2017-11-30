@@ -94,13 +94,23 @@ class TopicResult extends Component{
       let data = [];
       topicAll.map((item,index)=>{
         if(item.subIdx===-1){
-          data.push({
-            key : index +1,
-            position : `${item.column}/${item.idx}`,
-            status : false,
-            isCorrect : false,
-            problemId : item.problemId,
-          })
+          if(item.idx === -1){
+            data.push({
+              key : index +1,
+              position : `${item.column}`,
+              status : false,
+              isCorrect : false,
+              problemId : item.problemId,
+            })
+          }else{
+            data.push({
+              key : index +1,
+              position : `${item.column}/${item.idx}`,
+              status : false,
+              isCorrect : false,
+              problemId : item.problemId,
+            })
+          }
         }else{
           data.push({
             problemId : item.problemId,
