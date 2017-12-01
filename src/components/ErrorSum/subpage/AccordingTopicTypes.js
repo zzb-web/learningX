@@ -32,7 +32,11 @@ class AccordingTocpicTypes extends Component{
                   {item.problems.map((problem,i)=>{
                     var content ;
                     if(problem.subIdx ===-1){
-                      content = `P${problem.page}/${problem.column}/${problem.idx}`;
+                      if(problem.idx === -1){
+                        content = `P${problem.page}/${problem.column}`;
+                      }else{
+                        content = `P${problem.page}/${problem.column}/${problem.idx}`;
+                      }
                     }else{
                       content = `P${problem.page}/${problem.column}/${problem.idx}(${problem.subIdx})`;
                     }

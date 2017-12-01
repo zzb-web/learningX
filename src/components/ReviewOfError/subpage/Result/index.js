@@ -22,6 +22,9 @@ class Result extends React.Component{
               mode: 'error'
           })
       }
+    //   saveHandle(data){
+    //       console.log(data)
+    //   }
     render(){
         const { mode, currentIndex } = this.state;
         console.log(currentIndex)
@@ -65,10 +68,10 @@ class Result extends React.Component{
                         (this.props.category === '2' && mode === 'resultMark') ? <Button type="primary" size='large' style={{width:240,height:35}} onClick={this.nextOneHandle.bind(this)}> 下一题</Button>
                                                      : null
                     }
-                    {
-                        this.props.category === '1' ? <Button type="primary" size='large' style={{width:240,height:35}}>保存</Button>
+                    {/* {
+                        this.props.category === '1' ? <Button type="primary" size='large' style={{width:240,height:35}} onClick={this.saveHandle.bind(this)}>保存</Button>
                         : null
-                    }
+                    } */}
                 </div>
             </div>
         )

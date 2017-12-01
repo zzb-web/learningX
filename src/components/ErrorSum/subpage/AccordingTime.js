@@ -65,7 +65,11 @@ class AccordingTime extends Component{
                     var content ;
                     // console.log(index,problem.problemId);
                     if(problem.subIdx ===-1){
-                      content = `P${problem.page}/${problem.column}/${problem.idx}`;
+                      if(problem.idx === -1){
+                        content = `P${problem.page}/${problem.column}`;
+                      }else{
+                        content = `P${problem.page}/${problem.column}/${problem.idx}`;
+                      }
                     }else{
                       content = `P${problem.page}/${problem.column}/${problem.idx}(${problem.subIdx})`;
                     }
