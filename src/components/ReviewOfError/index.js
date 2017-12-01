@@ -64,42 +64,47 @@ class ReviewOfError extends Component {
             this.setState({
                 showWarning:false
             })
-            // let url = `http://118.31.16.70/api/v3/students/me/wrongProblemsInfo/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
-            // let data = Get(url);
-            // data.then((response)=>{
-            //     console.log(response.data)
-            //     // this.setState({
-            //     //     detailData : response
-            //     // })
-            // })
-            const data = {
-                totalNum: 4,
-                problems: [
-                    {
-                    problemId: '1', 
-                    subIdx: '-1', 
-                    index: 1,
-                    },
-                    {
-                        problemId: '2', 
-                        subIdx: '-1', 
-                        index: 2,
-                    },
-                    {
-                        problemId: '3', 
-                        subIdx: '-1', 
-                        index: 3,
-                    },
-                    {
-                        problemId: '4', 
-                        subIdx: '-1', 
-                        index: 4,
-                    }        
-            ]
-            }
-            this.setState({
-                    detailData : data
-                })
+            let url = `http://118.31.16.70/api/v3/students/me/wrongProblemsInfo/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
+            let data = Get(url);
+            data.then((response)=>{
+                console.log(response.data)
+                if(response.status === 200){
+                    console.log(JSON.stringify(response.data.wrongProblems))
+                    var dataTest = [
+                        {"problemId":"20758","subIdx":1,"index":1},
+                        {"problemId":"20758","subIdx":2,"index":1},
+                        {"problemId":"20758","subIdx":3,"index":1},
+                        {"problemId":"20758","subIdx":4,"index":1},
+                        {"problemId":"20771","subIdx":1,"index":2},
+                        {"problemId":"20771","subIdx":2,"index":2},
+                        {"problemId":"20779","subIdx":-1,"index":3},
+                        {"problemId":"20761","subIdx":1,"index":4},
+                        {"problemId":"20761","subIdx":2,"index":4},
+                        {"problemId":"20761","subIdx":3,"index":4}
+                    ]
+                    var data1 = {};
+                    var detailData = []
+                    // response.data.wrongProblems
+                    response.data.wrongProblems.map((item,index)=>{
+                        console.log(item)
+                        if(data1[item.problemId+'_']===undefined){
+                            data1[item.problemId+'_']=[];
+                            data1[item.problemId+'_'].push(item)
+                        }else{
+                            data1[item.problemId+'_'].push(item)
+                        }
+                    })
+                    console.log(data1)
+                    for(var key in data1){
+                        detailData.push(data1[key])
+                    }
+                    console.log(detailData)
+                    this.setState({
+                        detailData : detailData
+                    })
+                }
+                
+            })
         }
     }
     chaptersChange(value){
@@ -160,7 +165,7 @@ class ReviewOfError extends Component {
                     <Col span={13}>
                         <div className='category-detail'>
                             {
-                               <Result category={category} data={detailData}/>
+                               this.state.category !=='0' ? <Result category={category} data={detailData}/> : null
                             }
                         </div>
                     </Col>

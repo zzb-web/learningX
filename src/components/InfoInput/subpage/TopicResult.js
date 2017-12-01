@@ -17,7 +17,7 @@ class TopicResult extends Component{
             console.log(item.position)
             let position = item.position.split('/');
             console.log(position.length)
-            if(position.length === 2){
+            if(position.length !== 3){
               msg.push({
                   isCorrect : item.isCorrect,
                   problemId: item.problemId,

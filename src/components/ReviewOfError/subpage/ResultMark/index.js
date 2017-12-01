@@ -8,7 +8,7 @@ class ResultMark extends Component{
    constructor(props){
      super();
      this.state={
-       data : props.dataTest,
+       data : [],
      }
    }
     saveBtnHandle(){
@@ -72,34 +72,39 @@ class ResultMark extends Component{
         data : data
       })
     }
-    // componentWillMount(){
-    // //   const {page,topicAll} = this.props;
-    // var topicAll = [];
-    //   let data = [];
-    //   topicAll.map((item,index)=>{
-    //     if(item.subIdx===-1){
-    //       data.push({
-    //         key : index +1,
-    //         position : `${item.column}/${item.idx}`,
-    //         status : false,
-    //         isCorrect : false,
-    //         problemId : item.problemId,
-    //       })
-    //     }else{
-    //       data.push({
-    //         problemId : item.problemId,
-    //         key : index +1,
-    //         position : `${item.column}/${item.idx}/(${item.subIdx})`,
-    //         status : false,
-    //         isCorrect : false,
-    //         problemId : item.problemId,
-    //       })
-    //     }
-    //   })
-    //  this.setState({
-    //    data : data
-    //  })
-    // }
+    componentWillMount(){
+      const {detailData} = this.props;
+      console.log('77',detailData)
+      let data = [];
+      if(detailData !==undefined){
+      detailData.map((item,index)=>{
+        console.log(item)
+        item.map((item2,index2)=>{
+          if(item2.subIdx === -1){
+            data.push({
+              key : `${index}${index2}`,
+              position : item2.index,
+              result : true,
+              status : '',
+              problemId : item2.problemId,
+            })
+          }else{
+            data.push({
+              key : `${index}${index2}`,
+              position : `${item2.index}/(${item2.subIdx})`,
+              result : true,
+              status : '',
+              problemId : item2.problemId,
+            })
+          }
+        })
+      })
+      console.log(data)
+    }
+     this.setState({
+       data : data
+     })
+    }
     render(){
       const columns = [{
         title: '题目序号',
@@ -177,11 +182,11 @@ class ResultMark extends Component{
                 </div>
         )
     }
-    componentWillMount(){
-      this.setState({
-        data : this.props.dataTest
-      })
-    }
+    // componentWillMount(){
+    //   this.setState({
+    //     data : this.props.dataTest
+    //   })
+    // }
 }
 
 export default ResultMark;

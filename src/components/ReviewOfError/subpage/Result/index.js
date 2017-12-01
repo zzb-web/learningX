@@ -3,39 +3,12 @@ import {Radio, Button} from 'antd';
 import ResultMark  from '../ResultMark/index.js';
 import './style.css';
 // import { Button } from 'antd/lib/radio';
-var dataTest = [
-    {
-        key : '1',
-        position : `1`,
-        result : true,
-        status : '',
-    },
-    {
-        key : '2',
-        position : `2`,
-        result : true,
-        status : '',
-    },
-    {
-        key : '3',
-        position : `3`,
-        result : true,
-        statust : '',
-    },
-    {
-        key : '4',
-        position : `4`,
-        result : true,
-        status : '',
-    }
-
-]
 class Result extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-          mode: 'resultMark',
-          currentIndex : 0
+          mode: 'error',
+          currentIndex : 1
         };
       }
       handleModeChange(e){
@@ -45,20 +18,30 @@ class Result extends React.Component{
       }
       nextOneHandle(){
           this.setState({
-              currentIndex : this.state.currentIndex+1
+              currentIndex : this.state.currentIndex+1,
+              mode: 'error'
           })
       }
     render(){
         const { mode, currentIndex } = this.state;
         console.log(currentIndex)
         const {category,data} = this.props;
+        console.log(data)
         var detailData;
         if(category === '1'){
             //显示全部的数据
-            detailData = data.problems;
+            detailData = data;
         }else if(category === '2'){
             //只显示一条
-            detailData = data.problems[currentIndex]
+            var data2 = [];
+            data.map((item,i)=>{
+                item.map((item2,i2)=>{
+                    if(item2.index === currentIndex){
+                        data2.push(item2)
+                    }
+                })
+            })
+            detailData = [data2];
         }
         console.log('11111111111',detailData)
         return(
@@ -75,7 +58,7 @@ class Result extends React.Component{
                     {mode === 'error'?<div>错题</div>:null}
                     {mode === 'knowledgePoint'?<div>知识点</div>:null}
                     {mode === 'answer'?<div>答案</div>:null}
-                    {mode === 'resultMark'?<ResultMark dataTest={dataTest}/>:null}
+                    {mode === 'resultMark'?<ResultMark detailData={detailData}/>:null}
                 </div>
                 <div style={{width:240,margin:'0 auto'}}>
                     {
