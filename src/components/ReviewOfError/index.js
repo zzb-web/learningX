@@ -19,7 +19,10 @@ class ReviewOfError extends Component {
             checkWay : '',
             detailData : [],
             showWarning:false,
-            warningMsg:''
+            warningMsg:'',
+            showDetail:false,
+            currentIndex:1,
+            allNum:0
         }
     }
     changeCategory(value){
@@ -52,24 +55,25 @@ class ReviewOfError extends Component {
         if(currentChapterNum === 0){
             this.setState({
                 showWarning:true,
-                warningMsg:'章信息不正常'
+                warningMsg:'章信息不正常',
+                showDetail:false
             })
         }else if(selectValue === '0'){
             this.setState({
                 showWarning:true,
-                warningMsg:'归类方法不正常'
+                warningMsg:'归类方法不正常',
+                showDetail:false
             })
         }else if(selectValue !== '0' && currentChapterNum !== 0 && currentSectionNum !==0){
             console.log('xxxxx')
-            this.setState({
-                showWarning:false
-            })
+            // this.setState({
+            //     showWarning:false
+            // })
             let url = `http://118.31.16.70/api/v3/students/me/wrongProblemsInfo/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
             let data = Get(url);
             data.then((response)=>{
                 console.log(response.data)
                 if(response.status === 200){
-                    console.log(JSON.stringify(response.data.wrongProblems))
                     var dataTest = [
                         {"problemId":"20758","subIdx":1,"index":1},
                         {"problemId":"20758","subIdx":2,"index":1},
@@ -84,9 +88,7 @@ class ReviewOfError extends Component {
                     ]
                     var data1 = {};
                     var detailData = []
-                    // response.data.wrongProblems
                     response.data.wrongProblems.map((item,index)=>{
-                        console.log(item)
                         if(data1[item.problemId+'_']===undefined){
                             data1[item.problemId+'_']=[];
                             data1[item.problemId+'_'].push(item)
@@ -94,13 +96,21 @@ class ReviewOfError extends Component {
                             data1[item.problemId+'_'].push(item)
                         }
                     })
-                    console.log(data1)
                     for(var key in data1){
                         detailData.push(data1[key])
                     }
-                    console.log(detailData)
+                    console.log('vvvvvvvvvv',detailData)
                     this.setState({
-                        detailData : detailData
+                        detailData : detailData,
+                        showWarning:false,
+                        showDetail:true,
+                        allNum : detailData.length
+                    })
+                }else if(response.status ===404){
+                    this.setState({
+                        showWarning:true,
+                        warningMsg:'CS无数据',
+                        showDetail:false
                     })
                 }
                 
@@ -119,6 +129,17 @@ class ReviewOfError extends Component {
         this.setState({
             defaultSections : value,
             currentSectionNum : Number(value.split('_')[1])
+        })
+    }
+    saveHandle(value){
+        this.setState({
+            showDetail:value,
+            currentIndex:1
+        })
+    }
+    getCurrentIndex(value){
+        this.setState({
+            currentIndex:value
         })
     }
     render(){
@@ -159,13 +180,24 @@ class ReviewOfError extends Component {
                                     <span style={{color:'red'}}>{this.state.warningMsg}</span>
                                  </div> : null
                             }
+                            {
+                                this.state.showDetail && this.state.category ==='1' ? <div className='save-success'>
+                                     <div>本节错题总量：<span style={{color:'#108ee9'}}>{this.state.allNum}</span></div>
+                                 </div> : null
+                            }
+                            {
+                                this.state.showDetail && this.state.category ==='2' ? <div className='save-success'>
+                                    <div>本节错题总量：<span style={{color:'#108ee9'}}>{this.state.allNum}</span></div>
+                                    <div>当前为第<span style={{color:'#108ee9'}}>{this.state.currentIndex}</span>道题</div>
+                                 </div> : null
+                            }
                         </div>
                     </Col>
                     <Col span={2}></Col>
                     <Col span={13}>
                         <div className='category-detail'>
                             {
-                               this.state.category !=='0' ? <Result category={category} data={detailData}/> : null
+                                this.state.showDetail ? <Result category={category} data={detailData} allNum={this.state.allNum} saveHandle={this.saveHandle.bind(this)} currentIndex={this.getCurrentIndex.bind(this)}/> : null
                             }
                         </div>
                     </Col>

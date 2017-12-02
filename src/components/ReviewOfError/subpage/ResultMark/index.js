@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Switch, Button,Radio} from 'antd';
+import {Table, Switch, Button,Radio,message} from 'antd';
 import {Post} from '../../../../fetch/data.js';
 import './style.css';
 const RadioGroup = Radio.Group;
@@ -135,6 +135,7 @@ class ResultMark extends Component{
     saveHandle(){
       var timestamp = Date.parse(new Date())/1000; 
       var data = JSON.parse(JSON.stringify(this.state.data));
+      console.log('88888',data)
       var newData = [];
       var saveMsg = {};
       data.map((item,index)=>{
@@ -151,9 +152,20 @@ class ResultMark extends Component{
       }
       var result = Post('http://118.31.16.70/api/v3/students/me/problemsRevised/',saveMsg);
       result.then((response)=>{
-        console.log(response.status)
+        if(response.status ===200){
+          if(this.props.category ==='1'){
+            this.props.saveHandle(false);
+          }else{
+            this.props.nextOneHandle();
+            if(this.props.currentIndex === this.props.allNum){
+              this.props.saveHandle(false);
+            }
+          }
+          message.success('结果标记成功',1.5);
+        }else{
+          message.error('结果标记失败',1.5);
+        }
       })
-      
     }
     render(){
       console.log(this.state.data)
@@ -208,6 +220,7 @@ class ResultMark extends Component{
         data1.push(a)
       })
         return(
+          <div>
                 <div className='topic-result'>
                     <Table
                         columns={columns}
@@ -229,17 +242,18 @@ class ResultMark extends Component{
                           }
                         }}
                     />
-                    <div className='save_btn'>
-                    <Button type="primary" size='large' style={{width:240,height:35}} onClick={this.saveHandle.bind(this)}>保存</Button>
-                   </div>
                 </div>
+                <div className='save_btn'>
+                  {
+                    this.props.category === '1'?<Button type="primary" size='large' style={{width:240,height:35}} onClick={this.saveHandle.bind(this)}>保存</Button>:null
+                  }
+                  {
+                    this.props.category === '2'? <Button type="primary" size='large' style={{width:240,height:35}} onClick={this.saveHandle.bind(this)}>下一题</Button>:null
+                  }
+                </div>
+          </div>
         )
     }
-    // componentWillMount(){
-    //   this.setState({
-    //     data : this.props.dataTest
-    //   })
-    // }
 }
 
 export default ResultMark;

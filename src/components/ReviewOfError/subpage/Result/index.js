@@ -17,14 +17,18 @@ class Result extends React.Component{
         this.setState({ mode });
       }
       nextOneHandle(){
+          if(this.state.currentIndex<this.props.allNum){
+            console.log('下一题');
           this.setState({
               currentIndex : this.state.currentIndex+1,
               mode: 'error'
           })
+          this.props.currentIndex(this.state.currentIndex);
+        }
       }
-    //   saveHandle(data){
-    //       console.log(data)
-    //   }
+      saveHandle(value){
+          this.props.saveHandle(value);
+      }
     render(){
         const { mode, currentIndex } = this.state;
         console.log(currentIndex)
@@ -61,17 +65,7 @@ class Result extends React.Component{
                     {mode === 'error'?<div>错题</div>:null}
                     {mode === 'knowledgePoint'?<div>知识点</div>:null}
                     {mode === 'answer'?<div>答案</div>:null}
-                    {mode === 'resultMark'?<ResultMark detailData={detailData}/>:null}
-                </div>
-                <div style={{width:240,margin:'0 auto'}}>
-                    {
-                        (this.props.category === '2' && mode === 'resultMark') ? <Button type="primary" size='large' style={{width:240,height:35}} onClick={this.nextOneHandle.bind(this)}> 下一题</Button>
-                                                     : null
-                    }
-                    {/* {
-                        this.props.category === '1' ? <Button type="primary" size='large' style={{width:240,height:35}} onClick={this.saveHandle.bind(this)}>保存</Button>
-                        : null
-                    } */}
+                    {mode === 'resultMark'?<ResultMark category={this.props.category} allNum={this.props.allNum} currentIndex={this.state.currentIndex} detailData={detailData} saveHandle={this.saveHandle.bind(this)} nextOneHandle={this.nextOneHandle.bind(this)}/>:null}
                 </div>
             </div>
         )
