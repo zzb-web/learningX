@@ -7,27 +7,27 @@ class ErrorTopic extends React.Component{
         this.state={
             PDF:'',
             numPages: null,
-            pageNumber: 0,
+            pageNumber: 1,
         }
     }
-    onDocumentLoad({ numPages }) {
-        this.setState({ numPages });
-      }
+    // onDocumentLoad({ numPages }) {
+    //     this.setState({ numPages });
+    //   }
     render(){
         const {PDF,pageNumber, numPages} = this.state;
         return (
-            <div>
+            <div style={{height:350,overflow:'auto'}}>
               <Document
-                file={`http://118.31.16.70${PDF}`}
-                onLoadSuccess={this.onDocumentLoad.bind(this)}
+                file={PDF}
+                // onLoadSuccess={this.onDocumentLoad.bind(this)}
               >
-                {/* <Page pageNumber={pageNumber} /> */}
+                <Page pageNumber={pageNumber} />
               </Document>
               {/* <p>Page {pageNumber} of {numPages}</p> */}
             </div>
           );
     }
-    componentWillMount(){
+    componentDidMount(){
         var data = this.props.data;
         var dataObj = {};
         var dataParams = []
@@ -52,6 +52,7 @@ class ErrorTopic extends React.Component{
             }
         })
     }
+    
 }
 
 export default ErrorTopic;
