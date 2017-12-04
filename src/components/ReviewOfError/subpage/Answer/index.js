@@ -1,4 +1,5 @@
 import React from 'react';
+import {Button} from 'antd';
 import { Document, Page } from 'react-pdf';
 import{Post} from '../../../../fetch/data.js';
 class Answer extends React.Component{
@@ -16,14 +17,23 @@ class Answer extends React.Component{
     render(){
         const {PDF,pageNumber, numPages} = this.state;
         return (
-            <div style={{height:350,overflow:'auto'}}>
-              <Document
-                file={PDF}
-                // onLoadSuccess={this.onDocumentLoad.bind(this)}
-              >
-                <Page pageNumber={pageNumber} />
-              </Document>
-              {/* <p>Page {pageNumber} of {numPages}</p> */}
+            <div>
+                <div style={{height:350,overflow:'auto',border:'1px solid #d9d9d9'}}>
+                <Document
+                    file={PDF}
+                    // onLoadSuccess={this.onDocumentLoad.bind(this)}
+                >
+                    <Page pageNumber={pageNumber} />
+                </Document>
+                {/* <p>Page {pageNumber} of {numPages}</p> */}
+                </div>
+                <div className='save_btn'>
+                {
+                    this.props.category === '1'?<a download={PDF} href={PDF} target="blank"><Button type="primary" size='large' style={{width:240,height:35}}>
+                                                    保存</Button></a>
+                                                :null
+                }
+                </div>
             </div>
           );
     }

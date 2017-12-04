@@ -11,7 +11,7 @@ class Result extends React.Component{
         super(props);
         this.state = {
           mode: 'error',
-          currentIndex : 1
+          currentIndex : 1,
         };
       }
       handleModeChange(e){
@@ -41,6 +41,7 @@ class Result extends React.Component{
         if(category === '1'){
             //显示全部的数据
             detailData = data;
+            
         }else if(category === '2'){
             //只显示一条
             var data2 = [];
@@ -65,10 +66,25 @@ class Result extends React.Component{
                     </Radio.Group>
                 </div>
                 <div className='select-content'>
-                    {mode === 'error'?<ErrorTopic data={detailData}/>:null}
-                    {mode === 'knowledgePoint'?<KnowledgePoint data={detailData}/>:null}
-                    {mode === 'answer'?<Answer data={detailData}/>:null}
-                    {mode === 'resultMark'?<ResultMark category={this.props.category} allNum={this.props.allNum} currentIndex={this.state.currentIndex} detailData={detailData} saveHandle={this.saveHandle.bind(this)} nextOneHandle={this.nextOneHandle.bind(this)}/>:null}
+                    {mode === 'error'?
+                                    <div style={{display:'block'}}><ErrorTopic data={detailData} category={this.props.category}/></div>
+                                   :<div style={{display:'none'}}><ErrorTopic data={detailData} category={this.props.category}/></div>}
+                    {mode === 'knowledgePoint'?
+                                     <div style={{display:'block'}}><KnowledgePoint data={detailData} category={this.props.category}/></div>
+                                     :<div style={{display:'none'}}><KnowledgePoint data={detailData} category={this.props.category}/></div>}
+                    {mode === 'answer'?
+                                    <div style={{display:'block'}}><Answer data={detailData} category={this.props.category}/></div>
+                                     :<div style={{display:'none'}}><Answer data={detailData} category={this.props.category}/></div>}
+                    {mode === 'resultMark'?<div style={{display:'block'}}><ResultMark category={this.props.category} allNum={this.props.allNum} currentIndex={this.state.currentIndex} detailData={detailData} saveHandle={this.saveHandle.bind(this)} nextOneHandle={this.nextOneHandle.bind(this)}/></div>
+                                    :<div style={{display:'none'}}><ResultMark category={this.props.category} allNum={this.props.allNum} currentIndex={this.state.currentIndex} detailData={detailData} saveHandle={this.saveHandle.bind(this)} nextOneHandle={this.nextOneHandle.bind(this)}/></div>}
+                </div>
+                <div className='currentTopicPosition'>
+                    {
+                      category === '2'?<div>
+                                        {detailData[0][0].subIdx===-1? `${detailData[0][0].book}/P${detailData[0][0].page}/${detailData[0][0].column}/${detailData[0][0].idx}`
+                                                                        :`${detailData[0][0].book}/P${detailData[0][0].page}/${detailData[0][0].column}/${detailData[0][0].idx}(${detailData[0][0].subIdx})`}
+                                         </div>:null
+                    }
                 </div>
             </div>
         )
