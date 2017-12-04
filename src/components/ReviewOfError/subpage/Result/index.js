@@ -2,6 +2,8 @@ import React from 'react';
 import {Radio, Button} from 'antd';
 import ResultMark from '../ResultMark/index.js';
 import ErrorTopic from  '../ErrorTopic/index.js';
+import KnowledgePoint from '../KnowledgePoint/index.js';
+import Answer from '../Answer/index.js';
 import './style.css';
 // import { Button } from 'antd/lib/radio';
 class Result extends React.Component{
@@ -64,8 +66,8 @@ class Result extends React.Component{
                 </div>
                 <div className='select-content'>
                     {mode === 'error'?<ErrorTopic data={detailData}/>:null}
-                    {mode === 'knowledgePoint'?<div>知识点</div>:null}
-                    {mode === 'answer'?<div>答案</div>:null}
+                    {mode === 'knowledgePoint'?<KnowledgePoint data={detailData}/>:null}
+                    {mode === 'answer'?<Answer data={detailData}/>:null}
                     {mode === 'resultMark'?<ResultMark category={this.props.category} allNum={this.props.allNum} currentIndex={this.state.currentIndex} detailData={detailData} saveHandle={this.saveHandle.bind(this)} nextOneHandle={this.nextOneHandle.bind(this)}/>:null}
                 </div>
             </div>
