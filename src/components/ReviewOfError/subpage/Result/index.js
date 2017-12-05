@@ -53,6 +53,7 @@ class Result extends React.Component{
                 })
             })
             detailData = [data2];
+            console.log(detailData)
         }
         console.log('11111111111',detailData)
         return(

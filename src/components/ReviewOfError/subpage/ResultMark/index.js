@@ -93,17 +93,17 @@ class ResultMark extends Component{
         data : data
       })
     }
-    componentWillMount(){
-      const {detailData} = this.props;
+    componentWillReceiveProps(nextProps){
+      const {detailData} = nextProps;
       console.log('77',detailData)
       let data = [];
       if(detailData !==undefined){
-      detailData.map((item,index)=>{
+      detailData.map((item,i1)=>{
         console.log(item)
-        item.map((item2,index2)=>{
+        item.map((item2,i2)=>{
           if(item2.subIdx === -1){
             data.push({
-              key : `${index}${index2}`,
+              key : `${i1}${i2}`,
               position : item2.index,
               subIdx:item2.subIdx,
               isCorrect : '',
@@ -114,7 +114,7 @@ class ResultMark extends Component{
             })
           }else{
             data.push({
-              key : `${index}${index2}`,
+              key : `${i1}${i2}`,
               position : `${item2.index}/(${item2.subIdx})`,
               subIdx:item2.subIdx,
               isCorrect : '',
@@ -157,8 +157,10 @@ class ResultMark extends Component{
             this.props.saveHandle(false);
           }else{
             this.props.nextOneHandle();
+            console.log(this.props.currentIndex,this.props.allNum)
             if(this.props.currentIndex === this.props.allNum){
-              this.props.saveHandle(false);
+              // this.props.saveHandle(false);
+              console.log('最后一题')
             }
           }
           message.success('结果标记成功',1.5);

@@ -96,6 +96,7 @@ class ReviewOfError extends Component {
                             data1[item.problemId+'_'].push(item)
                         }
                     })
+                    console.log('OOOOOOO',data1);
                     for(var key in data1){
                         detailData.push(data1[key])
                     }
