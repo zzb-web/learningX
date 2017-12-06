@@ -76,6 +76,7 @@ class ErrorSum extends Component {
                 }else if(response.status ===404){
                     this.setState({
                         showFail : true,
+                        failMsg:'CS无数据',
                         category:'0'
                     })
                 }

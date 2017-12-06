@@ -30,7 +30,7 @@ class Answer extends React.Component{
                 <div className='save_btn'>
                 {
                     this.props.category === '1'?<a download={PDF} href={PDF} target="blank"><Button type="primary" size='large' style={{width:240,height:35}}>
-                                                    保存</Button></a>
+                                                    下载</Button></a>
                                                 :null
                 }
                 </div>

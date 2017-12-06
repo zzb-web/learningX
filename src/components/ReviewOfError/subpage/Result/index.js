@@ -81,7 +81,7 @@ class Result extends React.Component{
                 </div>
                 <div className='currentTopicPosition'>
                     {
-                      category === '2'?<div>
+                      category === '2' && mode != 'resultMark' ?<div>
                                         {detailData[0][0].subIdx===-1? `${detailData[0][0].book}/P${detailData[0][0].page}/${detailData[0][0].column}/${detailData[0][0].idx}`
                                                                         :`${detailData[0][0].book}/P${detailData[0][0].page}/${detailData[0][0].column}/${detailData[0][0].idx}(${detailData[0][0].subIdx})`}
                                          </div>:null

@@ -9,6 +9,7 @@ class ResultMark extends Component{
      super();
      this.state={
        data : [],
+       showOver : false
      }
    }
     saveBtnHandle(){
@@ -46,7 +47,7 @@ class ResultMark extends Component{
         
      }
      resultClick(index,e){
-         console.log(index,e.target.value)
+      console.log(index,e.target.value)
       let data = this.state.data;
       data[index].isCorrect = e.target.value;
       if(e.target.value){
@@ -94,12 +95,16 @@ class ResultMark extends Component{
       })
     }
     componentWillReceiveProps(nextProps){
-      const {detailData} = nextProps;
-      console.log('77',detailData)
+      const {detailData,allNum} = nextProps;
+      console.log('77',detailData,allNum)
+      if(allNum ===1){
+        this.setState({
+          showOver : true
+        })
+      }
       let data = [];
       if(detailData !==undefined){
       detailData.map((item,i1)=>{
-        console.log(item)
         item.map((item2,i2)=>{
           if(item2.subIdx === -1){
             data.push({
@@ -126,7 +131,7 @@ class ResultMark extends Component{
           }
         })
       })
-      console.log(data)
+      console.log('7777777777',data)
     }
      this.setState({
        data : data
@@ -135,7 +140,6 @@ class ResultMark extends Component{
     saveHandle(){
       var timestamp = Date.parse(new Date())/1000; 
       var data = JSON.parse(JSON.stringify(this.state.data));
-      console.log('88888',data)
       var newData = [];
       var saveMsg = {};
       data.map((item,index)=>{
@@ -150,27 +154,102 @@ class ResultMark extends Component{
         time : timestamp,
         problems : newData
       }
+      if(newData.length !== 0){
+        var result = Post('http://118.31.16.70/api/v3/students/me/problemsRevised/',saveMsg);
+        result.then((response)=>{
+          if(response.status ===200){
+            this.props.saveHandle(false);
+            message.success('结果标记成功',1.5);
+          }else{
+            message.error('结果标记失败',1.5);
+          }
+        })
+      }else{
+        this.props.saveHandle(false);
+      }
+    }
+    nextOneSaveHandle(){
+      var timestamp = Date.parse(new Date())/1000; 
+      var data = JSON.parse(JSON.stringify(this.state.data));
+      var dataNum = data.length;
+      var newData = [];
+      var saveMsg = {};
+      data.map((item,index)=>{
+        if(item.isCorrect !==''){
+          delete item.key;
+          delete item.position;
+          delete item.status;
+          newData.push(item)
+        }
+      })
+      var newDataNum = newData.length;
+      if(dataNum === newDataNum){
+      saveMsg={
+        time : timestamp,
+        problems : newData
+      }
       var result = Post('http://118.31.16.70/api/v3/students/me/problemsRevised/',saveMsg);
       result.then((response)=>{
         if(response.status ===200){
-          if(this.props.category ==='1'){
-            this.props.saveHandle(false);
-          }else{
             this.props.nextOneHandle();
             console.log(this.props.currentIndex,this.props.allNum)
             if(this.props.currentIndex === this.props.allNum){
               // this.props.saveHandle(false);
-              console.log('最后一题')
+              console.log('最后一题');
+              this.setState({
+                showOver : true
+              })
             }
-          }
           message.success('结果标记成功',1.5);
         }else{
           message.error('结果标记失败',1.5);
         }
       })
+      }else{
+        message.error('请标记结果',1.5);
+      }
+    }
+    finalSaveHandle(){
+      var timestamp = Date.parse(new Date())/1000; 
+      var data = JSON.parse(JSON.stringify(this.state.data));
+      var dataNum = data.length;
+      var newData = [];
+      var saveMsg = {};
+      data.map((item,index)=>{
+        if(item.isCorrect !==''){
+          delete item.key;
+          delete item.position;
+          delete item.status;
+          newData.push(item)
+        }
+      })
+      var newDataNum = newData.length;
+      if(dataNum === newDataNum){
+      saveMsg={
+        time : timestamp,
+        problems : newData
+      }
+      var result = Post('http://118.31.16.70/api/v3/students/me/problemsRevised/',saveMsg);
+      result.then((response)=>{
+        if(response.status ===200){
+            this.props.nextOneHandle();
+            console.log(this.props.currentIndex,this.props.allNum)
+              this.props.saveHandle(false);
+              this.setState({
+                showOver : false
+              })
+          message.success('结果标记成功',1.5);
+        }else{
+          message.error('结果标记失败',1.5);
+        }
+      })
+      }else{
+        message.error('请标记结果',1.5);
+      }
     }
     render(){
-      console.log(this.state.data)
+      const {category, detailData} = this.props;
+      console.log('9999999',this.state.data)
       const columns = [{
         title: '题目序号',
         className: 'column-position',
@@ -188,13 +267,14 @@ class ResultMark extends Component{
         dataIndex: 'status',
       },
     ];
-      let data1=[];
+      var data1=[];
       this.state.data.map((data, i)=>{
-        let a ={};
+        console.log('2222222222',data)
+        var a ={};
         a.key = data.key;
         a.position = data.position;
         a.isCorrect = <div>
-                        <RadioGroup onChange={this.resultClick.bind(this,i)}>
+                        <RadioGroup onChange={this.resultClick.bind(this,i)} value={data.isCorrect}>
                           <Radio value={true}>做对了</Radio>
                           <Radio value={false}>做错了</Radio>
                         </RadioGroup>
@@ -203,7 +283,7 @@ class ResultMark extends Component{
         if(data.status ==='' || data.status === undefined){
             a.status = null;
         }else if(!data.status){
-            a.status =    <div>
+            a.status =  <div>
                                 <span className='status-font'>学习答案: </span>
                                 <RadioGroup onChange={this.isUnderstoodClick.bind(this,i)}>
                                   <Radio value={true}>学懂了</Radio>
@@ -221,6 +301,7 @@ class ResultMark extends Component{
         }
         data1.push(a)
       })
+      console.log('xxxxxxxxxxxx',data1)
         return(
           <div>
                 <div className='topic-result'>
@@ -244,13 +325,24 @@ class ResultMark extends Component{
                           }
                         }}
                     />
+                    <div className='currentTopicPosition'>
+                    {
+                      category === '2' ?<div>
+                                        {detailData[0][0].subIdx===-1? `${detailData[0][0].book}/P${detailData[0][0].page}/${detailData[0][0].column}/${detailData[0][0].idx}`
+                                                                        :`${detailData[0][0].book}/P${detailData[0][0].page}/${detailData[0][0].column}/${detailData[0][0].idx}(${detailData[0][0].subIdx})`}
+                                         </div>:null
+                    }
+                  </div>
                 </div>
                 <div className='save_btn'>
                   {
-                    this.props.category === '1'?<Button type="primary" size='large' style={{width:240,height:35}} onClick={this.saveHandle.bind(this)}>保存</Button>:null
+                    category === '1'?<Button type="primary" size='large' style={{width:240,height:35}} onClick={this.saveHandle.bind(this)}>保存</Button>:null
                   }
                   {
-                    this.props.category === '2'? <Button type="primary" size='large' style={{width:240,height:35}} onClick={this.saveHandle.bind(this)}>下一题</Button>:null
+                    category === '2' && !this.state.showOver? <Button type="primary" size='large' style={{width:240,height:35}} onClick={this.nextOneSaveHandle.bind(this)}>下一题</Button>:null
+                  }
+                  {
+                    category === '2' && this.state.showOver? <Button type="primary" size='large' style={{width:240,height:35}} onClick={this.finalSaveHandle.bind(this)}>复习结束</Button>:null
                   }
                 </div>
           </div>
