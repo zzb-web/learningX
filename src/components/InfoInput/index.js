@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Row , Col, Select, Button ,DatePicker, InputNumber} from 'antd';
+import { withRouter } from 'react-router';
 import TopicResult from './subpage/TopicResult.js';
 import {Get} from '../../fetch/data.js';
 import './style.css';
@@ -76,6 +77,8 @@ class InfoInput extends Component {
                         })
                     }
                     
+                }else if(response.status ===401){
+                    this.props.history.push('/');
                 }else{
                     if(page === undefined){
                         this.setState({
@@ -208,6 +211,8 @@ class InfoInput extends Component {
         data.then((response)=>{
             if(response.status === 200){
                 this.setState({books:response.data})
+            }else if(response.status ===401){
+                this.props.history.push('/');
             }else{
                 this.setState({books:[]})
             }
@@ -215,4 +220,4 @@ class InfoInput extends Component {
     }
 }
 
-export default InfoInput;
+export default withRouter(InfoInput);

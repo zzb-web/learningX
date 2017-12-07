@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { Form, Icon, Input, Button, Checkbox, Row, Col } from 'antd';
 import './style.css';
 import {Post} from '../../fetch/data.js'
@@ -70,4 +71,4 @@ class NormalLoginForm extends React.Component {
 }
 
 const LoginForm = Form.create()(NormalLoginForm);
-export default LoginForm;
+export default withRouter(LoginForm);

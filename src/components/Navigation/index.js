@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import {Get, Post} from '../../fetch/data.js';
-// import ErrorSum from '../ErrorSum/index.js';
+import { withRouter } from 'react-router';
 import ErrorSum from '../ErrorSum/index.js';
 import InfoInput from '../InfoInput/index.js';
 import UserMsgForm from '../UserMsg/index.js';
 import PassWordForm from '../PassWord/index.js';
 import ReviewOfError from '../ReviewOfError/index.js';
-import Test from '../Test/index.js';
+import Homepage from '../Homepage/index.js';
 import './style.css';
 const { Header, Sider, Content} = Layout;
 class Navigation extends Component {
@@ -115,7 +115,7 @@ class Navigation extends Component {
           </Header>
           <Content style={{ margin: '16px 16px', padding: 24, background: '#fff', minHeight:this.state.contentHeight,/*marginTop:80 */ }}>
             {
-                 this.state.key === '0' ? <Test/> : null
+                 this.state.key === '0' ? <Homepage/> : null
             }
             {
                  this.state.key === '1' ? <InfoInput /> : null
@@ -172,8 +172,10 @@ class Navigation extends Component {
             phone : response.data.telephone,
             gender:response.data.gender
         })
-      }
+      }else if(response.status ===401){
+        this.props.history.push('/');
+    }
     })
   }
 }
-export default Navigation;
+export default withRouter(Navigation);

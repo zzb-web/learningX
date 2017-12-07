@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Row , Col, Select, Button} from 'antd';
+import { withRouter } from 'react-router';
 import Result from './subpage/Result/index.js';
 import {Get} from '../../fetch/data.js';
 import './style.css';
@@ -61,7 +62,7 @@ class ReviewOfError extends Component {
         }else if(selectValue === '0'){
             this.setState({
                 showWarning:true,
-                warningMsg:'归类方法不正常',
+                warningMsg:'复习方式不正常',
                 showDetail:false
             })
         }else if(selectValue !== '0' && currentChapterNum !== 0 && currentSectionNum !==0){
@@ -113,6 +114,8 @@ class ReviewOfError extends Component {
                         warningMsg:'CS无数据',
                         showDetail:false
                     })
+                }else if(response.status ===401){
+                    this.props.history.push('/');
                 }
                 
             })
@@ -224,6 +227,8 @@ class ReviewOfError extends Component {
                     chapters_sections[`${item.chapterName}_${item.chapter}`].push(`${item.sectionName}_${item.section}`);
                 }
             })
+            }else if(response.status ===401){
+                this.props.history.push('/');
             }
             this.setState({
                 chapters : chapters,
@@ -233,4 +238,4 @@ class ReviewOfError extends Component {
     }
 }
 
-export default ReviewOfError;
+export default withRouter(ReviewOfError);

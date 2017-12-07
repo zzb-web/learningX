@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import {Row , Col, Select, Button} from 'antd';
 import AccordingTime from './subpage/AccordingTime.js';
 import AccordingTopicTypes from './subpage/AccordingTopicTypes.js';
@@ -79,6 +80,8 @@ class ErrorSum extends Component {
                         failMsg:'CS无数据',
                         category:'0'
                     })
+                }else if(response.status ===401){
+                    this.props.history.push('/');
                 }
             })
         }else if(currentChapterNum ===0){
@@ -165,6 +168,7 @@ class ErrorSum extends Component {
         )
     }
     componentDidMount(){
+        const that = this;
         const data = Get('http://118.31.16.70/api/v3/students/me/info/?chapter=1&section=1');
         data.then((response)=>{
             let chapters = [];
@@ -182,7 +186,11 @@ class ErrorSum extends Component {
                     chapters_sections[`${item.chapterName}_${item.chapter}`].push(`${item.sectionName}_${item.section}`);
                 }
             })  
-         }
+         }else if(response.status ===401){
+             console.log('xxxxx')
+             console.log(this)
+            this.props.history.push('/');
+        }
          this.setState({
             chapters : chapters,
             chapters_sections : chapters_sections
@@ -197,4 +205,4 @@ class ErrorSum extends Component {
     // }
 }
 
-export default ErrorSum;
+export default withRouter(ErrorSum);
