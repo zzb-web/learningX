@@ -9,6 +9,7 @@ class Answer extends React.Component{
             PDF:'',
             numPages: null,
             pageNumber: 1,
+            scale:1.5
         }
     }
     // onDocumentLoad({ numPages }) {
@@ -21,6 +22,7 @@ class Answer extends React.Component{
                 <div style={{height:350,overflow:'auto',border:'1px solid #d9d9d9'}}>
                 <Document
                     file={PDF}
+                    scale={this.state.scale}
                     // onLoadSuccess={this.onDocumentLoad.bind(this)}
                 >
                     <Page pageNumber={pageNumber} />
@@ -57,7 +59,7 @@ class Answer extends React.Component{
         result.then((response)=>{
             if(response.status === 200){
                 this.setState({
-                    PDF : response.data
+                    PDF : response.data.pdfurl
                 })
             }
         })

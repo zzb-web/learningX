@@ -9,18 +9,20 @@ class KnowledgePoint extends React.Component{
             PDF:'',
             numPages: null,
             pageNumber: 1,
+            scale: 1.5
         }
     }
     // onDocumentLoad({ numPages }) {
     //     this.setState({ numPages });
     //   }
     render(){
-        const {PDF,pageNumber, numPages} = this.state;
+        const {PDF,pageNumber, numPages,scale} = this.state;
         return (
             <div>
                 <div style={{height:350,overflow:'auto',border:'1px solid #d9d9d9'}}>
                 <Document
                     file={PDF}
+                    scale={scale}
                     // onLoadSuccess={this.onDocumentLoad.bind(this)}
                 >
                     <Page pageNumber={pageNumber} />
@@ -61,7 +63,7 @@ class KnowledgePoint extends React.Component{
         result.then((response)=>{
             if(response.status === 200){
                 this.setState({
-                    PDF : response.data
+                    PDF : response.data.pdfurl
                 })
             }
         })

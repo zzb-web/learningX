@@ -9,55 +9,27 @@ class ErrorTopic extends React.Component{
             PDF:'',
             numPages: null,
             pageNumber: 1,
-            visible: false,
+            scale: 1.5
         }
     }
     // onDocumentLoad({ numPages }) {
     //     this.setState({ numPages });
     //   }
-    showModal(){
-        this.setState({
-          visible: true,
-        });
-      }
-      handleOk = (e) => {
-        console.log(e);
-        this.setState({
-          visible: false,
-        });
-      }
-      handleCancel = (e) => {
-        console.log(e);
-        this.setState({
-          visible: false,
-        });
-      }
     render(){
         const {PDF,pageNumber, numPages} = this.state;
         return (
             <div>
-            <div style={{height:350,overflow:'auto',border:'1px solid #d9d9d9'}} onClick={this.showModal.bind(this)}>
+            <div style={{height:350,overflow:'auto',border:'1px solid #d9d9d9'}}>
               <Document
                 file={PDF}
+                scale={this.state.scale}
                 // onLoadSuccess={this.onDocumentLoad.bind(this)}
               >
                 <Page pageNumber={pageNumber} />
               </Document>
               {/* <p>Page {pageNumber} of {numPages}</p> */}
             </div>
-            <Modal
-                title="Basic Modal"
-                visible={this.state.visible}
-                onOk={this.handleOk}
-                onCancel={this.handleCancel}
-                width={900}
-                >
-                <Document
-                    file={PDF}
-                >
-                    <Page pageNumber={pageNumber} />
-                </Document>
-            </Modal>
+           
             <div className='save_btn'>
                 {
                     this.props.category === '1'?<a download={PDF} href={PDF} target="blank"><Button type="primary" size='large' style={{width:240,height:35}}>
@@ -95,7 +67,7 @@ class ErrorTopic extends React.Component{
         result.then((response)=>{
             if(response.status === 200){
                 this.setState({
-                    PDF : response.data
+                    PDF : response.data.pdfurl
                 })
             }
         })
