@@ -75,33 +75,21 @@ class ReviewOfError extends Component {
             data.then((response)=>{
                 console.log(response.data)
                 if(response.status === 200){
-                    var dataTest = [
-                        {"problemId":"20758","subIdx":1,"index":1},
-                        {"problemId":"20758","subIdx":2,"index":1},
-                        {"problemId":"20758","subIdx":3,"index":1},
-                        {"problemId":"20758","subIdx":4,"index":1},
-                        {"problemId":"20771","subIdx":1,"index":2},
-                        {"problemId":"20771","subIdx":2,"index":2},
-                        {"problemId":"20779","subIdx":-1,"index":3},
-                        {"problemId":"20761","subIdx":1,"index":4},
-                        {"problemId":"20761","subIdx":2,"index":4},
-                        {"problemId":"20761","subIdx":3,"index":4}
-                    ]
                     var data1 = {};
-                    var detailData = []
+                    var detailData = [];
                     response.data.wrongProblems.map((item,index)=>{
-                        if(data1[item.problemId+'_']===undefined){
-                            data1[item.problemId+'_']=[];
-                            data1[item.problemId+'_'].push(item)
-                        }else{
-                            data1[item.problemId+'_'].push(item)
-                        }
+                        item.problems.map((item2,index2)=>{
+                            if(data1[item2.problemId+'_']===undefined){
+                                data1[item2.problemId+'_']=[];
+                                data1[item2.problemId+'_'].push(item2)
+                            }else{
+                                data1[item2.problemId+'_'].push(item2)
+                            }
+                        })
                     })
-                    console.log('OOOOOOO',data1);
                     for(var key in data1){
                         detailData.push(data1[key])
                     }
-                    console.log('vvvvvvvvvv',detailData)
                     this.setState({
                         detailData : detailData,
                         showWarning:false,

@@ -45,25 +45,57 @@ class ErrorTopic extends React.Component{
         var dataObj = {};
         var dataParams = []
         data.map((item,i)=>{
+            console.log(item)
             item.map((item2,i2)=>{
                 console.log(item2)
                 dataObj[item2.problemId+'_'] = {
                                                 index : item2.index,
                                                 subIdx : item2.subIdx,
-                                                full : item2.full
+                                                full : item2.full,
+                                                type : item2.type
                                                 }
             })
         })
+        // var obj = {};
         for(var key in dataObj){
-            dataParams.push({
-                problemId: key.split('_')[0],
-                subIdx: dataObj[key].subIdx,
-                index: dataObj[key].index,
-                full:dataObj[key].full,
+            if(dataParams[dataObj[key].type] === undefined){
+                dataParams[dataObj[key].type] = [];
+                dataParams[dataObj[key].type].push({
+                                    problemId: key.split('_')[0],
+                                    subIdx: dataObj[key].subIdx,
+                                    index: dataObj[key].index,
+                                    full:dataObj[key].full,
+                                 })
+            }else{
+                dataParams[dataObj[key].type].push({
+                    problemId: key.split('_')[0],
+                    subIdx: dataObj[key].subIdx,
+                    index: dataObj[key].index,
+                    full:dataObj[key].full,
+                 })
+            }
+        }
+        // for(var key in dataObj){
+        //     dataParams.push({
+        //         type:dataObj[key].type,
+        //         problems:{
+        //             problemId: key.split('_')[0],
+        //             subIdx: dataObj[key].subIdx,
+        //             index: dataObj[key].index,
+        //             full:dataObj[key].full,
+        //         }
+        //     })
+        // }
+        console.log('YYYYYYYY',dataParams)
+        var params = [];
+        for(var key in dataParams){
+            params.push({
+                type : key,
+                problems : dataParams[key]
             })
         }
-        console.log('YYYYYYYY',dataParams)
-        var result = Post('http://118.31.16.70/api/v3/students/me/getWrongProblems/',dataParams);  
+        console.log(params)
+        var result = Post('http://118.31.16.70/api/v3/students/me/getWrongProblems/',params);  
         result.then((response)=>{
             if(response.status === 200){
                 this.setState({
