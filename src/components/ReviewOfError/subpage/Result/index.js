@@ -16,12 +16,12 @@ class Result extends React.Component{
       }
       handleModeChange(e){
         const mode = e.target.value;
-        console.log(mode)
+        // console.log(mode)
         this.setState({ mode });
       }
       nextOneHandle(){
           if(this.state.currentIndex<this.props.allNum){
-            console.log('下一题');
+            // console.log('下一题');
           this.setState({
               currentIndex : this.state.currentIndex+1,
               mode: 'error'
@@ -34,9 +34,9 @@ class Result extends React.Component{
       }
     render(){
         const { mode, currentIndex } = this.state;
-        console.log(currentIndex)
+        // console.log(currentIndex)
         const {category,data} = this.props;
-        console.log(data)
+        // console.log(data)
         var detailData;
         if(category === '1'){
             //显示全部的数据
@@ -53,9 +53,9 @@ class Result extends React.Component{
                 })
             })
             detailData = [data2];
-            console.log(detailData)
+            // console.log(detailData)
         }
-        console.log('11111111111',detailData)
+        // console.log('11111111111',detailData);
         return(
             <div className='main-content'>
                 <div className='selects'>
@@ -67,17 +67,21 @@ class Result extends React.Component{
                     </Radio.Group>
                 </div>
                 <div className='select-content'>
-                    {mode === 'error'?
+                    {/* {mode === 'error'?
                                     <div style={{display:'block'}}><ErrorTopic data={detailData} category={this.props.category}/></div>
-                                   :<div style={{display:'none'}}><ErrorTopic data={detailData} category={this.props.category}/></div>}
-                    {mode === 'knowledgePoint'?
+                                   :<div style={{display:'none'}}><ErrorTopic data={detailData} category={this.props.category}/></div>} */}
+                    <div style={mode === 'error'?{display:'block'}:{display:'none'}}><ErrorTopic data={detailData} category={this.props.category}/></div>
+                    <div style={mode === 'knowledgePoint'?{display:'block'}:{display:'none'}}><KnowledgePoint data={detailData} category={this.props.category}/></div>
+                    <div style={mode === 'answer'?{display:'block'}:{display:'none'}}><Answer data={detailData} category={this.props.category}/></div>
+                    <div style={mode === 'resultMark'?{display:'block'}:{display:'none'}}><ResultMark category={this.props.category} allNum={this.props.allNum} currentIndex={this.state.currentIndex} detailData={detailData} saveHandle={this.saveHandle.bind(this)} nextOneHandle={this.nextOneHandle.bind(this)}/></div>
+                    {/* {mode === 'knowledgePoint'?
                                      <div style={{display:'block'}}><KnowledgePoint data={detailData} category={this.props.category}/></div>
-                                     :<div style={{display:'none'}}><KnowledgePoint data={detailData} category={this.props.category}/></div>}
-                    {mode === 'answer'?
+                                     :<div style={{display:'none'}}><KnowledgePoint data={detailData} category={this.props.category}/></div>} */}
+                    {/* {mode === 'answer'?
                                     <div style={{display:'block'}}><Answer data={detailData} category={this.props.category}/></div>
-                                     :<div style={{display:'none'}}><Answer data={detailData} category={this.props.category}/></div>}
-                    {mode === 'resultMark'?<div style={{display:'block'}}><ResultMark category={this.props.category} allNum={this.props.allNum} currentIndex={this.state.currentIndex} detailData={detailData} saveHandle={this.saveHandle.bind(this)} nextOneHandle={this.nextOneHandle.bind(this)}/></div>
-                                    :<div style={{display:'none'}}><ResultMark category={this.props.category} allNum={this.props.allNum} currentIndex={this.state.currentIndex} detailData={detailData} saveHandle={this.saveHandle.bind(this)} nextOneHandle={this.nextOneHandle.bind(this)}/></div>}
+                                     :<div style={{display:'none'}}><Answer data={detailData} category={this.props.category}/></div>} */}
+                    {/* {mode === 'resultMark'?<div style={{display:'block'}}><ResultMark category={this.props.category} allNum={this.props.allNum} currentIndex={this.state.currentIndex} detailData={detailData} saveHandle={this.saveHandle.bind(this)} nextOneHandle={this.nextOneHandle.bind(this)}/></div>
+                                    :<div style={{display:'none'}}><ResultMark category={this.props.category} allNum={this.props.allNum} currentIndex={this.state.currentIndex} detailData={detailData} saveHandle={this.saveHandle.bind(this)} nextOneHandle={this.nextOneHandle.bind(this)}/></div>} */}
                 </div>
                 <div className='currentTopicPosition'>
                     {

@@ -47,7 +47,7 @@ class ResultMark extends Component{
         
      }
      resultClick(index,e){
-      console.log(index,e.target.value)
+      // console.log(index,e.target.value)
       let data = this.state.data;
       data[index].isCorrect = e.target.value;
       if(e.target.value){
@@ -96,7 +96,7 @@ class ResultMark extends Component{
     }
     componentWillReceiveProps(nextProps){
       const {detailData,allNum} = nextProps;
-      console.log('77',detailData,allNum)
+      // console.log('77',detailData,allNum)
       if(allNum ===1){
         this.setState({
           showOver : true
@@ -131,7 +131,7 @@ class ResultMark extends Component{
           }
         })
       })
-      console.log('7777777777',data)
+      // console.log('7777777777',data)
     }
      this.setState({
        data : data
@@ -192,10 +192,10 @@ class ResultMark extends Component{
       result.then((response)=>{
         if(response.status ===200){
             this.props.nextOneHandle();
-            console.log(this.props.currentIndex,this.props.allNum)
+            // console.log(this.props.currentIndex,this.props.allNum)
             if(this.props.currentIndex === this.props.allNum){
               // this.props.saveHandle(false);
-              console.log('最后一题');
+              // console.log('最后一题');
               this.setState({
                 showOver : true
               })
@@ -233,7 +233,7 @@ class ResultMark extends Component{
       result.then((response)=>{
         if(response.status ===200){
             this.props.nextOneHandle();
-            console.log(this.props.currentIndex,this.props.allNum)
+            // console.log(this.props.currentIndex,this.props.allNum)
               this.props.saveHandle(false);
               this.setState({
                 showOver : false
@@ -248,8 +248,9 @@ class ResultMark extends Component{
       }
     }
     render(){
+      console.log('结果标记');
       const {category, detailData} = this.props;
-      console.log('9999999',this.state.data)
+      // console.log('9999999',this.state.data)
       const columns = [{
         title: '题目序号',
         className: 'column-position',
@@ -269,7 +270,7 @@ class ResultMark extends Component{
     ];
       var data1=[];
       this.state.data.map((data, i)=>{
-        console.log('2222222222',data)
+        // console.log('2222222222',data)
         var a ={};
         a.key = data.key;
         a.position = data.position;
@@ -301,7 +302,6 @@ class ResultMark extends Component{
         }
         data1.push(a)
       })
-      console.log('xxxxxxxxxxxx',data1)
         return(
           <div>
                 <div className='topic-result'>
