@@ -8,28 +8,61 @@ class ErrorTopic extends React.Component{
         this.state={
             PDF:'',
             numPages: null,
-            pageNumber: 1,
+            pageNumber:1,
             scale: 1.5,
             data :[]
         }
     }
-    // onDocumentLoad({ numPages }) {
-    //     this.setState({ numPages });
-    //   }
+    onDocumentLoad({ numPages }) {
+        console.log(numPages)
+        this.setState({ numPages });
+      }
+    wheelEvent(event){
+        var {pageNumber,numPages} = this.state;
+        console.log(pageNumber)
+        var pdf = this.refs.pdf;
+        var box = this.refs.box;
+        var scrollHeight = box.scrollTop;
+         //判断鼠标滚轮的上下滑动
+         let deta = event.deltaY;
+         if(deta > 0){
+            if(scrollHeight > 610){
+                if(pageNumber< numPages){
+                    this.setState({
+                        pageNumber:pageNumber+1
+                    })
+                    this.refs.top.scrollIntoView();
+                }
+                
+            }
+         }
+         if(deta < 0){
+            if(scrollHeight === 0){
+                if(pageNumber>1){
+                    this.setState({
+                        pageNumber:pageNumber-1
+                    })
+                    this.refs.top.scrollIntoView();
+                }
+            }
+         }
+    }
     render(){
         console.log('错题');
         const {PDF,pageNumber, numPages} = this.state;
+        console.log(pageNumber)
         return (
             <div>
-            <div style={{height:350,overflow:'auto',border:'1px solid #d9d9d9'}}>
+            <div ref='box' style={{height:350,overflow:'auto',border:'1px solid #d9d9d9'}} onWheel={this.wheelEvent.bind(this)}>
+                <div ref='top'></div>
               <Document
                 file={PDF}
                 scale={this.state.scale}
-                // onLoadSuccess={this.onDocumentLoad.bind(this)}
+                onLoadSuccess={this.onDocumentLoad.bind(this)}
+                ref = 'pdf'
               >
                 <Page pageNumber={pageNumber} />
               </Document>
-              {/* <p>Page {pageNumber} of {numPages}</p> */}
             </div>
            
             <div className='save_btn'>
@@ -99,7 +132,7 @@ class ErrorTopic extends React.Component{
         }
     }
     shouldComponentUpdate(nextProps,nextState){
-        if(JSON.stringify(nextProps.data)!==JSON.stringify(this.state.data) || nextState.PDF!==this.state.PDF){
+        if(JSON.stringify(nextProps.data)!==JSON.stringify(this.state.data) || nextState.PDF!==this.state.PDF ||nextState.pageNumber!==this.state.pageNumber ){
             console.log('错题不一样')
             return true;
         }else{
@@ -110,7 +143,7 @@ class ErrorTopic extends React.Component{
     }
 
    componentDidMount(){
-       console.log('componentDidMount');
+        console.log('componentDidMount');
         var data = this.props.data;
         this.setState({
             data:data
