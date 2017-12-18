@@ -87,12 +87,21 @@ class ErrorTopic extends React.Component{
             var dataParams = []
             data.map((item,i)=>{
                 item.map((item2,i2)=>{
-                    dataObj[item2.problemId+'_'] = {
-                                                    index : item2.index,
-                                                    subIdx : item2.subIdx,
-                                                    full : item2.full,
-                                                    type : item2.type
-                                                    }
+                    if(item2.type){
+                        dataObj[item2.problemId+'_'] = {
+                            index : item2.index,
+                            subIdx : item2.subIdx,
+                            full : item2.full,
+                            type : item2.type
+                            }
+                    }else{
+                        dataObj[item2.problemId+'_'+i2] = {
+                            index : item2.index,
+                            subIdx : item2.subIdx,
+                            full : item2.full,
+                            type : item2.type
+                            }
+                    }                                
                 })
             })
             for(var key in dataObj){

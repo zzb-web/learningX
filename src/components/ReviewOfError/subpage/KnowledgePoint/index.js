@@ -85,7 +85,7 @@ class KnowledgePoint extends React.Component{
             var dataParams = []
             data.map((item,i)=>{
                 item.map((item2,i2)=>{
-                    dataObj[item2.problemId+'_'] = {
+                    dataObj[item2.problemId+'_'+i2] = {
                                                     index:item2.index,
                                                     subIdx: item2.subIdx, 
                                                     }
@@ -134,7 +134,6 @@ class KnowledgePoint extends React.Component{
                                                 }
             })
         })
-        // console.log(dataObj)
         for(var key in dataObj){
             dataParams.push({
                 problemId: key.split('_')[0],
