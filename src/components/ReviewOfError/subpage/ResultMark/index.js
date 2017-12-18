@@ -248,7 +248,7 @@ class ResultMark extends Component{
       }
     }
     render(){
-      console.log('结果标记');
+      // console.log('结果标记');
       const {category, detailData} = this.props;
       // console.log('9999999',this.state.data)
       const columns = [{

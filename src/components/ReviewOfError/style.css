@@ -33,8 +33,8 @@
     height:500px;
     float: right;
 }
-.ReactPDF__Page canvas{
+/* .ReactPDF__Page canvas{
     margin: 0 auto;
     width: 100% !important;
     height: 141% !important;
-}
+} */

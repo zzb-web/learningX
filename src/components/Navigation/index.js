@@ -61,7 +61,7 @@ class Navigation extends Component {
     })
   }
   componentWillMount(){
-    console.log(sessionStorage.userId);
+    // console.log(sessionStorage.userId);
      if(sessionStorage.userId === undefined){
         this.props.history.push('/');
      }

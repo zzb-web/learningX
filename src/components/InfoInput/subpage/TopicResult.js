@@ -11,12 +11,12 @@ class TopicResult extends Component{
    }
     saveBtnHandle(){
         let msg = [];
-        console.log(this.state.data)
+        // console.log(this.state.data)
         this.state.data.map((item,index)=>{
           if(item.status){
-            console.log(item.position)
+            // console.log(item.position)
             let position = item.position.split('/');
-            console.log(position.length)
+            // console.log(position.length)
             if(position.length !== 3){
               msg.push({
                   isCorrect : item.isCorrect,
@@ -40,7 +40,7 @@ class TopicResult extends Component{
         }
         var response = Post(url,params);
         response.then((resp)=>{
-          console.log(resp)
+          // console.log(resp)
           if(resp.status === 200){
             this.props.handleDetail();
           }

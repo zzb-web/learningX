@@ -18,13 +18,13 @@ class RegistrationForm extends Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+                // console.log('Received values of form: ', values);
                 var params = {
                     realName: values.name,
                     gender: values.gender,
                     telephone: values.phone
                 }
-                console.log(params)
+                // console.log(params)
                 var result = Patch('http://118.31.16.70/api/v3/students/me/profile/',params)
                 result.then((response)=>{
                     if(response.status ===200){

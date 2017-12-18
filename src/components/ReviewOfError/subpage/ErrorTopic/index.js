@@ -9,24 +9,25 @@ class ErrorTopic extends React.Component{
             PDF:'',
             numPages: null,
             pageNumber:1,
-            scale: 1.5,
+            scale: 2,
             data :[]
         }
     }
     onDocumentLoad({ numPages }) {
-        console.log(numPages)
         this.setState({ numPages });
       }
     wheelEvent(event){
         var {pageNumber,numPages} = this.state;
-        console.log(pageNumber)
+        // console.log(pageNumber);
         var pdf = this.refs.pdf;
         var box = this.refs.box;
         var scrollHeight = box.scrollTop;
+        // console.log(pdf)
          //判断鼠标滚轮的上下滑动
          let deta = event.deltaY;
+         var heightDiff = 841-350;
          if(deta > 0){
-            if(scrollHeight > 610){
+            if(scrollHeight > heightDiff){
                 if(pageNumber< numPages){
                     this.setState({
                         pageNumber:pageNumber+1
@@ -48,9 +49,8 @@ class ErrorTopic extends React.Component{
          }
     }
     render(){
-        console.log('错题');
-        const {PDF,pageNumber, numPages} = this.state;
-        console.log(pageNumber)
+        // console.log('错题');
+        const {PDF,pageNumber} = this.state;
         return (
             <div>
             <div ref='box' style={{height:350,overflow:'auto',border:'1px solid #d9d9d9'}} onWheel={this.wheelEvent.bind(this)}>
@@ -76,10 +76,10 @@ class ErrorTopic extends React.Component{
           );
     }
     componentWillReceiveProps(nextProps){
-        console.log('willreceive');
+        // console.log('willreceive');
         var data = nextProps.data;
         if(JSON.stringify(this.state.data)!==JSON.stringify(nextProps.data)){
-            console.log('不一样')
+            // console.log('不一样')
             this.setState({
                 data : data
             })
@@ -120,7 +120,7 @@ class ErrorTopic extends React.Component{
                     problems : dataParams[key]
                 })
             }
-            console.log(params);
+            // console.log(params);
             var result = Post('http://118.31.16.70/api/v3/students/me/getWrongProblems/',params);  
             result.then((response)=>{
                 if(response.status === 200){
@@ -133,17 +133,17 @@ class ErrorTopic extends React.Component{
     }
     shouldComponentUpdate(nextProps,nextState){
         if(JSON.stringify(nextProps.data)!==JSON.stringify(this.state.data) || nextState.PDF!==this.state.PDF ||nextState.pageNumber!==this.state.pageNumber ){
-            console.log('错题不一样')
+            // console.log('错题不一样')
             return true;
         }else{
-            console.log('错题一样')
+            // console.log('错题一样')
             return false;
         }
        
     }
 
    componentDidMount(){
-        console.log('componentDidMount');
+        // console.log('componentDidMount');
         var data = this.props.data;
         this.setState({
             data:data
@@ -152,12 +152,21 @@ class ErrorTopic extends React.Component{
         var dataParams = []
         data.map((item,i)=>{
             item.map((item2,i2)=>{
-                dataObj[item2.problemId+'_'] = {
-                                                index : item2.index,
-                                                subIdx : item2.subIdx,
-                                                full : item2.full,
-                                                type : item2.type
-                                                }
+                if(item2.type){
+                    dataObj[item2.problemId+'_'] = {
+                        index : item2.index,
+                        subIdx : item2.subIdx,
+                        full : item2.full,
+                        type : item2.type
+                        }
+                }else{
+                    dataObj[item2.problemId+'_'+i2] = {
+                        index : item2.index,
+                        subIdx : item2.subIdx,
+                        full : item2.full,
+                        type : item2.type
+                        }
+                }
             })
         })
         for(var key in dataObj){
@@ -185,7 +194,7 @@ class ErrorTopic extends React.Component{
                 problems : dataParams[key]
             })
         }
-        console.log(params)
+        // console.log(params)
         var result = Post('http://118.31.16.70/api/v3/students/me/getWrongProblems/',params);  
         result.then((response)=>{
             if(response.status === 200){

@@ -36,7 +36,7 @@ class Result extends React.Component{
         const { mode, currentIndex } = this.state;
         // console.log(currentIndex)
         const {category,data} = this.props;
-        // console.log(data)
+        // console.log('??????????',data)
         var detailData;
         if(category === '1'){
             //显示全部的数据

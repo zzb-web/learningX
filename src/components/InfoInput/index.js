@@ -127,7 +127,7 @@ class InfoInput extends Component {
         })
     }
     dateChange(date, dateString){
-        console.log(date, dateString)
+        // console.log(date, dateString)
         var timestamp = Date.parse(new Date(dateString));
         timestamp = timestamp / 1000;
         this.setState({

@@ -66,14 +66,14 @@ class ReviewOfError extends Component {
                 showDetail:false
             })
         }else if(selectValue !== '0' && currentChapterNum !== 0 && currentSectionNum !==0){
-            console.log('xxxxx')
+            // console.log('xxxxx')
             // this.setState({
             //     showWarning:false
             // })
             let url = `http://118.31.16.70/api/v3/students/me/wrongProblemsInfo/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
             let data = Get(url);
             data.then((response)=>{
-                console.log(response.data)
+                // console.log(response.data)
                 if(response.status === 200){
                     var data1 = {};
                     var detailData = [];

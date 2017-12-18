@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Get, Post} from '../../fetch/data.js';
+// import {Get, Post} from '../../fetch/data.js';
 class Homepage extends Component{
     render(){
       return(

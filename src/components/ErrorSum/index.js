@@ -58,7 +58,7 @@ class ErrorSum extends Component {
             let url = `http://118.31.16.70/api/v3/students/me/${checkWay}/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
             let data = Get(url);
             data.then((response)=>{
-                console.log(response)
+                // console.log(response)
                 if(response.status ===200){
                     if(response.data.length === 0){
                         this.setState({
@@ -112,7 +112,7 @@ class ErrorSum extends Component {
     }
     render(){
         const {chapters, currentSections,chapters_sections,defaultSections,currentChapterNum,currentSectionNum, detailData} = this.state;
-        console.log(currentSections)
+        // console.log(currentSections)
         return(
             <div className='error-sum'>
                 <Row>
@@ -187,8 +187,8 @@ class ErrorSum extends Component {
                 }
             })  
          }else if(response.status ===401){
-             console.log('xxxxx')
-             console.log(this)
+            //  console.log('xxxxx')
+            //  console.log(this)
             this.props.history.push('/');
         }
          this.setState({
