@@ -2,7 +2,7 @@ import React from 'react';
 import {Button,Modal} from 'antd';
 import { Document, Page } from 'react-pdf';
 import{Post} from '../../../../fetch/data.js';
-class ErrorTopic extends React.Component{
+class TestTopic extends React.Component{
     constructor(){
         super();
         this.state={
@@ -216,4 +216,4 @@ class ErrorTopic extends React.Component{
     
 }
 
-export default ErrorTopic;
+export default TestTopic;

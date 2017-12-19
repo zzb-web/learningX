@@ -1,0 +1,30 @@
+th.column-position, td.column-position, td.column-status, td.column-result,th.column-status, th.column-result{
+    text-align: center !important;
+}
+.btn-content{
+    text-align:center;
+    margin-top: 40px;
+}
+.wrong-row {
+    background-color: #ffbf00;
+}
+.wrong-row:hover > td{
+    background-color:#ffbf00 !important;
+}
+.ant-table-thead > tr > th, .ant-table-tbody > tr > td{
+    padding: 14px 8px !important;
+}
+.status-font{
+    width: 80px;
+    /* text-align: left; */
+    display: inline-block;
+}
+.save_btn{
+    width: 242px;
+    position: absolute;
+    left: 240px;
+    bottom: -50px;
+}
+/* .ant-table-row{
+    height: 50px;
+} */

@@ -7,6 +7,7 @@ import InfoInput from '../InfoInput/index.js';
 import UserMsgForm from '../UserMsg/index.js';
 import PassWordForm from '../PassWord/index.js';
 import ReviewOfError from '../ReviewOfError/index.js';
+import QuestionTest from '../QuestionTest/index.js';
 import Homepage from '../Homepage/index.js';
 import './style.css';
 const { Header, Sider, Content} = Layout;
@@ -95,6 +96,10 @@ class Navigation extends Component {
               <Icon type="scan" />
               <span>错题复习</span>
             </Menu.Item>
+            <Menu.Item key="6">
+              <Icon type="database" />
+              <span>考题检验</span>
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
@@ -135,6 +140,9 @@ class Navigation extends Component {
             }
             {
                 this.state.key === '5' ? <ReviewOfError/> : null
+            }
+            {
+                this.state.key === '6' ? <QuestionTest/> : null
             }
           </Content>
           {/* <Footer style={{ textAlign: 'center' }}>
