@@ -95,7 +95,7 @@ class Answer extends React.Component{
                 })
             }
             // console.log('YYYYYYYY',dataParams)
-            var result = Post('http://118.31.16.70/api/v3/students/me/getAnswers/',dataParams);  
+            var result = Post('http://118.31.16.70/api/v3/students/me/getAnswersFile/',dataParams);  
             result.then((response)=>{
                 if(response.status === 200){
                     this.setState({
@@ -134,7 +134,7 @@ class Answer extends React.Component{
             })
         }
         // console.log('YYYYYYYY',dataParams)
-        var result = Post('http://118.31.16.70/api/v3/students/me/getAnswers/',dataParams);  
+        var result = Post('http://118.31.16.70/api/v3/students/me/getAnswersFile/',dataParams);  
         result.then((response)=>{
             if(response.status === 200){
                 this.setState({

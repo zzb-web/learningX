@@ -49,7 +49,7 @@ class QuestionTest extends Component {
                 showDetail:false
             })
         }else if(selectValue !== '0' && currentChapterNum !== 0 && currentSectionNum !==0){
-            let url = `http://118.31.16.70/api/v3/students/me/wrongProblemsInfo/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
+            let url = `http://118.31.16.70/api/v3/students/me/checkProblemsInfo/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
             let data = Get(url);
             data.then((response)=>{
                 // console.log(response.data)
