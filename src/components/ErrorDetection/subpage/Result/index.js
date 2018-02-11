@@ -27,7 +27,7 @@ class Result extends React.Component{
             <div className='main-content'>
                 <div className='selects'>
                     <Radio.Group onChange={this.handleModeChange.bind(this)} value={mode} style={{ marginBottom: 8 }}>
-                        <Radio.Button value="test">检验题</Radio.Button>
+                        <Radio.Button value="test">错题</Radio.Button>
                         <Radio.Button value="knowledgePoint">知识点</Radio.Button>
                         <Radio.Button value="answer">答案</Radio.Button>
                         <Radio.Button value="resultMark">结果标记</Radio.Button>
