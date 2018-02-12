@@ -37,7 +37,14 @@ class TestDetection extends Component {
     sureBtnHandle(){
       const {category , requestData} = this.state;
       var url = `http://118.31.16.70/api/v3/students/me/${category}/`;
-
+      var requestFlag = true;
+      requestData.map((item,index)=>{
+        if(item.startPage === undefined || item.endPage === undefined){
+            requestFlag = false;
+            return false;
+        }
+      })
+      if(requestFlag){
       Post(url,requestData)
       .then((response)=>{
         if(response.status === 200){
@@ -83,6 +90,13 @@ class TestDetection extends Component {
       .catch(function (error) {
         console.log(error);
       });
+    }else{
+        this.setState({
+            showFail : true,
+            showDetail : false,
+            failMsg : '页码不正常'
+        })
+    }
     }
     saveHandle(flag){
         this.setState({
@@ -225,7 +239,7 @@ class AddLearningMaterials extends React.Component{
         const {name,materials} = this.props;
         return(
             <div style={{marginTop:20}}>
-                <span className='subsection'><span>学习资料:</span><Select onChange={this.selectMaterials.bind(this)} style={{width:240}}>
+                <span className='subsection'><span>学习资料:</span><Select onChange={this.selectMaterials.bind(this)} style={{width:'30%'}}>
                                                                     {materials.map((item,index)=><Option value={item} key={index}>{item}</Option>)}
                                                                   </Select></span>
                 <span className='subsection'><span>开始页码:</span><InputNumber onChange={this.startChage.bind(this)}/></span>
