@@ -3,7 +3,6 @@ import { withRouter } from 'react-router';
 import {Row , Col, Select, Button ,Input,InputNumber} from 'antd';
 import Result from './subpage/Result/index.js';
 import {Post, Get} from '../../fetch/data.js';
-import './style.css';
 const Option = Select.Option;
 class TestDetection extends Component {
     constructor(){
