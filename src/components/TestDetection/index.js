@@ -18,6 +18,7 @@ class TestDetection extends Component {
             showDetail : false,
             failMsg : '',
             allNum : 0,
+            taskTime : 0
         }
     }
     changeCategory(value){
@@ -68,7 +69,8 @@ class TestDetection extends Component {
                 chooseAgain : true,
                 showFail : false,
                 showDetail : true,
-                allNum : response.data.totalNum
+                allNum : response.data.totalNum,
+                taskTime : response.data.time
             })
         }else if(response.status === 404){
             if(category === ''){
@@ -165,7 +167,7 @@ class TestDetection extends Component {
         })
     }
     render(){
-        const {requestData,materials, chooseAgain , showMaterials ,detailData ,allNum ,showFail, failMsg, showDetail} = this.state;
+        const {taskTime,requestData,materials, chooseAgain , showMaterials ,detailData ,allNum ,showFail, failMsg, showDetail} = this.state;
         return(
             <div className='error-detection'>
                 <Row>
@@ -214,7 +216,7 @@ class TestDetection extends Component {
                             <div className='addBtn'><Button type="primary" size='large' style={{width:240,height:35,marginLeft:'10px'}} onClick={this.sureBtnHandle.bind(this)}>确定</Button></div>
                         </div>
                         {
-                            showMaterials ? null : <Result data={detailData} saveHandle={this.saveHandle.bind(this)}/>
+                            showMaterials ? null : <Result taskTime={taskTime} data={detailData} saveHandle={this.saveHandle.bind(this)}/>
                         }
                     </Col>
                     <Col span={1}></Col>

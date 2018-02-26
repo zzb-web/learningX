@@ -35,7 +35,7 @@ class Result extends React.Component{
     render(){
         const { mode, currentIndex } = this.state;
         // console.log(currentIndex)
-        const {category,data} = this.props;
+        const {category,data,taskTime} = this.props;
         // console.log('??????????',data)
         var detailData;
         if(category === '1'){
@@ -70,7 +70,7 @@ class Result extends React.Component{
                     <div style={mode === 'test'?{display:'block'}:{display:'none'}}><TestTopic data={detailData} category={this.props.category}/></div>
                     <div style={mode === 'knowledgePoint'?{display:'block'}:{display:'none'}}><KnowledgePoint data={detailData} category={this.props.category}/></div>
                     <div style={mode === 'answer'?{display:'block'}:{display:'none'}}><Answer data={detailData} category={this.props.category}/></div>
-                    <div style={mode === 'resultMark'?{display:'block'}:{display:'none'}}><ResultMark category={this.props.category} allNum={this.props.allNum} currentIndex={this.state.currentIndex} detailData={detailData} saveHandle={this.saveHandle.bind(this)} nextOneHandle={this.nextOneHandle.bind(this)}/></div>
+                    <div style={mode === 'resultMark'?{display:'block'}:{display:'none'}}><ResultMark category={this.props.category} allNum={this.props.allNum} currentIndex={this.state.currentIndex} detailData={detailData} taskTime={taskTime} saveHandle={this.saveHandle.bind(this)} nextOneHandle={this.nextOneHandle.bind(this)}/></div>
                 </div>
                 <div className='currentTopicPosition'>
                     {

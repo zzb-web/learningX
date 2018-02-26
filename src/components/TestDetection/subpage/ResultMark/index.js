@@ -107,7 +107,9 @@ class ResultMark extends Component{
           newData.push(item)
         }
       })
+      const {taskTime} = this.props;
       saveMsg={
+        taskTime : taskTime,
         time : timestamp,
         problems : newData
       }

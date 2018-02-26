@@ -86,6 +86,10 @@ class Navigation extends Component {
             onClick={this.toggle}
           />
           <Menu theme="dark" mode="inline" onClick={this.clickHandle.bind(this)}>
+            <Menu.Item key="0">
+                <Icon type="rocket" />
+                <span>首页</span>
+            </Menu.Item>
             <Menu.Item key="1">
               <Icon type="book" />
               <span>错题标记</span>

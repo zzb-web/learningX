@@ -46,4 +46,16 @@ async function Patch(url, param){
   });
   return status;
 }
-export {Get, Post, Put, Patch}
+
+async function Delete(url){
+  var status;
+  await axios.delete(url)
+  .then(function (response) {
+   status = response;
+  })
+  .catch(function (error) {
+    status= error.response;
+  });
+  return status;
+}
+export {Get, Post, Put, Patch, Delete}

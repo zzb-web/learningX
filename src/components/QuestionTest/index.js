@@ -23,7 +23,8 @@ class QuestionTest extends Component {
             warningMsg:'',
             showDetail:false,
             currentIndex:1,
-            allNum:0
+            allNum:0,
+            taskTime : 0
         }
     }
     changeCategory(value){
@@ -73,7 +74,8 @@ class QuestionTest extends Component {
                         detailData : detailData,
                         showWarning:false,
                         showDetail:true,
-                        allNum : detailData.length
+                        allNum : detailData.length,
+                        taskTime : response.data.time
                     })
                 }else if(response.status ===404){
                     this.setState({
@@ -114,7 +116,7 @@ class QuestionTest extends Component {
         })
     }
     render(){
-        const {chapters, currentSections,chapters_sections,defaultSections,currentChapterNum,currentSectionNum, detailData,category} = this.state;
+        const {taskTime,chapters, currentSections,chapters_sections,defaultSections,currentChapterNum,currentSectionNum, detailData,category} = this.state;
         return(
             <div className='error-sum'>
                 <Row>
@@ -168,7 +170,7 @@ class QuestionTest extends Component {
                     <Col span={13}>
                         <div className='category-detail'>
                             {
-                                this.state.showDetail ? <Result category={category} data={detailData} allNum={this.state.allNum} saveHandle={this.saveHandle.bind(this)} currentIndex={this.getCurrentIndex.bind(this)}/> : null
+                                this.state.showDetail ? <Result category={category} data={detailData} allNum={this.state.allNum} taskTime={taskTime} saveHandle={this.saveHandle.bind(this)} currentIndex={this.getCurrentIndex.bind(this)}/> : null
                             }
                         </div>
                     </Col>

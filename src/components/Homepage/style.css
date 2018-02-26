@@ -1,0 +1,10 @@
+.home-title {
+    color: #108ee9;
+    width: 200px;
+}
+.home-table{
+    margin-top: 20px;
+}
+.column-date , .column-desc , .column-operate{
+    text-align: center !important;
+}
