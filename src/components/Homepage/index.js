@@ -113,6 +113,7 @@ class Homepage extends Component{
           {
             key : index,
             date : this._getDate(item.time),
+            desc: item.type === 1?"错题" : "检验题",
             operate : <div>
                         <span onClick={this.markHandle.bind(this,index)} style={{marginRight:10,cursor:"pointer",color:"#108ee9"}}>标记</span>
                         <Popconfirm placement="right" title={text} onConfirm={this.confirm.bind(this,index)} okText="Yes" cancelText="No">

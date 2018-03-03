@@ -70,7 +70,7 @@ class Navigation extends Component {
      }
   }
   render() {
-    const {userMsg,userName,phone,gender} = this.state;
+    const {userMsg,userName,phone,gender,school,classId,grade} = this.state;
     return (
       <Layout>
         <Sider
@@ -144,6 +144,9 @@ class Navigation extends Component {
             }
             {
                  this.state.key === '3' ? <UserMsgForm userMsg={userMsg}
+                                                       school={school}
+                                                       classId={classId}
+                                                       grade={grade}
                                                        name={userName}
                                                        phone={phone}
                                                        gender={gender}
@@ -172,11 +175,14 @@ class Navigation extends Component {
       </Layout>
     );
   }
-  modifyUserMsg(name,phone,gender){
+  modifyUserMsg(name,phone,gender,school,classId,grade){
     this.setState({
       userName : name,
       phone:phone,
-      gender:gender
+      gender:gender,
+      school : school,
+      classId : classId,
+      grade: grade
     })
   }
   componentDidMount(){
@@ -198,7 +204,10 @@ class Navigation extends Component {
             userMsg : response.data,
             userName : response.data.realName,
             phone : response.data.telephone,
-            gender:response.data.gender
+            gender:response.data.gender,
+            school :response.data.school,
+            classId :response.data.classId,
+            grade : response.data.grade
         })
       }else if(response.status ===401){
         this.props.history.push('/');

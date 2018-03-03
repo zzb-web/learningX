@@ -31,7 +31,7 @@ class RegistrationForm extends Component {
                 var result = Patch('http://118.31.16.70/api/v3/students/me/profile/',params)
                 result.then((response)=>{
                     if(response.status ===200){
-                     this.props.modifyUserMsg(values.name,values.phone,values.gender);
+                     this.props.modifyUserMsg(values.name,values.phone,values.gender,values.school,values.class,values.grade);
                      message.success('操作成功',1.5);
                     }else{
                         message.error('操作失败',1.5);
@@ -45,8 +45,8 @@ class RegistrationForm extends Component {
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     }
     componentDidMount(){
-        const {learnId, school, grade,classId} = this.props.userMsg;
-        const {name,phone,gender} = this.props;
+        const {learnId} = this.props.userMsg;
+        const {name,phone,gender,school, grade,classId} = this.props;
             this.props.form.setFieldsValue({
                 studyNum: this.props.userMsg.learnId,
                 school:school,
