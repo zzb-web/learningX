@@ -60,6 +60,7 @@ class ResultMark extends Component{
     }
     componentWillReceiveProps(nextProps){
       const {detailData} = nextProps;
+      console.log(detailData)
       let data = [];
       if(detailData !==undefined){
       detailData.map((item,i1)=>{

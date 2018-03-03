@@ -19,6 +19,7 @@ class ErrorDetection extends Component {
             showDetail : false,
             failMsg : '',
             allNum : 0,
+            maxNum : 0,
         }
     }
     changeCategory(value){
@@ -33,7 +34,7 @@ class ErrorDetection extends Component {
         })
     }
     sureBtnHandle(){
-      const {category , requestData} = this.state;
+      const {category , requestData, maxNum} = this.state;
       var url = `http://118.31.16.70/api/v3/students/me/${category}/`;
       var requestFlag = true;
       requestData.map((item,index)=>{
@@ -61,6 +62,14 @@ class ErrorDetection extends Component {
             for(var key in data1){
                 detailData.push(data1[key])
             }
+            detailData = detailData.splice(0,maxNum);
+            if(maxNum === 0 || maxNum === undefined){
+                this.setState({
+                    showFail : true,
+                    showDetail : false,
+                    failMsg : '请输入题目数量的最大值'
+                })
+            }else{
             this.setState({
                 detailData : detailData,
                 showMaterials : false,
@@ -69,6 +78,7 @@ class ErrorDetection extends Component {
                 showDetail : true,
                 allNum : response.data.totalNum
             })
+        }
         }else if(response.status === 404){
             if(category === ''){
                 this.setState({
@@ -134,6 +144,11 @@ class ErrorDetection extends Component {
             requestData : requestData
         })
     }
+    maxNumChange(value){
+        this.setState({
+            maxNum : value
+        })
+    }
     componentWillMount(){
         //设置数字，根据数字 ，截取返回数据数组
         const data = Get('http://118.31.16.70/api/v3/students/me/books/');
@@ -178,6 +193,10 @@ class ErrorDetection extends Component {
                                        <Option value='1'>曾经错过的所有题</Option>
                                        <Option value='2'>现在仍错的题</Option>
                                     </Select>
+                                </div>
+                                <div className='select-category-1'>
+                                    <span>题量控制&nbsp;&nbsp;:</span>
+                                    <InputNumber placeholder='控制题目数量的最大值' min={1} style={{ width: 240, marginLeft:'10px'}} onChange={this.maxNumChange.bind(this)}/>
                                 </div>
                                 <div className='select-category-1' style={{visibility:'hidden'}}>
                                 </div>

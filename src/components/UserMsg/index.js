@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 // import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,Radio } from 'antd';
-import { Form, Input, Row, Col, Button, Radio,message } from 'antd';
+import { Form, Input, Row, Col, Button, Radio,message,Select , InputNumber } from 'antd';
 import {Patch} from '../../fetch/data.js'; 
-
+import './style.css';
 const FormItem = Form.Item;
-// const Option = Select.Option;
+const Option = Select.Option;
 // const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 // const AutoCompleteOption = AutoComplete.Option;
@@ -18,8 +18,11 @@ class RegistrationForm extends Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                // console.log('Received values of form: ', values);
+                console.log('Received values of form: ', values);
                 var params = {
+                    school:values.school,
+                    grade:values.grade,
+                    classId:values.class,
                     realName: values.name,
                     gender: values.gender,
                     telephone: values.phone
@@ -80,7 +83,7 @@ class RegistrationForm extends Component {
             },
         };
         return (
-            <div>
+            <div className='userMsg'>
                 <Row>
                     <Col span={8}></Col>
                     <Col span={8}>
@@ -111,7 +114,7 @@ class RegistrationForm extends Component {
                                 {getFieldDecorator('school', {
                                     rules: [{ required: true, message: '请输入您的学校!', whitespace: true }],
                                 })(
-                                    <Input disabled/>
+                                    <Input/>
                                     )}
                             </FormItem>
 
@@ -125,9 +128,13 @@ class RegistrationForm extends Component {
                                 hasFeedback
                             >
                                 {getFieldDecorator('grade', {
-                                    // rules: [{ required: true, message: '请输入您的年级!', whitespace: true }],
+                                    rules: [{ required: true, message: '请输入您的年级!', whitespace: true }],
                                 })(
-                                    <Input disabled/>
+                                    <Select>
+                                        <Option value='七'>七</Option>
+                                        <Option value='八'>八</Option>
+                                        <Option value='九'>九</Option>
+                                    </Select>
                                     )}
                             </FormItem>
 
@@ -141,9 +148,9 @@ class RegistrationForm extends Component {
                                 hasFeedback
                             >
                                 {getFieldDecorator('class', {
-                                    // rules: [{ required: true, message: '请输入您的班级!', whitespace: true }],
+                                    rules: [{ required: true,type:'number', message: '请输入您的班级(班级为数字)!', whitespace: true }],
                                 })(
-                                    <Input disabled/>
+                                    <InputNumber min={1} style={{width:'100%'}}/>
                                     )}
                             </FormItem>
 
@@ -167,7 +174,9 @@ class RegistrationForm extends Component {
                                 {...formItemLayout}
                                 label="性别"
                             >
-                                {getFieldDecorator('gender')(
+                                {getFieldDecorator('gender',{
+                                     rules: [{ required: true, message: '请选择性别', whitespace: true }],
+                                })(
                                     <RadioGroup>
                                         <Radio value="male">男</Radio>
                                         <Radio value="female">女</Radio>
