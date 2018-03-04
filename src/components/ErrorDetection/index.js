@@ -35,6 +35,13 @@ class ErrorDetection extends Component {
     }
     sureBtnHandle(){
       const {category , requestData, maxNum} = this.state;
+      if(maxNum === 0 || maxNum === undefined){
+          this.setState({
+            showFail : true,
+            showDetail : false,
+            failMsg : '请输入题目数量的最大值'
+          })
+      }else{
       var url = `http://118.31.16.70/api/v3/students/me/${category}/`;
       var requestFlag = true;
       requestData.map((item,index)=>{
@@ -43,8 +50,12 @@ class ErrorDetection extends Component {
             return false;
         }
       })
+      var postMsg = {
+        max: maxNum,
+        bookPage:requestData
+        }
       if(requestFlag){
-      Post(url,requestData)
+      Post(url,postMsg)
       .then((response)=>{
         if(response.status === 200){
             var data1 = {};
@@ -62,14 +73,6 @@ class ErrorDetection extends Component {
             for(var key in data1){
                 detailData.push(data1[key])
             }
-            detailData = detailData.splice(0,maxNum);
-            if(maxNum === 0 || maxNum === undefined){
-                this.setState({
-                    showFail : true,
-                    showDetail : false,
-                    failMsg : '请输入题目数量的最大值'
-                })
-            }else{
             this.setState({
                 detailData : detailData,
                 showMaterials : false,
@@ -78,7 +81,6 @@ class ErrorDetection extends Component {
                 showDetail : true,
                 allNum : response.data.totalNum
             })
-        }
         }else if(response.status === 404){
             if(category === ''){
                 this.setState({
@@ -104,6 +106,7 @@ class ErrorDetection extends Component {
             showDetail : false,
             failMsg : '页码不正常'
         })
+    }
     }
     }
     saveHandle(flag){
@@ -204,7 +207,7 @@ class ErrorDetection extends Component {
                                 </div>
                                 <div className='select-category-1' style={chooseAgain?{display:'block'}:{display:'none'}}>
                                     <span></span>
-                                    <Button type="primary" size='large' style={{width:240,height:35,marginLeft:'10px'}} onClick={this.chooseAgain.bind(this)}>重新选择</Button>
+                                    <Button type="primary" size='large' style={{width:240,height:35,marginLeft:'10px'}} onClick={this.chooseAgain.bind(this)}>重选题目</Button>
                                </div>
                             </div>
                             {
