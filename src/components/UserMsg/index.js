@@ -150,7 +150,7 @@ class RegistrationForm extends Component {
                                 {getFieldDecorator('class', {
                                     rules: [{ required: true,type:'number', message: '请输入您的班级(班级为数字)!', whitespace: true }],
                                 })(
-                                    <InputNumber min={1} style={{width:'100%'}}/>
+                                    <InputNumber min={0} style={{width:'100%'}}/>
                                     )}
                             </FormItem>
 
