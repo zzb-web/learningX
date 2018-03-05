@@ -10,6 +10,7 @@ class Result extends React.Component{
         super(props);
         this.state = {
           mode: 'test',
+          timestamp : 0
         };
       }
       handleModeChange(e){
@@ -19,8 +20,13 @@ class Result extends React.Component{
       saveHandle(value){
           this.props.saveHandle(value);
       }
+      getTimeStamp(time){
+        this.setState({
+            timestamp : time
+        })
+      }
     render(){
-        const { mode } = this.state;
+        const { mode,timestamp } = this.state;
         const {data,taskTime} = this.props;
         var detailData = data;
         return(
@@ -34,10 +40,10 @@ class Result extends React.Component{
                     </Radio.Group>
                 </div>
                 <div className='select-content'>
-                    <div style={mode === 'test'?{display:'block'}:{display:'none'}}><TestTopic data={detailData} category='1'/></div>
+                    <div style={mode === 'test'?{display:'block'}:{display:'none'}}><TestTopic data={detailData} category='1' current="01" getTimeStamp={this.getTimeStamp.bind(this)}/></div>
                     <div style={mode === 'knowledgePoint'?{display:'block'}:{display:'none'}}><KnowledgePoint data={detailData} category='1'/></div>
                     <div style={mode === 'answer'?{display:'block'}:{display:'none'}}><Answer data={detailData} category='1'/></div>
-                    <div style={mode === 'resultMark'?{display:'block'}:{display:'none'}}><ResultMark taskTime={taskTime} detailData={detailData} saveHandle={this.saveHandle.bind(this)}/></div>
+                    <div style={mode === 'resultMark'?{display:'block'}:{display:'none'}}><ResultMark taskTime={taskTime} detailData={detailData} saveHandle={this.saveHandle.bind(this)} markTime={timestamp}/></div>
                 </div>
             </div>
         )

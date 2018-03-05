@@ -48,6 +48,31 @@ class TestTopic extends React.Component{
             }
          }
     }
+    downLoad(){
+        const {current,data} = this.props;
+        var detail = JSON.stringify(data);
+        var timestamp = Date.parse(new Date())/1000;
+        if(current !== undefined){
+            this.props.getTimeStamp(timestamp);
+            var type;
+            if(current === "00"){
+                type = 1;
+            }else if(current === "01"){
+                type = 2;
+            }
+            var url = 'http://118.31.16.70/api/v3/students/me/uploadTasks/';
+            var postMsg ={
+                time : timestamp,
+                type : type,
+                detail : detail
+            }
+            Post(url,postMsg).then(resp=>{
+                console.log(resp)
+            }).catch(err=>{
+                console.log(err)
+            })
+        }
+    }
     render(){
         // console.log('错题');
         const {PDF,pageNumber} = this.state;
@@ -67,7 +92,7 @@ class TestTopic extends React.Component{
            
             <div className='save_btn'>
                 {
-                    this.props.category === '1'?<a download={PDF} href={PDF} target="blank"><Button type="primary" size='large' style={{width:240,height:35}}>
+                    this.props.category === '1'?<a download={PDF} href={PDF} target="blank"><Button onClick={this.downLoad.bind(this)} type="primary" size='large' style={{width:240,height:35}}>
                                                      下载</Button></a>
                                                 :null
                 }

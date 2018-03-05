@@ -64,7 +64,6 @@ class Homepage extends Component{
     confirm(index){
       const {data} = this.state;
       const time = data[index].time;
-      console.log(time)
       var url = `http://118.31.16.70/api/v3/students/me/uploadTasks/${time}/`
       Delete(url).then(resp=>{
         if(resp.status === 200){

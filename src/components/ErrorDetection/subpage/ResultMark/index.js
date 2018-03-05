@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Table, Switch, Button,Radio,message} from 'antd';
-import {Post} from '../../../../fetch/data.js';
+import {Post,Delete} from '../../../../fetch/data.js';
 import './style.css';
 const RadioGroup = Radio.Group;
 
@@ -95,6 +95,12 @@ class ResultMark extends Component{
      })
     }
     saveHandle(){
+      var url = `http://118.31.16.70/api/v3/students/me/uploadTasks/${this.props.markTime}/`;
+      Delete(url).then(resp=>{
+
+      }).catch(err=>{
+
+      })
       var timestamp = Date.parse(new Date())/1000; 
       var data = JSON.parse(JSON.stringify(this.state.data));
       var newData = [];
