@@ -30,6 +30,7 @@ class Homepage extends Component{
         if(resp.status ===200){
             var data1 = {};
             var detailData = [];
+            console.log(resp.data);
             resp.data.wrongProblems.map((item,index)=>{
                 item.problems.map((item2,index2)=>{
                     if(data1[item2.problemId+'_']===undefined){

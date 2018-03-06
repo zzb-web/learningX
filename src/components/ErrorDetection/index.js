@@ -20,6 +20,7 @@ class ErrorDetection extends Component {
             failMsg : '',
             allNum : 0,
             maxNum : 0,
+            returnData : {}
         }
     }
     changeCategory(value){
@@ -60,6 +61,7 @@ class ErrorDetection extends Component {
         if(response.status === 200){
             var data1 = {};
             var detailData = [];
+            console.log(response.data);
             response.data.wrongProblems.map((item,index)=>{
                 item.problems.map((item2,index2)=>{
                     if(data1[item2.problemId+'_']===undefined){
@@ -79,7 +81,8 @@ class ErrorDetection extends Component {
                 chooseAgain : true,
                 showFail : false,
                 showDetail : true,
-                allNum : response.data.totalNum
+                allNum : response.data.totalNum,
+                returnData : response.data
             })
         }else if(response.status === 404){
             if(category === ''){
@@ -182,7 +185,7 @@ class ErrorDetection extends Component {
         })
     }
     render(){
-        const {requestData,materials, chooseAgain , showMaterials ,detailData ,allNum ,showFail, failMsg, showDetail} = this.state;
+        const {requestData,materials, chooseAgain , showMaterials ,detailData ,allNum ,showFail, failMsg, showDetail,returnData} = this.state;
         return(
             <div className='error-detection'>
                 <Row>
@@ -234,7 +237,7 @@ class ErrorDetection extends Component {
                             <div className='addBtn'><Button type="primary" size='large' style={{width:240,height:35,marginLeft:'10px'}} onClick={this.sureBtnHandle.bind(this)}>确定</Button></div>
                         </div>
                         {
-                            showMaterials ? null : <Result data={detailData} saveHandle={this.saveHandle.bind(this)}/>
+                            showMaterials ? null : <Result data={detailData} returnData={returnData} saveHandle={this.saveHandle.bind(this)}/>
                         }
                     </Col>
                     <Col span={1}></Col>

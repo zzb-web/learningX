@@ -49,8 +49,8 @@ class TestTopic extends React.Component{
          }
     }
     downLoad(){
-        const {current,data} = this.props;
-        var detail = JSON.stringify(data);
+        const {current,data,returnData} = this.props;
+        var detail = JSON.stringify(returnData);
         var timestamp = Date.parse(new Date())/1000;
         if(current !== undefined){
             this.props.getTimeStamp(timestamp);

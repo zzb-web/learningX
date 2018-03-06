@@ -27,7 +27,7 @@ class Result extends React.Component{
       }
     render(){
         const { mode,timestamp } = this.state;
-        const {data,taskTime} = this.props;
+        const {data,taskTime,returnData} = this.props;
         var detailData = data;
         return(
             <div className='main-content'>
@@ -40,7 +40,7 @@ class Result extends React.Component{
                     </Radio.Group>
                 </div>
                 <div className='select-content'>
-                    <div style={mode === 'test'?{display:'block'}:{display:'none'}}><TestTopic data={detailData} category='1' current="01" getTimeStamp={this.getTimeStamp.bind(this)}/></div>
+                    <div style={mode === 'test'?{display:'block'}:{display:'none'}}><TestTopic data={detailData} returnData={returnData}category='1' current="01" getTimeStamp={this.getTimeStamp.bind(this)}/></div>
                     <div style={mode === 'knowledgePoint'?{display:'block'}:{display:'none'}}><KnowledgePoint data={detailData} category='1'/></div>
                     <div style={mode === 'answer'?{display:'block'}:{display:'none'}}><Answer data={detailData} category='1'/></div>
                     <div style={mode === 'resultMark'?{display:'block'}:{display:'none'}}><ResultMark taskTime={taskTime} detailData={detailData} saveHandle={this.saveHandle.bind(this)} markTime={timestamp}/></div>
