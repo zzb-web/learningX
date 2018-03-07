@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Table, Switch, Button,Radio,message} from 'antd';
-import {Post} from '../../../../fetch/data.js';
+import {Post,Delete} from '../../../../fetch/data.js';
 import './style.css';
 const RadioGroup = Radio.Group;
 
@@ -114,12 +114,20 @@ class ResultMark extends Component{
         time : timestamp,
         problems : newData
       }
+      console.log(saveMsg)
       if(newData.length !== 0){
         var result = Post('http://118.31.16.70/api/v3/students/me/problemsChecked/',saveMsg);
         result.then((response)=>{
           if(response.status ===200){
             this.props.saveHandle(false);
             message.success('结果标记成功',1.5);
+            var url = `http://118.31.16.70/api/v3/students/me/uploadTasks/${taskTime}/`
+            Delete(url).then(resp=>{
+              if(resp.status === 200){
+              }
+            }).catch(err=>{
+      
+            })
           }else{
             message.error('结果标记失败',1.5);
           }

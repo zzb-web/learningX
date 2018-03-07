@@ -49,7 +49,7 @@ class Homepage extends Component{
                 detailData : detailData,
                 markIndex : index,
                 showFail : false,
-                taskTime : resp.data.time
+                taskTime : time
             })
         }else if(resp.status === 404){
           this.setState({
