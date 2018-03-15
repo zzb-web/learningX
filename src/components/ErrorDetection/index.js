@@ -20,7 +20,9 @@ class ErrorDetection extends Component {
             failMsg : '',
             allNum : 0,
             maxNum : 0,
-            returnData : {}
+            returnData : {},
+            sort : '',
+            paper : ''
         }
     }
     changeCategory(value){
@@ -35,12 +37,24 @@ class ErrorDetection extends Component {
         })
     }
     sureBtnHandle(){
-      const {category , requestData, maxNum} = this.state;
+      const {category , requestData, maxNum,sort,paper} = this.state;
       if(maxNum === 0 || maxNum === undefined){
           this.setState({
             showFail : true,
             showDetail : false,
             failMsg : '请输入题目数量的最大值'
+          })
+      }else if(sort === ''){
+        this.setState({
+            showFail : true,
+            showDetail : false,
+            failMsg : '请选择题目排序方式'
+          })
+      }else if(paper === ''){
+        this.setState({
+            showFail : true,
+            showDetail : false,
+            failMsg : '请选择纸张大小'
           })
       }else{
       var url = `http://118.31.16.70/api/v3/students/me/${category}/`;
@@ -52,6 +66,8 @@ class ErrorDetection extends Component {
         }
       })
       var postMsg = {
+        sort : sort,
+        paper :paper,
         max: maxNum,
         bookPage:requestData
         }
@@ -155,6 +171,16 @@ class ErrorDetection extends Component {
             maxNum : value
         })
     }
+    changeSort(value){
+        this.setState({
+            sort:Number(value)
+        })
+    }
+    changePaper(value){
+        this.setState({
+            paper:Number(value)
+        })
+    }
     componentWillMount(){
         //设置数字，根据数字 ，截取返回数据数组
         const data = Get('http://118.31.16.70/api/v3/students/me/books/');
@@ -204,9 +230,19 @@ class ErrorDetection extends Component {
                                     <span>题量控制&nbsp;&nbsp;:</span>
                                     <InputNumber placeholder='控制题目数量的最大值' min={1} style={{ width: 240, marginLeft:'10px'}} onChange={this.maxNumChange.bind(this)}/>
                                 </div>
-                                <div className='select-category-1' style={{visibility:'hidden'}}>
+                                <div className='select-category-1'>
+                                    <span>排序算法&nbsp;&nbsp;:</span>
+                                    <Select placeholder='选择题目排序方式' style={{ width: 240, marginLeft:'10px' }} onChange={this.changeSort.bind(this)}>
+                                       <Option value='1'>按出题方式</Option>
+                                       <Option value='2'>按题目类型</Option>
+                                    </Select>
                                 </div>
-                                <div className='select-category-1' style={{visibility:'hidden'}}>
+                                <div className='select-category-1'>
+                                    <span>纸张大小&nbsp;&nbsp;:</span>
+                                    <Select placeholder='选择输出纸张的大小' style={{ width: 240, marginLeft:'10px' }} onChange={this.changePaper.bind(this)}>
+                                        <Option value='1'>A3</Option>
+                                        <Option value='2'>A4</Option>
+                                    </Select>
                                 </div>
                                 <div className='select-category-1' style={chooseAgain?{display:'block'}:{display:'none'}}>
                                     <span></span>
