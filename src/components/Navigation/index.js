@@ -99,7 +99,11 @@ class Navigation extends Component {
         >
           <div className='head-font'>
             达摩纠错本
-            <span className='pushin' onClick={this.menuHandle.bind(this)}><Icon type="pushpin"/></span>
+            <span className='pushin' 
+                  onClick={this.menuHandle.bind(this)} 
+                  style={!hideMenu?{display:'inline-block'}:{display:'none'}}>
+              <Icon type="pushpin"/>
+            </span>
           </div>
           <Icon
             className="trigger trigger-icon"
