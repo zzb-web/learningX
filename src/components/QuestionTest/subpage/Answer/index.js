@@ -33,7 +33,6 @@ class Answer extends React.Component{
                     })
                     this.refs.top.scrollIntoView();
                 }
-                
             }
          }
          if(deta < 0){

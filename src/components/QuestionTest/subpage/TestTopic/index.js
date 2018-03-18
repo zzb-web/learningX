@@ -112,7 +112,7 @@ class TestTopic extends React.Component{
             var dataParams = []
             data.map((item,i)=>{
                 item.map((item2,i2)=>{
-                    if(item2.type){
+                    if(item2.full){
                         dataObj[item2.problemId+'_'] = {
                             index : item2.index,
                             subIdx : item2.subIdx,
@@ -186,7 +186,7 @@ class TestTopic extends React.Component{
         var dataParams = []
         data.map((item,i)=>{
             item.map((item2,i2)=>{
-                if(item2.type){
+                if(item2.full){
                     dataObj[item2.problemId+'_'] = {
                         index : item2.index,
                         subIdx : item2.subIdx,
