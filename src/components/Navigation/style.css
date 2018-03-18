@@ -85,3 +85,11 @@
 /* .ant-layout-content{
   margin: 16px !important;
 } */
+
+.pushin{
+  color: #fff;
+  cursor: pointer;
+}
+.pushin:hover{
+  color: #108ee9;
+}

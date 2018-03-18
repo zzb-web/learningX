@@ -22,7 +22,8 @@ class Navigation extends Component {
     userMsg : {},
     userName : '',
     phone:'',
-    gender:''
+    gender:'',
+    hideMenu : false
   };
   toggle = () => {
     this.setState({
@@ -48,7 +49,7 @@ class Navigation extends Component {
     this.setState({
       showUser : 'block'
     })
-  }
+  } 
   userMouseLeave(e){
     this.setState({
       showUser : 'none'
@@ -63,14 +64,31 @@ class Navigation extends Component {
       }
     })
   }
+  menuHandle(){
+    sessionStorage.hideMenu = true;
+    this.setState({
+      hideMenu : true
+    })
+  }
   componentWillMount(){
     // console.log(sessionStorage.userId);
      if(sessionStorage.userId === undefined){
         this.props.history.push('/');
      }
+     const hideMenu = sessionStorage.hideMenu;
+     var flag;
+     if(hideMenu === undefined || hideMenu === "false"){
+        flag = false;
+     }else{
+        flag = true;
+     }
+     this.setState({
+       hideMenu : flag
+     })
   }
   render() {
-    const {userMsg,userName,phone,gender,school,classId,grade} = this.state;
+    const {userMsg,userName,phone,gender,school,classId,grade,hideMenu} = this.state;
+    console.log('xxxxxxx',hideMenu)
     return (
       <Layout>
         <Sider
@@ -79,7 +97,10 @@ class Navigation extends Component {
           collapsed={this.state.collapsed}
           width={130}
         >
-          <div className='head-font'>达摩纠错本</div>
+          <div className='head-font'>
+            达摩纠错本
+            <span className='pushin' onClick={this.menuHandle.bind(this)}><Icon type="pushpin"/></span>
+          </div>
           <Icon
             className="trigger trigger-icon"
             type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
@@ -94,26 +115,28 @@ class Navigation extends Component {
               <Icon type="book" />
               <span>错题标记</span>
             </Menu.Item>
-            <Menu.Item key="2">
+            
+            <Menu.Item key="2"  style={hideMenu?{display:'block'}:{display:'none'}}>
               <Icon type="appstore" />
               <span>错题归类</span>
             </Menu.Item>
-            <Menu.Item key="7">
+            <Menu.Item key="7" style={hideMenu?{display:'block'}:{display:'none'}}>
               <Icon type="bar-chart" />
               <span>错题测试</span>
             </Menu.Item>
-            <Menu.Item key="8">
+            <Menu.Item key="8" style={hideMenu?{display:'block'}:{display:'none'}}>
               <Icon type="link" />
               <span>检验题测试</span>
             </Menu.Item>
-            <Menu.Item key="5">
+            <Menu.Item key="5" style={hideMenu?{display:'block'}:{display:'none'}}>
               <Icon type="scan" />
               <span>错题复习</span>
             </Menu.Item>
-            <Menu.Item key="6">
+            <Menu.Item key="6" style={hideMenu?{display:'block'}:{display:'none'}}>
               <Icon type="database" />
               <span>考题检验</span>
             </Menu.Item>
+            
           </Menu>
         </Sider>
         <Layout>
