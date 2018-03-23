@@ -9,6 +9,7 @@ class ResultMark extends Component{
      super();
      this.state={
        data : [],
+       showSave : true
      }
    }
      resultClick(index,e){
@@ -95,6 +96,10 @@ class ResultMark extends Component{
      })
     }
     saveHandle(){
+      this.setState({
+        showSave : false
+      })
+      setTimeout(()=>{this.setState({showSave:true})},500)
       var url = `http://118.31.16.70/api/v3/students/me/uploadTasks/${this.props.markTime}/`;
       Delete(url).then(resp=>{
 
@@ -133,6 +138,7 @@ class ResultMark extends Component{
     }
     render(){
       const {detailData} = this.props;
+      const {showSave} = this.state;
       const columns = [{
         title: '题目序号',
         className: 'column-position',
@@ -208,7 +214,11 @@ class ResultMark extends Component{
                     />
                 </div>
                 <div className='save_btn'>
-                    <Button type="primary" size='large' style={{width:240,height:35}} onClick={this.saveHandle.bind(this)}>保存</Button>
+                    <Button type="primary" 
+                            size='large'
+                            disabled={!showSave} 
+                            style={{width:240,height:35}} 
+                            onClick={this.saveHandle.bind(this)}>保存</Button>
                 </div>
           </div>
         )

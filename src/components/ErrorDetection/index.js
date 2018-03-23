@@ -22,7 +22,8 @@ class ErrorDetection extends Component {
             maxNum : 0,
             returnData : {},
             sort : '',
-            paper : ''
+            paper : '',
+            showSure: true
         }
     }
     changeCategory(value){
@@ -37,6 +38,10 @@ class ErrorDetection extends Component {
         })
     }
     sureBtnHandle(){
+        this.setState({showSure : false})
+      setTimeout(()=>{
+          this.setState({showSure:true})
+      },500)
       const {category , requestData, maxNum,sort,paper} = this.state;
       if(maxNum === 0 || maxNum === undefined){
           this.setState({
@@ -211,7 +216,7 @@ class ErrorDetection extends Component {
         })
     }
     render(){
-        const {requestData,materials, chooseAgain , showMaterials ,detailData ,allNum ,showFail, failMsg, showDetail,returnData} = this.state;
+        const {showSure,requestData,materials, chooseAgain , showMaterials ,detailData ,allNum ,showFail, failMsg, showDetail,returnData} = this.state;
         return(
             <div className='error-detection'>
                 <Row>
@@ -270,7 +275,14 @@ class ErrorDetection extends Component {
                                 }
                                 <div className='addBtn'><Button icon="plus" style={{width:200}} onClick={this.addMaterials.bind(this)}>添加</Button></div>
                             </div>
-                            <div className='addBtn'><Button type="primary" size='large' style={{width:240,height:35,marginLeft:'10px'}} onClick={this.sureBtnHandle.bind(this)}>确定</Button></div>
+                            <div className='addBtn'>
+                                <Button type="primary" 
+                                        size='large' 
+                                        style={{width:240,height:35,marginLeft:'10px'}} 
+                                        onClick={this.sureBtnHandle.bind(this)}
+                                        disabled={!showSure}>确定</Button>
+
+                            </div>
                         </div>
                         {
                             showMaterials ? null : <Result data={detailData} returnData={returnData} saveHandle={this.saveHandle.bind(this)}/>

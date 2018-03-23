@@ -11,6 +11,7 @@ import QuestionTest from '../QuestionTest/index.js';
 import Homepage from '../Homepage/index.js';
 import ErrorDetection from '../ErrorDetection/index.js';
 import TestDetection from '../TestDetection/index.js';
+import StudentMsg from '../StudentMsg/index.js';
 import './style.css';
 const { Header, Sider, Content} = Layout;
 class Navigation extends Component {
@@ -115,6 +116,10 @@ class Navigation extends Component {
                 <Icon type="rocket" />
                 <span>首页</span>
             </Menu.Item>
+            <Menu.Item key="9">
+                <Icon type="user-add" />
+                <span>学生信息录入</span>
+            </Menu.Item>
             <Menu.Item key="1">
               <Icon type="book" />
               <span>错题标记</span>
@@ -193,6 +198,9 @@ class Navigation extends Component {
             }
             {
                 this.state.key === '8' ? <TestDetection/> : null
+            }
+            {
+              this.state.key === '9' ? <StudentMsg/> : null
             }
           </Content>
           {/* <Footer style={{ textAlign: 'center' }}>
