@@ -9,6 +9,7 @@ class ResultMark extends Component{
      super();
      this.state={
        data : [],
+       showSure: true
      }
    }
      resultClick(index,e){
@@ -96,6 +97,10 @@ class ResultMark extends Component{
      })
     }
     saveHandle(){
+      this.setState({showSure : false})
+      setTimeout(()=>{
+          this.setState({showSure:true})
+      },500)
       var timestamp = Date.parse(new Date())/1000; 
       var data = JSON.parse(JSON.stringify(this.state.data));
       const {taskTime} = this.props;
@@ -139,6 +144,7 @@ class ResultMark extends Component{
     }
     render(){
       const {detailData} = this.props;
+      const {showSure} = this.state;
       const columns = [{
         title: '题目序号',
         className: 'column-position',
@@ -214,7 +220,11 @@ class ResultMark extends Component{
                     />
                 </div>
                 <div className='save_btn'>
-                    <Button type="primary" size='large' style={{width:240,height:35}} onClick={this.saveHandle.bind(this)}>保存</Button>
+                    <Button type="primary" 
+                            size='large' 
+                            style={{width:240,height:35}} 
+                            onClick={this.saveHandle.bind(this)}
+                            disabled={!showSure}>保存</Button>
                 </div>
           </div>
         )

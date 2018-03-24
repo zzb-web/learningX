@@ -12,12 +12,13 @@ import Homepage from '../Homepage/index.js';
 import ErrorDetection from '../ErrorDetection/index.js';
 import TestDetection from '../TestDetection/index.js';
 import StudentMsg from '../StudentMsg/index.js';
+import axios from 'axios';
 import './style.css';
 const { Header, Sider, Content} = Layout;
 class Navigation extends Component {
   state = {
     collapsed: true,
-    key: '0',
+    key: '1',
     showUser : 'none',
     contentHeight :　0,
     userMsg : {},
@@ -102,7 +103,8 @@ class Navigation extends Component {
             达摩纠错本
             <span className='pushin' 
                   onClick={this.menuHandle.bind(this)} 
-                  style={!hideMenu?{display:'inline-block'}:{display:'none'}}>
+                  style={!hideMenu?{display:'none'}:{display:'none'}
+                  }>
               <Icon type="pushpin"/>
             </span>
           </div>
@@ -112,14 +114,14 @@ class Navigation extends Component {
             onClick={this.toggle}
           />
           <Menu theme="dark" mode="inline" onClick={this.clickHandle.bind(this)}>
-            <Menu.Item key="0">
+            <Menu.Item key="0" style={hideMenu?{display:'block'}:{display:'none'}}>
                 <Icon type="rocket" />
                 <span>首页</span>
             </Menu.Item>
-            <Menu.Item key="9">
+            {/* <Menu.Item key="9">
                 <Icon type="user-add" />
                 <span>学生信息录入</span>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item key="1">
               <Icon type="book" />
               <span>错题标记</span>
@@ -221,6 +223,7 @@ class Navigation extends Component {
     })
   }
   componentDidMount(){
+    axios.defaults.withCredentials = true;
     let that = this;
     let allHeight = document.documentElement.clientHeight;
     this.setState({

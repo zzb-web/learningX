@@ -6,10 +6,15 @@ class TopicResult extends Component{
    constructor(){
      super();
      this.state={
-       data : []
+       data : [],
+       showSure: true
      }
    }
     saveBtnHandle(){
+      this.setState({showSure : false})
+      setTimeout(()=>{
+          this.setState({showSure:true})
+      },500)
         let msg = [];
         // console.log(this.state.data)
         this.state.data.map((item,index)=>{
@@ -168,6 +173,7 @@ class TopicResult extends Component{
         }
         data1.push(a)
       })
+      const {showSure} = this.state;
         return(
                 <div className='topic-result'>
                     <h2 className='select-info-h2'>选择做题结果</h2>
@@ -194,7 +200,8 @@ class TopicResult extends Component{
                         <Button type="primary"
                                 size='large'
                                 style={{width:150,height:40,marginRight:'20px'}}
-                                onClick={this.saveBtnHandle.bind(this)}>保存</Button>
+                                onClick={this.saveBtnHandle.bind(this)}
+                                disabled={!showSure}>保存</Button>
                         <Button size='large'
                                 style={{width:150,height:40,marginLeft:'20px'}}
                                 onClick={this.cancelBtnHandle.bind(this)}
