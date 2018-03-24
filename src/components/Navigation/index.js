@@ -73,6 +73,7 @@ class Navigation extends Component {
     })
   }
   componentWillMount(){
+    axios.defaults.withCredentials = true;
     // console.log(sessionStorage.userId);
      if(sessionStorage.userId === undefined){
         this.props.history.push('/');
@@ -223,7 +224,7 @@ class Navigation extends Component {
     })
   }
   componentDidMount(){
-    axios.defaults.withCredentials = true;
+    
     let that = this;
     let allHeight = document.documentElement.clientHeight;
     this.setState({
