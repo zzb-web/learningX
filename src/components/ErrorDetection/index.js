@@ -82,8 +82,13 @@ class ErrorDetection extends Component {
         if(response.status === 200){
             var data1 = {};
             var detailData = [];
-            console.log(response.data);
-            response.data.wrongProblems.map((item,index)=>{
+            var wrongProblems = response.data.wrongProblems;
+            wrongProblems.map((item,index)=>{
+                item.problems.map((item2,index2)=>{
+                    item2.type = `${item2.book}/P${item2.page}/${item2.idx}`
+                })
+            })
+            wrongProblems.map((item,index)=>{
                 item.problems.map((item2,index2)=>{
                     if(data1[item2.problemId+'_']===undefined){
                         data1[item2.problemId+'_']=[];
@@ -96,6 +101,7 @@ class ErrorDetection extends Component {
             for(var key in data1){
                 detailData.push(data1[key])
             }
+            console.log(detailData)
             this.setState({
                 detailData : detailData,
                 showMaterials : false,
