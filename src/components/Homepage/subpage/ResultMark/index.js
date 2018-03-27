@@ -59,9 +59,21 @@ class ResultMark extends Component{
         data : data
       })
     }
+    componentWillMount(){
+      const {detailData} = this.props;
+      const data = this._dataHandle(detailData)
+     this.setState({
+       data : data
+     })
+    }
     componentWillReceiveProps(nextProps){
       const {detailData} = nextProps;
-      console.log(detailData)
+      const data = this._dataHandle(detailData)
+     this.setState({
+       data : data
+     })
+    }
+    _dataHandle(detailData){
       let data = [];
       if(detailData !==undefined){
       detailData.map((item,i1)=>{
@@ -92,9 +104,7 @@ class ResultMark extends Component{
         })
       })
     }
-     this.setState({
-       data : data
-     })
+    return data;
     }
     saveHandle(){
       this.setState({showSure : false})
@@ -156,11 +166,11 @@ class ResultMark extends Component{
         dataIndex: 'isCorrect',
         width:290,
       },
-      {
-        title: '状态信息',
-        className: 'column-status',
-        dataIndex: 'status',
-      },
+      // {
+      //   title: '状态信息',
+      //   className: 'column-status',
+      //   dataIndex: 'status',
+      // },
     ];
       var data1=[];
       this.state.data.map((data, i)=>{

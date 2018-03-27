@@ -17,8 +17,8 @@ import './style.css';
 const { Header, Sider, Content} = Layout;
 class Navigation extends Component {
   state = {
-    collapsed: true,
-    key: '1',
+    collapsed: false,
+    key: '0',
     showUser : 'none',
     contentHeight :　0,
     userMsg : {},
@@ -101,7 +101,7 @@ class Navigation extends Component {
           width={130}
         >
           <div className='head-font'>
-            达摩纠错本
+            错题标记
             <span className='pushin' 
                   onClick={this.menuHandle.bind(this)} 
                   style={!hideMenu?{display:'none'}:{display:'none'}
@@ -115,9 +115,9 @@ class Navigation extends Component {
             onClick={this.toggle}
           />
           <Menu theme="dark" mode="inline" onClick={this.clickHandle.bind(this)}>
-            <Menu.Item key="0" style={hideMenu?{display:'block'}:{display:'none'}}>
+            <Menu.Item key="0">
                 <Icon type="rocket" />
-                <span>首页</span>
+                <span>纠错本</span>
             </Menu.Item>
             {/* <Menu.Item key="9">
                 <Icon type="user-add" />
@@ -125,7 +125,7 @@ class Navigation extends Component {
             </Menu.Item> */}
             <Menu.Item key="1">
               <Icon type="book" />
-              <span>错题标记</span>
+              <span>平时作业</span>
             </Menu.Item>
             
             <Menu.Item key="2"  style={hideMenu?{display:'block'}:{display:'none'}}>

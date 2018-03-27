@@ -9,7 +9,7 @@ class ErrorDetection extends Component {
     constructor(){
         super();
         this.state = {
-            category : '',
+            category : 'onceWrongProblems',
             materials : [],
             chooseAgain : false,
             requestData : [],
@@ -19,10 +19,10 @@ class ErrorDetection extends Component {
             showDetail : false,
             failMsg : '',
             allNum : 0,
-            maxNum : 0,
+            maxNum : 10,
             returnData : {},
-            sort : '',
-            paper : '',
+            sort : 1,
+            paper : 2,
             showSure: true
         }
     }
@@ -43,6 +43,7 @@ class ErrorDetection extends Component {
           this.setState({showSure:true})
       },500)
       const {category , requestData, maxNum,sort,paper} = this.state;
+      console.log(sort)
       if(maxNum === 0 || maxNum === undefined){
           this.setState({
             showFail : true,
@@ -83,11 +84,13 @@ class ErrorDetection extends Component {
             var data1 = {};
             var detailData = [];
             var wrongProblems = response.data.wrongProblems;
-            wrongProblems.map((item,index)=>{
-                item.problems.map((item2,index2)=>{
-                    item2.type = `${item2.book}/P${item2.page}/${item2.idx}`
+            if(sort === 1){
+                wrongProblems.map((item,index)=>{
+                    item.problems.map((item2,index2)=>{
+                        item2.type = `${item2.book}/P${item2.page}/${item2.idx}`
+                    })
                 })
-            })
+            }
             wrongProblems.map((item,index)=>{
                 item.problems.map((item2,index2)=>{
                     if(data1[item2.problemId+'_']===undefined){
@@ -232,25 +235,29 @@ class ErrorDetection extends Component {
                             <div className='select-info-content'>
                                 <div className='select-category-1'>
                                     <span>错题状态&nbsp;&nbsp;:</span>
-                                    <Select placeholder='选择错题状态' style={{ width: 240, marginLeft:'10px' }} onChange={this.changeCategory.bind(this)}>
+                                    <Select placeholder='选择错题状态' style={{ width: 240, marginLeft:'10px' }} onChange={this.changeCategory.bind(this)} defaultValue='1'>
                                        <Option value='1'>曾经错过的所有题</Option>
                                        <Option value='2'>现在仍错的题</Option>
                                     </Select>
                                 </div>
                                 <div className='select-category-1'>
                                     <span>题量控制&nbsp;&nbsp;:</span>
-                                    <InputNumber placeholder='控制题目数量的最大值' min={1} style={{ width: 240, marginLeft:'10px'}} onChange={this.maxNumChange.bind(this)}/>
+                                    <InputNumber placeholder='控制题目数量的最大值'
+                                                 defaultValue = {10} 
+                                                 min={1} 
+                                                 style={{ width: 240, marginLeft:'10px'}} 
+                                                 onChange={this.maxNumChange.bind(this)}/>
                                 </div>
                                 <div className='select-category-1'>
                                     <span>排序算法&nbsp;&nbsp;:</span>
-                                    <Select placeholder='选择题目排序方式' style={{ width: 240, marginLeft:'10px' }} onChange={this.changeSort.bind(this)}>
+                                    <Select defaultValue='1' placeholder='选择题目排序方式' style={{ width: 240, marginLeft:'10px' }} onChange={this.changeSort.bind(this)}>
                                        <Option value='1'>按出题方式</Option>
                                        <Option value='2'>按题目类型</Option>
                                     </Select>
                                 </div>
                                 <div className='select-category-1'>
                                     <span>纸张大小&nbsp;&nbsp;:</span>
-                                    <Select placeholder='选择输出纸张的大小' style={{ width: 240, marginLeft:'10px' }} onChange={this.changePaper.bind(this)}>
+                                    <Select defaultValue='2' placeholder='选择输出纸张的大小' style={{ width: 240, marginLeft:'10px' }} onChange={this.changePaper.bind(this)}>
                                         <Option value='1'>A3</Option>
                                         <Option value='2'>A4</Option>
                                     </Select>
