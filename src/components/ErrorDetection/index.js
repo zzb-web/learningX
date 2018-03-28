@@ -9,7 +9,7 @@ class ErrorDetection extends Component {
     constructor(){
         super();
         this.state = {
-            category : 'onceWrongProblems',
+            category : 'newestWrongProblems',
             materials : [],
             chooseAgain : false,
             requestData : [],
@@ -235,7 +235,7 @@ class ErrorDetection extends Component {
                             <div className='select-info-content'>
                                 <div className='select-category-1'>
                                     <span>错题状态&nbsp;&nbsp;:</span>
-                                    <Select placeholder='选择错题状态' style={{ width: 240, marginLeft:'10px' }} onChange={this.changeCategory.bind(this)} defaultValue='1'>
+                                    <Select placeholder='选择错题状态' style={{ width: 240, marginLeft:'10px' }} onChange={this.changeCategory.bind(this)} defaultValue='2'>
                                        <Option value='1'>曾经错过的所有题</Option>
                                        <Option value='2'>现在仍错的题</Option>
                                     </Select>

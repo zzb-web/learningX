@@ -121,6 +121,7 @@ class ResultMark extends Component{
           delete item.key;
           delete item.position;
           delete item.status;
+          item.smooth = -1
           newData.push(item)
         }
       })
