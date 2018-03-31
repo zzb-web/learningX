@@ -2,16 +2,25 @@ import React, { Component } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import {Get, Post} from '../../fetch/data.js';
 import { withRouter } from 'react-router';
-import ErrorSum from '../ErrorSum/index.js';
-import InfoInput from '../InfoInput/index.js';
+// import ErrorSum from '../ErrorSum/index.js';
+// import InfoInput from '../InfoInput/index.js';
 import UserMsgForm from '../UserMsg/index.js';
-import PassWordForm from '../PassWord/index.js';
-import ReviewOfError from '../ReviewOfError/index.js';
-import QuestionTest from '../QuestionTest/index.js';
-import Homepage from '../Homepage/index.js';
-import ErrorDetection from '../ErrorDetection/index.js';
-import TestDetection from '../TestDetection/index.js';
-import StudentMsg from '../StudentMsg/index.js';
+// import PassWordForm from '../PassWord/index.js';
+// import ReviewOfError from '../ReviewOfError/index.js';
+// import QuestionTest from '../QuestionTest/index.js';
+// import Homepage from '../Homepage/index.js';
+import {HomepageLoadable , 
+        ErrorSumLoadable ,
+        InfoInputLoadable ,
+        PassWordFormLoadable,
+        ReviewOfErrorLoadable,
+        QuestionTestLoadable,
+        ErrorDetectionLoadable,
+        TestDetectionLoadable,
+        StudentMsgLoadable} from '../Loadable/homepageaComponent.js';
+// import ErrorDetection from '../ErrorDetection/index.js';
+// import TestDetection from '../TestDetection/index.js';
+// import StudentMsg from '../StudentMsg/index.js';
 import axios from 'axios';
 import './style.css';
 const { Header, Sider, Content} = Layout;
@@ -169,13 +178,13 @@ class Navigation extends Component {
           </Header>
           <Content style={{ margin: '16px 16px', padding: 24, background: '#fff', minHeight:this.state.contentHeight,/*marginTop:80 */ }}>
             {
-                 this.state.key === '0' ? <Homepage/> : null
+                 this.state.key === '0' ? <HomepageLoadable/> : null
             }
             {
-                 this.state.key === '1' ? <InfoInput /> : null
+                 this.state.key === '1' ? <InfoInputLoadable /> : null
             }
             {
-                this.state.key === '2' ? <ErrorSum /> : null
+                this.state.key === '2' ? <ErrorSumLoadable /> : null
             }
             {
                  this.state.key === '3' ? <UserMsgForm userMsg={userMsg}
@@ -188,22 +197,22 @@ class Navigation extends Component {
                                                        modifyUserMsg={this.modifyUserMsg.bind(this)}/> : null
             }
             {
-                 this.state.key === '4' ? <PassWordForm/> : null
+                 this.state.key === '4' ? <PassWordFormLoadable/> : null
             }
             {
-                this.state.key === '5' ? <ReviewOfError/> : null
+                this.state.key === '5' ? <ReviewOfErrorLoadable/> : null
             }
             {
-                this.state.key === '6' ? <QuestionTest/> : null
+                this.state.key === '6' ? <QuestionTestLoadable/> : null
             }
             {
-                this.state.key === '7' ? <ErrorDetection/> : null
+                this.state.key === '7' ? <ErrorDetectionLoadable/> : null
             }
             {
-                this.state.key === '8' ? <TestDetection/> : null
+                this.state.key === '8' ? <TestDetectionLoadable/> : null
             }
             {
-              this.state.key === '9' ? <StudentMsg/> : null
+              this.state.key === '9' ? <StudentMsgLoadable/> : null
             }
           </Content>
           {/* <Footer style={{ textAlign: 'center' }}>

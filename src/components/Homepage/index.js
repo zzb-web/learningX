@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Table , Row , Col,Popconfirm, message,Button} from 'antd';
+
 import axios from 'axios';
 import './style.css';
 import Result from './subpage/Result/index.js';
@@ -163,4 +164,6 @@ class Homepage extends Component{
           })
     }
 }
+
+
   export default Homepage;
