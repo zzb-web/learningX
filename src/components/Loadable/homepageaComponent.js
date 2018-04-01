@@ -114,6 +114,16 @@ const TestErrorMarkerComponent = Loadable({
   }
 }
 
+const TestErrorDetectionComponent = Loadable({
+  loader: () => import('../TestErrorDetection/index.js'),
+  loading: MyLoadingComponent,
+});
+ class TestErrorDetectionLoadable extends React.Component {
+  render() {
+    return <TestErrorDetectionComponent/>;
+  }
+}
+
 export {HomepageLoadable,
         ErrorSumLoadable , 
         InfoInputLoadable ,
@@ -123,4 +133,5 @@ export {HomepageLoadable,
         ErrorDetectionLoadable,
         TestDetectionLoadable,
         StudentMsgLoadable,
-        TestErrorMarkerLoadable}
+        TestErrorMarkerLoadable,
+        TestErrorDetectionLoadable}

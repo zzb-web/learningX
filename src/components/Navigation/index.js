@@ -18,7 +18,8 @@ import {HomepageLoadable ,
         ErrorDetectionLoadable,
         TestDetectionLoadable,
         StudentMsgLoadable,
-        TestErrorMarkerLoadable} from '../Loadable/homepageaComponent.js';
+        TestErrorMarkerLoadable,
+        TestErrorDetectionLoadable} from '../Loadable/homepageaComponent.js';
 // import ErrorDetection from '../ErrorDetection/index.js';
 // import TestDetection from '../TestDetection/index.js';
 // import TestErrorMarker from '../TestErrorMarker/index.js';
@@ -149,6 +150,10 @@ class Navigation extends Component {
               <Icon type="bar-chart" />
               <span>错题测试</span>
             </Menu.Item>
+            <Menu.Item key="10">
+              <Icon type="exception" />
+              <span>试卷错题测试</span>
+            </Menu.Item>
             <Menu.Item key="8" style={hideMenu?{display:'block'}:{display:'none'}}>
               <Icon type="link" />
               <span>检验题测试</span>
@@ -220,6 +225,9 @@ class Navigation extends Component {
             } */}
             {
               this.state.key === '9' ? <TestErrorMarkerLoadable/> : null
+            }
+            {
+              this.state.key === '10' ? <TestErrorDetectionLoadable/> : null
             }
           </Content>
           {/* <Footer style={{ textAlign: 'center' }}>
