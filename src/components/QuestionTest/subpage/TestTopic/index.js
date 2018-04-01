@@ -3,6 +3,9 @@ import {Button,Modal} from 'antd';
 import { Document, Page } from 'react-pdf';
 import{Post} from '../../../../fetch/data.js';
 class TestTopic extends React.Component{
+    static defaultProps = {
+        paper : ''
+    }
     constructor(){
         super();
         this.state={
@@ -221,14 +224,35 @@ class TestTopic extends React.Component{
                  })
             }
         }
-        var params = [];
-        for(var key in dataParams){
-            params.push({
-                type : key,
-                problems : dataParams[key]
-            })
+        var paper = this.props.paper;
+        if(paper === ''){
+            var params = [];
+            for(var key in dataParams){
+                params.push({
+                    type : key,
+                    problems : dataParams[key]
+                })
+            }
+        }else{
+            var problems = [];
+            var paperString;
+            if(paper === 1){
+                paperString = 'A3';
+            }else{
+                paperString = 'A4';
+            }
+            for(var key in dataParams){
+                problems.push({
+                    type : key,
+                    problems : dataParams[key]
+                })
+            }
+            var params = {
+                type : paperString,
+                problems : problems
+            }
         }
-        // console.log(params)
+        
         var result = Post('http://118.31.16.70/api/v3/students/me/getProblemsFile/',params);  
         result.then((response)=>{
             if(response.status === 200){

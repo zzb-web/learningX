@@ -109,7 +109,7 @@ class Navigation extends Component {
           trigger={null}
           collapsible
           collapsed={this.state.collapsed}
-          width={130}
+          width={135}
         >
           <div className='head-font'>
             错题标记

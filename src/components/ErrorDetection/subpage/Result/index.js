@@ -6,11 +6,14 @@ import KnowledgePoint from '../../../QuestionTest/subpage/KnowledgePoint/index.j
 import Answer from '../../../QuestionTest/subpage/Answer/index.js'
 import './style.css';
 class Result extends React.Component{
+    static defaultProps = {
+        paper : ''
+    }
     constructor(props) {
         super(props);
         this.state = {
           mode: 'test',
-          timestamp : 0
+          timestamp : 0,
         };
       }
       handleModeChange(e){
@@ -27,7 +30,7 @@ class Result extends React.Component{
       }
     render(){
         const { mode, timestamp} = this.state;
-        const {data,returnData} = this.props;
+        const {data,returnData,paper} = this.props;
         var detailData = data;
         return(
             <div className='main-content'>
@@ -40,7 +43,7 @@ class Result extends React.Component{
                     </Radio.Group>
                 </div>
                 <div className='select-content'>
-                    <div style={mode === 'test'?{display:'block'}:{display:'none'}}><TestTopic data={detailData} returnData={returnData} category='1' current='00' getTimeStamp={this.getTimeStamp.bind(this)}/></div>
+                    <div style={mode === 'test'?{display:'block'}:{display:'none'}}><TestTopic data={detailData} returnData={returnData} category='1' current='00' paper={paper} getTimeStamp={this.getTimeStamp.bind(this)}/></div>
                     <div style={mode === 'knowledgePoint'?{display:'block'}:{display:'none'}}><KnowledgePoint data={detailData} category='1'/></div>
                     <div style={mode === 'answer'?{display:'block'}:{display:'none'}}><Answer data={detailData} category='1'/></div>
                     <div style={mode === 'resultMark'?{display:'block'}:{display:'none'}}><ResultMark detailData={detailData} saveHandle={this.saveHandle.bind(this)} markTime={timestamp}/></div>
