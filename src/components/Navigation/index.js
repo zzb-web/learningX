@@ -17,10 +17,11 @@ import {HomepageLoadable ,
         QuestionTestLoadable,
         ErrorDetectionLoadable,
         TestDetectionLoadable,
-        StudentMsgLoadable} from '../Loadable/homepageaComponent.js';
+        StudentMsgLoadable,
+        TestErrorMarkerLoadable} from '../Loadable/homepageaComponent.js';
 // import ErrorDetection from '../ErrorDetection/index.js';
 // import TestDetection from '../TestDetection/index.js';
-// import StudentMsg from '../StudentMsg/index.js';
+// import TestErrorMarker from '../TestErrorMarker/index.js';
 import axios from 'axios';
 import './style.css';
 const { Header, Sider, Content} = Layout;
@@ -136,7 +137,10 @@ class Navigation extends Component {
               <Icon type="book" />
               <span>平时作业</span>
             </Menu.Item>
-            
+            <Menu.Item key="9">
+              <Icon type="line-chart" />
+              <span>试卷错题标记</span>
+            </Menu.Item>
             <Menu.Item key="2"  style={hideMenu?{display:'block'}:{display:'none'}}>
               <Icon type="appstore" />
               <span>错题归类</span>
@@ -211,8 +215,11 @@ class Navigation extends Component {
             {
                 this.state.key === '8' ? <TestDetectionLoadable/> : null
             }
-            {
+            {/* {
               this.state.key === '9' ? <StudentMsgLoadable/> : null
+            } */}
+            {
+              this.state.key === '9' ? <TestErrorMarkerLoadable/> : null
             }
           </Content>
           {/* <Footer style={{ textAlign: 'center' }}>
