@@ -71,11 +71,17 @@ class ErrorDetection extends Component {
             return false;
         }
       })
+      var thisRequestData = [];
+      requestData.map((item,index)=>{
+        if(item.book !== ''){
+            thisRequestData.push(item)
+        }
+      })
       var postMsg = {
         sort : sort,
         paper :paper,
         max: maxNum,
-        bookPage:requestData
+        bookPage:thisRequestData
         }
       if(requestFlag){
       Post(url,postMsg)

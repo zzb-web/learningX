@@ -64,17 +64,17 @@ class TestErrorDetection extends Component {
       }else{
       var url = `http://118.31.16.70/api/v3/students/me/${category}/`;
       var requestFlag = true;
-    //   requestData.map((item,index)=>{
-    //     if(item.startPage === undefined || item.endPage === undefined){
-    //         requestFlag = false;
-    //         return false;
-    //     }
-    //   })
+      var thisRequestData = [];
+      requestData.map((item,index)=>{
+        if(item !== ''){
+            thisRequestData.push(item)
+        }
+      })
       var postMsg = {
         sort : sort,
         paper :paper,
         max: maxNum,
-        paperIDs:requestData
+        paperIDs:thisRequestData
         }
         console.log(postMsg)
       if(requestFlag){
