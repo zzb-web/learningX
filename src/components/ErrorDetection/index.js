@@ -225,7 +225,7 @@ class ErrorDetection extends Component {
         })
     }
     render(){
-        const {showSure,requestData,materials, chooseAgain , showMaterials ,detailData ,allNum ,showFail, failMsg, showDetail,returnData} = this.state;
+        const {showSure,requestData,materials, chooseAgain , showMaterials ,detailData ,allNum ,showFail, failMsg, showDetail,returnData,paper} = this.state;
         return(
             <div className='error-detection'>
                 <Row>
@@ -298,7 +298,7 @@ class ErrorDetection extends Component {
                             </div>
                         </div>
                         {
-                            showMaterials ? null : <Result data={detailData} returnData={returnData} saveHandle={this.saveHandle.bind(this)}/>
+                            showMaterials ? null : <Result data={detailData} returnData={returnData} saveHandle={this.saveHandle.bind(this)} paper={paper}/>
                         }
                     </Col>
                     <Col span={1}></Col>

@@ -248,7 +248,7 @@ class TestTopic extends React.Component{
                 })
             }
             var params = {
-                type : paperString,
+                pageType : paperString,
                 problems : problems
             }
         }
