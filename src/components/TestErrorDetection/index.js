@@ -292,7 +292,7 @@ class AddLearningMaterials extends React.Component{
         const {name,materials} = this.props;
         return(
             <div style={{marginTop:20}}>
-                <span className='subsection'><span>试卷名称:</span><Select onChange={this.selectMaterials.bind(this)} style={{width:'30%'}}>
+                <span className='subsection'><span>试卷名称:</span><Select onChange={this.selectMaterials.bind(this)} style={{width:240}}>
                                                                     {materials.map((item,index)=><Option value={item.paperID} key={index}>{item.name}</Option>)}
                                                                   </Select></span>
             </div>

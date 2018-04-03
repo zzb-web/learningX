@@ -138,7 +138,7 @@ class Navigation extends Component {
               <Icon type="book" />
               <span>平时作业</span>
             </Menu.Item>
-            <Menu.Item key="9">
+            <Menu.Item key="9" style={hideMenu?{display:'block'}:{display:'none'}}>
               <Icon type="line-chart" />
               <span>试卷错题标记</span>
             </Menu.Item>
@@ -150,7 +150,7 @@ class Navigation extends Component {
               <Icon type="bar-chart" />
               <span>错题测试</span>
             </Menu.Item>
-            <Menu.Item key="10">
+            <Menu.Item key="10" style={hideMenu?{display:'block'}:{display:'none'}}>
               <Icon type="exception" />
               <span>试卷错题测试</span>
             </Menu.Item>

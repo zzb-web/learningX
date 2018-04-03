@@ -100,6 +100,12 @@ class TopicResult extends Component{
       console.log(topicAll)
       let data = [];
       topicAll.map((item,index)=>{
+        var slash;
+            if(item.column === ''){
+                slash = '';
+            }else{
+                slash = '/';
+            }
         if(item.subIdx===-1){
           if(item.idx === -1){
             data.push({
@@ -110,9 +116,10 @@ class TopicResult extends Component{
               problemId : item.problemId,
             })
           }else{
+            
             data.push({
               key : index +1,
-              position : `${item.column}/${item.idx}`,
+              position : `${item.column}${slash}${item.idx}`,
               status : true,
               isCorrect : true,
               problemId : item.problemId,
@@ -122,7 +129,7 @@ class TopicResult extends Component{
           data.push({
             problemId : item.problemId,
             key : index +1,
-            position : `${item.column}/${item.idx}/(${item.subIdx})`,
+            position : `${item.column}${slash}${item.idx}/(${item.subIdx})`,
             status : true,
             isCorrect : true,
             problemId : item.problemId,
