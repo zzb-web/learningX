@@ -104,10 +104,8 @@ class TestTopic extends React.Component{
           );
     }
     componentWillReceiveProps(nextProps){
-        // console.log('willreceive');
         var data = nextProps.data;
         if(JSON.stringify(this.state.data)!==JSON.stringify(nextProps.data)){
-            // console.log('不一样')
             this.setState({
                 data : data
             })
@@ -115,23 +113,30 @@ class TestTopic extends React.Component{
             var dataParams = []
             data.map((item,i)=>{
                 item.map((item2,i2)=>{
-                    if(item2.full){
-                        dataObj[item2.problemId+'_'] = {
+                          dataObj[item2.problemId+'_'+i2] = {
                             index : item2.index,
                             subIdx : item2.subIdx,
                             full : item2.full,
                             type : item2.type
                             }
-                    }else{
-                        dataObj[item2.problemId+'_'+i2] = {
-                            index : item2.index,
-                            subIdx : item2.subIdx,
-                            full : item2.full,
-                            type : item2.type
-                            }
-                    }                                
+                    // if(item2.full){
+                    //     dataObj[item2.problemId+'_'] = {
+                    //         index : item2.index,
+                    //         subIdx : item2.subIdx,
+                    //         full : item2.full,
+                    //         type : item2.type
+                    //         }
+                    // }else{
+                    //     dataObj[item2.problemId+'_'+i2] = {
+                    //         index : item2.index,
+                    //         subIdx : item2.subIdx,
+                    //         full : item2.full,
+                    //         type : item2.type
+                    //         }
+                    // }                                
                 })
             })
+            console.log(dataObj)
             for(var key in dataObj){
                 if(dataParams[dataObj[key].type] === undefined){
                     dataParams[dataObj[key].type] = [];
@@ -189,21 +194,27 @@ class TestTopic extends React.Component{
         var dataParams = []
         data.map((item,i)=>{
             item.map((item2,i2)=>{
-                if(item2.full){
-                    dataObj[item2.problemId+'_'] = {
-                        index : item2.index,
-                        subIdx : item2.subIdx,
-                        full : item2.full,
-                        type : item2.type
-                        }
-                }else{
-                    dataObj[item2.problemId+'_'+i2] = {
-                        index : item2.index,
-                        subIdx : item2.subIdx,
-                        full : item2.full,
-                        type : item2.type
-                        }
-                }
+                dataObj[item2.problemId+'_'+i2] = {
+                    index : item2.index,
+                    subIdx : item2.subIdx,
+                    full : item2.full,
+                    type : item2.type
+                    }
+                // if(item2.full){
+                //     dataObj[item2.problemId+'_'] = {
+                //         index : item2.index,
+                //         subIdx : item2.subIdx,
+                //         full : item2.full,
+                //         type : item2.type
+                //         }
+                // }else{
+                //     dataObj[item2.problemId+'_'+i2] = {
+                //         index : item2.index,
+                //         subIdx : item2.subIdx,
+                //         full : item2.full,
+                //         type : item2.type
+                //         }
+                // }
             })
         })
         for(var key in dataObj){
