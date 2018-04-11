@@ -45,7 +45,7 @@ class Result extends React.Component{
                 <div className='select-content'>
                     <div style={mode === 'test'?{display:'block'}:{display:'none'}}><TestTopic data={detailData} returnData={returnData} category='1' current='00' paper={paper} getTimeStamp={this.getTimeStamp.bind(this)}/></div>
                     <div style={mode === 'knowledgePoint'?{display:'block'}:{display:'none'}}><KnowledgePoint data={detailData} category='1'/></div>
-                    <div style={mode === 'answer'?{display:'block'}:{display:'none'}}><Answer data={detailData} category='1'/></div>
+                    <div style={mode === 'answer'?{display:'block'}:{display:'none'}}><Answer data={detailData} category='1' paper={paper}/></div>
                     <div style={mode === 'resultMark'?{display:'block'}:{display:'none'}}><ResultMark detailData={detailData} saveHandle={this.saveHandle.bind(this)} markTime={timestamp}/></div>
                 </div>
             </div>

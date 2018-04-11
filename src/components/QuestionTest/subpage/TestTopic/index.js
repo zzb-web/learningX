@@ -155,14 +155,41 @@ class TestTopic extends React.Component{
                     })
                 }
             }
-            var params = [];
-            for(var key in dataParams){
-                params.push({
-                    type : key,
-                    problems : dataParams[key]
-                })
+            // var params = [];
+            // for(var key in dataParams){
+            //     params.push({
+            //         type : key,
+            //         problems : dataParams[key]
+            //     })
+            // }
+            var paper =nextProps.paper;
+            if(paper === ''){
+                var params = [];
+                for(var key in dataParams){
+                    params.push({
+                        type : key,
+                        problems : dataParams[key]
+                    })
+                }
+            }else{
+                var problems = [];
+                var paperString;
+                if(paper === 1){
+                    paperString = 'A3';
+                }else{
+                    paperString = 'A4';
+                }
+                for(var key in dataParams){
+                    problems.push({
+                        type : key,
+                        problems : dataParams[key]
+                    })
+                }
+                var params = {
+                    pageType : paperString,
+                    problems : problems
+                }
             }
-            // console.log(params);
             var result = Post('http://118.31.16.70/api/v3/students/me/getProblemsFile/',params);  
             result.then((response)=>{
                 if(response.status === 200){
@@ -185,7 +212,6 @@ class TestTopic extends React.Component{
     }
 
    componentDidMount(){
-        // console.log('componentDidMount');
         var data = this.props.data;
         this.setState({
             data:data

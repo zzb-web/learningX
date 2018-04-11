@@ -87,13 +87,34 @@ class Answer extends React.Component{
                     dataObj[item2.problemId+'_'] = item2.index
                 })
             })
-            for(var key in dataObj){
-                dataParams.push({
-                    problemId: key.split('_')[0],
-                    index: dataObj[key],
-                })
+            var paper = nextProps.paper;
+            if(paper === ''){
+                var dataParams = []
+                for(var key in dataObj){
+                    dataParams.push({
+                        problemId: key.split('_')[0],
+                        index: dataObj[key],
+                    })
+                }
+            }else{
+                var problems = [];
+                var paperString;
+                if(paper === 1){
+                    paperString = 'A3';
+                }else{
+                    paperString = 'A4';
+                }
+                for(var key in dataObj){
+                    problems.push({
+                        problemId: key.split('_')[0],
+                        index: dataObj[key],
+                    })
+                }
+                var dataParams = {
+                    pageType : paperString,
+                    problems : problems
+                }
             }
-            // console.log('YYYYYYYY',dataParams)
             var result = Post('http://118.31.16.70/api/v3/students/me/getAnswersFile/',dataParams);  
             result.then((response)=>{
                 if(response.status === 200){
@@ -120,19 +141,41 @@ class Answer extends React.Component{
             data:data
         })
         var dataObj = {};
-        var dataParams = []
         data.map((item,i)=>{
             item.map((item2,i2)=>{
                 dataObj[item2.problemId+'_'] = item2.index
             })
         })
-        for(var key in dataObj){
-            dataParams.push({
-                problemId: key.split('_')[0],
-                index: dataObj[key],
-            })
+       
+        var paper = this.props.paper;
+        if(paper === ''){
+            var dataParams = []
+            for(var key in dataObj){
+                dataParams.push({
+                    problemId: key.split('_')[0],
+                    index: dataObj[key],
+                })
+            }
+        }else{
+            var problems = [];
+            var paperString;
+            if(paper === 1){
+                paperString = 'A3';
+            }else{
+                paperString = 'A4';
+            }
+            for(var key in dataObj){
+                problems.push({
+                    problemId: key.split('_')[0],
+                    index: dataObj[key],
+                })
+            }
+            var dataParams = {
+                pageType : paperString,
+                problems : problems
+            }
         }
-        // console.log('YYYYYYYY',dataParams)
+
         var result = Post('http://118.31.16.70/api/v3/students/me/getAnswersFile/',dataParams);  
         result.then((response)=>{
             if(response.status === 200){
