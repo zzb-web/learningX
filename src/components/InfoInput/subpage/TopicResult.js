@@ -38,7 +38,7 @@ class TopicResult extends Component{
             }
           }
         })
-        const url = 'http://118.31.16.70/api/v3/students/me/problems/';
+        const url = '/api/v3/students/me/problems/';
         var params = {
           time : this.props.date,
           problems : msg

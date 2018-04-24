@@ -99,7 +99,7 @@ class KnowledgePoint extends React.Component{
                 })
             }
             // console.log('YYYYYYYY',dataParams)
-            var result = Post('http://118.31.16.70/api/v3/students/me/getPointsFile/',dataParams);  
+            var result = Post('/api/v3/students/me/getPointsFile/',dataParams);  
             result.then((response)=>{
                 if(response.status === 200){
                     this.setState({
@@ -142,7 +142,7 @@ class KnowledgePoint extends React.Component{
             })
         }
         // console.log('YYYYYYYY',dataParams)
-        var result = Post('http://118.31.16.70/api/v3/students/me/getPointsFile/',dataParams);  
+        var result = Post('/api/v3/students/me/getPointsFile/',dataParams);  
         result.then((response)=>{
             if(response.status === 200){
                 this.setState({

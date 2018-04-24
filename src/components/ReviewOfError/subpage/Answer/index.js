@@ -88,6 +88,7 @@ class Answer extends React.Component{
                     dataObj[item2.problemId+'_'] = item2.index
                 })
             })
+            console.log(dataObj)
             for(var key in dataObj){
                 dataParams.push({
                     problemId: key.split('_')[0],
@@ -95,7 +96,7 @@ class Answer extends React.Component{
                 })
             }
             // console.log('YYYYYYYY',dataParams)
-            var result = Post('http://118.31.16.70/api/v3/students/me/getAnswersFile/',dataParams);  
+            var result = Post('/api/v3/students/me/getAnswersFile/',dataParams);  
             result.then((response)=>{
                 if(response.status === 200){
                     this.setState({
@@ -127,6 +128,7 @@ class Answer extends React.Component{
                 dataObj[item2.problemId+'_'] = item2.index
             })
         })
+        console.log(dataObj)
         for(var key in dataObj){
             dataParams.push({
                 problemId: key.split('_')[0],
@@ -134,7 +136,7 @@ class Answer extends React.Component{
             })
         }
         // console.log('YYYYYYYY',dataParams)
-        var result = Post('http://118.31.16.70/api/v3/students/me/getAnswersFile/',dataParams);  
+        var result = Post('/api/v3/students/me/getAnswersFile/',dataParams);  
         result.then((response)=>{
             if(response.status === 200){
                 this.setState({

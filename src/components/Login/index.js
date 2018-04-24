@@ -11,7 +11,7 @@ class NormalLoginForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         values.learnId = Number(values.learnId);
-        let status = Post('http://118.31.16.70/api/v3/students/login/',values);
+        let status = Post('/api/v3/students/login/',values);
         status.then(function(response){
             if(response === undefined){
                 alert('用户名或者密码错误！')

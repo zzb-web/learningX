@@ -133,12 +133,12 @@ class ResultMark extends Component{
       }
       console.log(saveMsg)
       if(newData.length !== 0){
-        var result = Post('http://118.31.16.70/api/v3/students/me/problemsChecked/',saveMsg);
+        var result = Post('/api/v3/students/me/problemsChecked/',saveMsg);
         result.then((response)=>{
           if(response.status ===200){
             this.props.saveHandle(false);
             message.success('结果标记成功',1.5);
-            var url = `http://118.31.16.70/api/v3/students/me/uploadTasks/${taskTime}/`
+            var url = `/api/v3/students/me/uploadTasks/${taskTime}/`
             Delete(url).then(resp=>{
               if(resp.status === 200){
               }

@@ -34,7 +34,7 @@ class InfoInput extends Component {
                     hasFail:'作业日期不正常'
                 })
        }else{
-        let url = 'http://118.31.16.70/api/v3/students/me/problems/?book='+current+'&page='+page;
+        let url = '/api/v3/students/me/problems/?book='+current+'&page='+page;
         let data = Get(url);
         data.then((response)=>{
             if(response.status ===200){
@@ -207,7 +207,7 @@ class InfoInput extends Component {
     }
     componentDidMount(){
         let that = this;
-        const data = Get('http://118.31.16.70/api/v3/students/me/books/');
+        const data = Get('/api/v3/students/me/books/');
         data.then((response)=>{
             if(response.status === 200){
                 this.setState({books:response.data})

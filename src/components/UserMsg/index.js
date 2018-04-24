@@ -28,7 +28,7 @@ class RegistrationForm extends Component {
                     telephone: values.phone
                 }
                 // console.log(params)
-                var result = Patch('http://118.31.16.70/api/v3/students/me/profile/',params)
+                var result = Patch('/api/v3/students/me/profile/',params)
                 result.then((response)=>{
                     if(response.status ===200){
                      this.props.modifyUserMsg(values.name,values.phone,values.gender,values.school,values.class,values.grade);

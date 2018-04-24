@@ -70,7 +70,7 @@ class ReviewOfError extends Component {
             // this.setState({
             //     showWarning:false
             // })
-            let url = `http://118.31.16.70/api/v3/students/me/wrongProblemsInfo/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
+            let url = `/api/v3/students/me/wrongProblemsInfo/?chapter=${currentChapterNum}&section=${currentSectionNum}`;
             let data = Get(url);
             data.then((response)=>{
                 // console.log(response.data)
@@ -199,7 +199,7 @@ class ReviewOfError extends Component {
         )
     }
     componentDidMount(){
-        const data = Get('http://118.31.16.70/api/v3/students/me/info/?chapter=1&section=1');
+        const data = Get('/api/v3/students/me/info/?chapter=1&section=1');
         data.then((response)=>{
             let chapters = [];
             let chapters_sections = {};

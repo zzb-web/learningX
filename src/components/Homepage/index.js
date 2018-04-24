@@ -26,7 +26,7 @@ class Homepage extends Component{
     markHandle(index){
       const {data} = this.state;
       const time = data[index].time;
-      var url = `http://118.31.16.70/api/v3/students/me/uploadTasks/${time}/`;
+      var url = `/api/v3/students/me/uploadTasks/${time}/`;
       Get(url).then(resp=>{
         if(resp.status ===200){
             var data1 = {};
@@ -66,7 +66,7 @@ class Homepage extends Component{
     confirm(index){
       const {data} = this.state;
       const time = data[index].time;
-      var url = `http://118.31.16.70/api/v3/students/me/uploadTasks/${time}/`
+      var url = `/api/v3/students/me/uploadTasks/${time}/`
       Delete(url).then(resp=>{
         if(resp.status === 200){
           data.splice(index,1)
@@ -153,7 +153,7 @@ class Homepage extends Component{
     }
     componentDidMount(){
           axios.defaults.withCredentials = true;
-          var url = `http://118.31.16.70/api/v3/students/me/uploadTasks/`;
+          var url = `/api/v3/students/me/uploadTasks/`;
           Get(url).then(resp=>{
             console.log(resp)
             this.setState({

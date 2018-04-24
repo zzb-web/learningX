@@ -130,7 +130,7 @@ class ErrorTopic extends React.Component{
                 })
             }
             // console.log(params);
-            var result = Post('http://118.31.16.70/api/v3/students/me/getProblemsFile/',params);  
+            var result = Post('/api/v3/students/me/getProblemsFile/',params);  
             result.then((response)=>{
                 if(response.status === 200){
                     this.setState({
@@ -204,7 +204,7 @@ class ErrorTopic extends React.Component{
             })
         }
         // console.log(params)
-        var result = Post('http://118.31.16.70/api/v3/students/me/getProblemsFile/',params);  
+        var result = Post('/api/v3/students/me/getProblemsFile/',params);  
         result.then((response)=>{
             if(response.status === 200){
                 this.setState({

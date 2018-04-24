@@ -69,7 +69,7 @@ class Navigation extends Component {
     })
   }
   logoutHandle(){
-    var result =Post('http://118.31.16.70/api/v3/students/me/logout/');
+    var result =Post('/api/v3/students/me/logout/');
     result.then((response)=>{
       if(response.status === 200){
         // sessionStorage.removeItem('userId');
@@ -260,7 +260,7 @@ class Navigation extends Component {
         contentHeight :　allHeight-112
       })
     }
-    var msg =Get('http://118.31.16.70/api/v3/students/me/profile/');
+    var msg =Get('/api/v3/students/me/profile/');
     msg.then((response)=>{
       if(response.status ===200){
         this.setState({

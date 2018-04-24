@@ -20,7 +20,7 @@ class RegistrationForm extends Component {
                 var params = {
                     password : values.password
                 }
-                var result = Put('http://118.31.16.70/api/v3/students/me/password/',params)
+                var result = Put('/api/v3/students/me/password/',params)
                 result.then((response)=>{
                     if(response.status ===200){
                         message.success('操作成功',1.5);

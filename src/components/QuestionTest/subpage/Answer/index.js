@@ -84,16 +84,18 @@ class Answer extends React.Component{
             var dataParams = []
             data.map((item,i)=>{
                 item.map((item2,i2)=>{
-                    dataObj[item2.problemId+'_'] = item2.index
+                    dataObj[item2.problemId+'_'] = item2
                 })
             })
+            console.log(dataObj)
             var paper = nextProps.paper;
             if(paper === ''){
                 var dataParams = []
                 for(var key in dataObj){
                     dataParams.push({
-                        problemId: key.split('_')[0],
-                        index: dataObj[key],
+                        problemId: dataObj[key].problemId,
+                        index: dataObj[key].index,
+                        location : dataObj[key].type
                     })
                 }
             }else{
@@ -106,8 +108,9 @@ class Answer extends React.Component{
                 }
                 for(var key in dataObj){
                     problems.push({
-                        problemId: key.split('_')[0],
-                        index: dataObj[key],
+                        problemId: dataObj[key].problemId,
+                        index: dataObj[key].index,
+                        location : dataObj[key].type
                     })
                 }
                 var dataParams = {
@@ -115,7 +118,7 @@ class Answer extends React.Component{
                     problems : problems
                 }
             }
-            var result = Post('http://118.31.16.70/api/v3/students/me/getAnswersFile/',dataParams);  
+            var result = Post('/api/v3/students/me/getAnswersFile/',dataParams);  
             result.then((response)=>{
                 if(response.status === 200){
                     this.setState({
@@ -140,20 +143,22 @@ class Answer extends React.Component{
         this.setState({
             data:data
         })
+        console.log(data)
         var dataObj = {};
         data.map((item,i)=>{
             item.map((item2,i2)=>{
-                dataObj[item2.problemId+'_'] = item2.index
+                dataObj[item2.problemId+'_'] = item2
             })
         })
-       
+        console.log(dataObj)
         var paper = this.props.paper;
         if(paper === ''){
             var dataParams = []
             for(var key in dataObj){
                 dataParams.push({
-                    problemId: key.split('_')[0],
-                    index: dataObj[key],
+                    problemId: dataObj[key].problemId,
+                    index: dataObj[key].index,
+                    location : dataObj[key].type
                 })
             }
         }else{
@@ -166,8 +171,9 @@ class Answer extends React.Component{
             }
             for(var key in dataObj){
                 problems.push({
-                    problemId: key.split('_')[0],
-                    index: dataObj[key],
+                    problemId: dataObj[key].problemId,
+                    index: dataObj[key].index,
+                    location : dataObj[key].type
                 })
             }
             var dataParams = {
@@ -176,7 +182,7 @@ class Answer extends React.Component{
             }
         }
 
-        var result = Post('http://118.31.16.70/api/v3/students/me/getAnswersFile/',dataParams);  
+        var result = Post('/api/v3/students/me/getAnswersFile/',dataParams);  
         result.then((response)=>{
             if(response.status === 200){
                 this.setState({

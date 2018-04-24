@@ -45,7 +45,7 @@ class TestDetection extends Component {
           failMsg : '请输入题目数量的最大值'
         })
     }else{
-      var url = `http://118.31.16.70/api/v3/students/me/${category}/`;
+      var url = `/api/v3/students/me/${category}/`;
       var requestFlag = true;
       requestData.map((item,index)=>{
         if(item.startPage === undefined || item.endPage === undefined){
@@ -159,7 +159,7 @@ class TestDetection extends Component {
     }
     componentWillMount(){
         //设置数字，根据数字 ，截取返回数据数组
-        const data = Get('http://118.31.16.70/api/v3/students/me/books/');
+        const data = Get('/api/v3/students/me/books/');
         data.then((response)=>{
             if(response.status === 200){
                 var data1 = response.data.slice(0,2)

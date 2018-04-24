@@ -62,7 +62,7 @@ class TestErrorDetection extends Component {
             failMsg : '请选择纸张大小'
           })
       }else{
-      var url = `http://118.31.16.70/api/v3/students/me/${category}/`;
+      var url = `/api/v3/students/me/${category}/`;
       var requestFlag = true;
       var thisRequestData = [];
       requestData.map((item,index)=>{
@@ -181,7 +181,7 @@ class TestErrorDetection extends Component {
     }
     componentWillMount(){
         //设置数字，根据数字 ，截取返回数据数组
-        const data = Get('http://118.31.16.70/api/v3/students/me/papers/');
+        const data = Get('/api/v3/students/me/papers/');
         data.then((response)=>{
             if(response.status === 200){
                 var data1 = response.data.slice(0,2)

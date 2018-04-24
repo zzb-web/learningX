@@ -95,7 +95,7 @@ class ResultMark extends Component{
      })
     }
     saveHandle(){
-      var url = `http://118.31.16.70/api/v3/students/me/uploadTasks/${this.props.markTime}/`;
+      var url = `/api/v3/students/me/uploadTasks/${this.props.markTime}/`;
       Delete(url).then(resp=>{
 
       }).catch(err=>{
@@ -120,7 +120,7 @@ class ResultMark extends Component{
         problems : newData
       }
       if(newData.length !== 0){
-        var result = Post('http://118.31.16.70/api/v3/students/me/problemsChecked/',saveMsg);
+        var result = Post('/api/v3/students/me/problemsChecked/',saveMsg);
         result.then((response)=>{
           if(response.status ===200){
             this.props.saveHandle(false);

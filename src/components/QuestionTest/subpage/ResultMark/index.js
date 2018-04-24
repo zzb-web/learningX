@@ -33,7 +33,7 @@ class ResultMark extends Component{
             }
           }
         })
-        const url = 'http://118.31.16.70/api/v3/students/me/problems/';
+        const url = '/api/v3/students/me/problems/';
         var params = {
           time : this.props.date,
           problems : msg
@@ -157,7 +157,7 @@ class ResultMark extends Component{
         problems : newData
       }
       if(newData.length !== 0){
-        var result = Post('http://118.31.16.70/api/v3/students/me/problemsChecked/',saveMsg);
+        var result = Post('/api/v3/students/me/problemsChecked/',saveMsg);
         result.then((response)=>{
           if(response.status ===200){
             this.props.saveHandle(false);
@@ -192,7 +192,7 @@ class ResultMark extends Component{
         time : timestamp,
         problems : newData
       }
-      var result = Post('http://118.31.16.70/api/v3/students/me/problemsChecked/',saveMsg);
+      var result = Post('/api/v3/students/me/problemsChecked/',saveMsg);
       result.then((response)=>{
         if(response.status ===200){
             this.props.nextOneHandle();
@@ -236,7 +236,7 @@ class ResultMark extends Component{
         time : timestamp,
         problems : newData
       }
-      var result = Post('http://118.31.16.70/api/v3/students/me/problemsChecked/',saveMsg);
+      var result = Post('/api/v3/students/me/problemsChecked/',saveMsg);
       result.then((response)=>{
         if(response.status ===200){
             this.props.nextOneHandle();

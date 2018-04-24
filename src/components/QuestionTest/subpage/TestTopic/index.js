@@ -63,7 +63,7 @@ class TestTopic extends React.Component{
             }else if(current === "01"){
                 type = 2;
             }
-            var url = 'http://118.31.16.70/api/v3/students/me/uploadTasks/';
+            var url = '/api/v3/students/me/uploadTasks/';
             var postMsg ={
                 time : timestamp,
                 type : type,
@@ -190,7 +190,7 @@ class TestTopic extends React.Component{
                     problems : problems
                 }
             }
-            var result = Post('http://118.31.16.70/api/v3/students/me/getProblemsFile/',params);  
+            var result = Post('/api/v3/students/me/getProblemsFile/',params);  
             result.then((response)=>{
                 if(response.status === 200){
                     this.setState({
@@ -290,7 +290,7 @@ class TestTopic extends React.Component{
             }
         }
         
-        var result = Post('http://118.31.16.70/api/v3/students/me/getProblemsFile/',params);  
+        var result = Post('/api/v3/students/me/getProblemsFile/',params);  
         result.then((response)=>{
             if(response.status === 200){
                 this.setState({
