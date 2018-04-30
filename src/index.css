@@ -45,3 +45,6 @@ body {
   height:500px;
   float: right;
 }
+.ant-layout-footer{
+  padding:  8px !important;
+}

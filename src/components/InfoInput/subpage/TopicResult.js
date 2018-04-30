@@ -94,8 +94,7 @@ class TopicResult extends Component{
         data : data
       })
     }
-    componentWillMount(){
-      const {page,topicAll} = this.props;
+    _handleData(topicAll){
       let data = [];
       topicAll.map((item,index)=>{
         if(item.subIdx===-1){
@@ -127,9 +126,21 @@ class TopicResult extends Component{
           })
         }
       })
+      return data;
+    }
+    componentWillMount(){
+      const {page,topicAll} = this.props;
+      const data = this._handleData(topicAll)
      this.setState({
        data : data
      })
+    }
+    componentWillReceiveProps(nextProps){
+      const {topicAll} = nextProps;
+      const data = this._handleData(topicAll)
+      this.setState({
+        data : data
+      })
     }
     render(){
       const columns = [{
@@ -202,10 +213,10 @@ class TopicResult extends Component{
                                 style={{width:150,height:40,marginRight:'20px'}}
                                 onClick={this.saveBtnHandle.bind(this)}
                                 disabled={!showSure}>保存</Button>
-                        <Button size='large'
+                        {/* <Button size='large'
                                 style={{width:150,height:40,marginLeft:'20px'}}
                                 onClick={this.cancelBtnHandle.bind(this)}
-                                >取消</Button>
+                                >取消</Button> */}
                     </div>
                 </div>
         )

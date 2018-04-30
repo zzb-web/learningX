@@ -2,13 +2,7 @@ import React, { Component } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import {Get, Post} from '../../fetch/data.js';
 import { withRouter } from 'react-router';
-// import ErrorSum from '../ErrorSum/index.js';
-// import InfoInput from '../InfoInput/index.js';
 import UserMsgForm from '../UserMsg/index.js';
-// import PassWordForm from '../PassWord/index.js';
-// import ReviewOfError from '../ReviewOfError/index.js';
-// import QuestionTest from '../QuestionTest/index.js';
-// import Homepage from '../Homepage/index.js';
 import {HomepageLoadable , 
         ErrorSumLoadable ,
         InfoInputLoadable ,
@@ -20,12 +14,9 @@ import {HomepageLoadable ,
         StudentMsgLoadable,
         TestErrorMarkerLoadable,
         TestErrorDetectionLoadable} from '../Loadable/homepageaComponent.js';
-// import ErrorDetection from '../ErrorDetection/index.js';
-// import TestDetection from '../TestDetection/index.js';
-// import TestErrorMarker from '../TestErrorMarker/index.js';
 import axios from 'axios';
 import './style.css';
-const { Header, Sider, Content} = Layout;
+const { Header, Sider, Content,Footer} = Layout;
 class Navigation extends Component {
   state = {
     collapsed: false,
@@ -185,7 +176,7 @@ class Navigation extends Component {
             </ul>
           </div>
           </Header>
-          <Content style={{ margin: '16px 16px', padding: 24, background: '#fff', minHeight:this.state.contentHeight,/*marginTop:80 */ }}>
+          <Content style={{ margin: '16px 16px 0px 16px', padding: '24px', background: '#fff', minHeight:this.state.contentHeight,/*marginTop:80 */ }}>
             {
                  this.state.key === '0' ? <HomepageLoadable/> : null
             }
@@ -230,9 +221,9 @@ class Navigation extends Component {
               this.state.key === '10' ? <TestErrorDetectionLoadable/> : null
             }
           </Content>
-          {/* <Footer style={{ textAlign: 'center' }}>
-            Ant Design ©2016 Created by Ant UED
-          </Footer> */}
+          <Footer style={{ textAlign: 'center' }}>
+            皖ICP备18007473号
+          </Footer>
         </Layout>
       </Layout>
     );
@@ -252,12 +243,12 @@ class Navigation extends Component {
     let that = this;
     let allHeight = document.documentElement.clientHeight;
     this.setState({
-      contentHeight :　allHeight-112
+      contentHeight :　allHeight-114
     })
     window.onresize = function(){
       let allHeight = document.documentElement.clientHeight;
       that.setState({
-        contentHeight :　allHeight-112
+        contentHeight :　allHeight-114
       })
     }
     var msg =Get('/api/v3/students/me/profile/');

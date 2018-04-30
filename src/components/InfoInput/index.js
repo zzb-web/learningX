@@ -163,10 +163,7 @@ class InfoInput extends Component {
                                 </div>
                                 <div className='select-category'>
                                     <span></span>
-                                    {
-                                        !this.state.showDetail ? <Button type="primary" size='large' style={{width:240,height:35,marginLeft:'10px'}} onClick={this.sureBtnHandle.bind(this)}>确定</Button>
-                                                                : null
-                                    }
+                                    <Button type="primary" size='large' style={{width:240,height:35,marginLeft:'10px'}} onClick={this.sureBtnHandle.bind(this)}>确定</Button>
                                 </div>
                             </div>
                             {

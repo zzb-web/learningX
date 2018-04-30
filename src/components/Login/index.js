@@ -36,16 +36,16 @@ class NormalLoginForm extends React.Component {
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <FormItem>
                         {getFieldDecorator('learnId', {
-                            rules: [{ required: true, message: 'Please input your username!' }],
+                            rules: [{ required: true, message: '请输入您的学习号!' }],
                         })(
-                            <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Username" />
+                            <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="学习号" />
                         )}
                         </FormItem>
                         <FormItem>
                         {getFieldDecorator('password', {
-                            rules: [{ required: true, message: 'Please input your Password!' }],
+                            rules: [{ required: true, message: '请输入您的密码!' }],
                         })(
-                            <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
+                            <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="密码" />
                         )}
                         </FormItem>
                         <FormItem>
