@@ -17,24 +17,30 @@ class TopicResult extends Component{
       },500)
         let msg = [];
         // console.log(this.state.data)
+
         this.state.data.map((item,index)=>{
           if(item.status){
-            // console.log(item.position)
             let position = item.position.split('/');
-            // console.log(position.length)
-            if(position.length !== 3){
+            if(position.length === 2){
+              var subIdx = Number(position[1].split('')[1]);
               msg.push({
-                  isCorrect : item.isCorrect,
-                  problemId: item.problemId,
-                  subIdx : -1
-                })
-            }else{
+                isCorrect : item.isCorrect,
+                problemId: item.problemId,
+                subIdx : subIdx
+              })
+            }else if(position.length === 3){
               var subIdx = Number(position[2].split('')[1]);
               msg.push({
                 isCorrect : item.isCorrect,
                 problemId: item.problemId,
                 subIdx : subIdx
               })
+            }else{
+                msg.push({
+                    isCorrect : item.isCorrect,
+                    problemId: item.problemId,
+                    subIdx : -1
+                  })
             }
           }
         })
@@ -43,7 +49,6 @@ class TopicResult extends Component{
           time : this.props.date,
           problems : msg
         }
-        console.log(params)
         var response = Post(url,params);
         response.then((resp)=>{
           // console.log(resp)
@@ -97,7 +102,6 @@ class TopicResult extends Component{
     }
     componentWillMount(){
       const {page,topicAll} = this.props;
-      console.log(topicAll)
       let data = [];
       topicAll.map((item,index)=>{
         var slash;
