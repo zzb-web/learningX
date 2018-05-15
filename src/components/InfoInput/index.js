@@ -59,21 +59,24 @@ class InfoInput extends Component {
                             showFail : true,
                             showNone:false,
                             showSaveSuc:false,
-                            hasFail:'资料名称不正常'
+                            hasFail:'资料名称不正常',
+                            showDetail : false
                         })
                     }else if(page === 0){
                         this.setState({
                             showFail : true,
                             showNone:false,
                             showSaveSuc:false,
-                            hasFail:'页码不正常'
+                            hasFail:'页码不正常',
+                            showDetail : false
                         })
                     }else{
                         this.setState({
                             showFail : true,
                             showNone:false,
                             showSaveSuc:false,
-                            hasFail:'CS无数据'
+                            hasFail:'CS无数据',
+                            showDetail : false
                         })
                     }
                     
@@ -85,7 +88,8 @@ class InfoInput extends Component {
                             showFail : true,
                             showNone:false,
                             showSaveSuc:false,
-                            hasFail:'页码不正常'
+                            hasFail:'页码不正常',
+                            showDetail : false
                         })
                     }else{
                         this.setState({
@@ -93,7 +97,8 @@ class InfoInput extends Component {
                             showNone:false,
                             showSaveSuc:false,
                             showDetail : false,
-                            hasFail:'CS出故障'
+                            hasFail:'CS出故障',
+                            showDetail : false
                         })
                     }
                 }
