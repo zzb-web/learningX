@@ -42,9 +42,11 @@ class Homepage extends Component{
                     }
                 })
             })
+            console.log(data1);
             for(var key in data1){
                 detailData.push(data1[key])
             }
+            console.log(detailData)
             this.setState({
                 showDetail : true,
                 detailData : detailData,
@@ -79,14 +81,25 @@ class Homepage extends Component{
       })
     }
     saveHandle(flag){
-      const {data,markIndex} = this.state;
-      data.splice(markIndex,1)
+      // const {data,markIndex} = this.state;
+      // console.log(markIndex)
+      // data.splice(markIndex,1)
+      var url = `/api/v3/students/me/uploadTasks/`;
+          Get(url).then(resp=>{
+            this.setState({
+              data : resp.data
+            })
+          }).catch(err=>{
+            console.log(err)
+          })
+        
       this.setState({
           showDetail : flag,
-          data:data
+          // data:data
       })
     }
     render(){
+      console.log(this.state.markIndex)
       const columns = [{
         title: '日期',
         dataIndex: 'date',
@@ -151,7 +164,7 @@ class Homepage extends Component{
         </div>
       )
     }
-    componentDidMount(){
+    componentWillMount(){
           axios.defaults.withCredentials = true;
           var url = `/api/v3/students/me/uploadTasks/`;
           Get(url).then(resp=>{

@@ -9,7 +9,9 @@ class ResultMark extends Component{
      super();
      this.state={
        data : [],
-       showSure: true
+       taskTime : props.taskTime,
+       showSure: true,
+       detailData : props.detailData
      }
    }
      resultClick(index,e){
@@ -60,20 +62,24 @@ class ResultMark extends Component{
       })
     }
     componentWillMount(){
-      const {detailData} = this.props;
+      const {detailData , taskTime} = this.props;
       const data = this._dataHandle(detailData)
      this.setState({
-       data : data
+       data : data,
+       taskTime : taskTime
      })
     }
     componentWillReceiveProps(nextProps){
       const {detailData} = nextProps;
       const data = this._dataHandle(detailData)
      this.setState({
-       data : data
+       data : data,
+       taskTime : nextProps.taskTime,
+       detailData : nextProps.detailData
      })
     }
     _dataHandle(detailData){
+      console.log(detailData)
       let data = [];
       if(detailData !==undefined){
       detailData.map((item,i1)=>{
@@ -112,8 +118,9 @@ class ResultMark extends Component{
           this.setState({showSure:true})
       },500)
       var timestamp = Date.parse(new Date())/1000; 
+      
       var data = JSON.parse(JSON.stringify(this.state.data));
-      const {taskTime} = this.props;
+      const {taskTime} = this.state;
       var newData = [];
       var saveMsg = {};
       data.map((item,index)=>{
@@ -138,9 +145,11 @@ class ResultMark extends Component{
           if(response.status ===200){
             this.props.saveHandle(false);
             message.success('结果标记成功',1.5);
+            console.log(taskTime)
             var url = `/api/v3/students/me/uploadTasks/${taskTime}/`
             Delete(url).then(resp=>{
               if(resp.status === 200){
+                this.props.saveHandle(false);
               }
             }).catch(err=>{
       
@@ -149,14 +158,13 @@ class ResultMark extends Component{
             message.error('结果标记失败',1.5);
           }
         })
-        this.props.saveHandle(false);
       }else{
         this.props.saveHandle(false);
       }
     }
     render(){
-      const {detailData} = this.props;
-      const {showSure} = this.state;
+      const {showSure , detailData} = this.state;
+      console.log(this.state.taskTime , detailData)
       const columns = [{
         title: '题目序号',
         className: 'column-position',
