@@ -131,6 +131,10 @@ class TopicResult extends Component{
     componentWillMount(){
       const {page,topicAll} = this.props;
       const data = this._handleData(topicAll)
+      data.map((item,index)=>{
+        item.status = true;
+        item.isCorrect = true
+      })
      this.setState({
        data : data
      })
@@ -138,6 +142,10 @@ class TopicResult extends Component{
     componentWillReceiveProps(nextProps){
       const {topicAll} = nextProps;
       const data = this._handleData(topicAll)
+      data.map((item,index)=>{
+        item.status = true;
+        item.isCorrect = true
+      })
       this.setState({
         data : data
       })
@@ -148,13 +156,14 @@ class TopicResult extends Component{
         className: 'column-position',
         dataIndex: 'position',
         width:280
-      }, {
-        title: <Switch checkedChildren="全布置了" unCheckedChildren="全没布置" onChange={this.change.bind(this)}/>,
-        className: 'column-status',
-        dataIndex: 'status',
-        width:200,
-        render : (text, record, index)=><div onClick={()=>this.tdClick(index)}>{text}</div>
       },
+      //  {
+      //   title: <Switch checkedChildren="全布置了" unCheckedChildren="全没布置" onChange={this.change.bind(this)}/>,
+      //   className: 'column-status',
+      //   dataIndex: 'status',
+      //   width:200,
+      //   render : (text, record, index)=><div onClick={()=>this.tdClick(index)}>{text}</div>
+      // },
       {
         title: '做题结果',
         className: 'column-result',
