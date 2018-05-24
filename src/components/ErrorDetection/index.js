@@ -73,7 +73,7 @@ class ErrorDetection extends Component {
       })
       var thisRequestData = [];
       requestData.map((item,index)=>{
-        if(item.book !== ''){
+        if(item.bookID !== ''){
             thisRequestData.push(item)
         }
       })
@@ -165,7 +165,7 @@ class ErrorDetection extends Component {
     addMaterials(){
         var {requestData} = this.state;
             requestData.push({
-                book : '',
+                bookID : '',
                 startPage: 0,
                 endPage: 0
             })
@@ -176,7 +176,7 @@ class ErrorDetection extends Component {
     pageChange(index,value){
         const {requestData} = this.state;
         if(value[0] === 0){
-            requestData[index].book = value[1];
+            requestData[index].bookID = value[1];
         }else if(value[0] === 1){
             requestData[index].startPage = value[1];
         }else{
@@ -209,12 +209,12 @@ class ErrorDetection extends Component {
                 var data1 = response.data.slice(0,2)
                 var requestData = [
                     {
-                        book : '',
+                        bookID : '',
                         startPage: 0,
                          endPage: 0
                     },
                     {
-                        book : '',
+                        bookID : '',
                         startPage: 0,
                         endPage: 0
                     }
@@ -329,7 +329,7 @@ class AddLearningMaterials extends React.Component{
         return(
             <div style={{marginTop:20}}>
                 <span className='subsection'><span>学习资料:</span><Select onChange={this.selectMaterials.bind(this)} style={{width:'30%'}}>
-                                                                    {materials.map((item,index)=><Option value={item} key={index}>{item}</Option>)}
+                                                                    {materials.map((item,index)=><Option value={item.bookID} key={index}>{item.name}</Option>)}
                                                                   </Select></span>
                 <span className='subsection'><span>开始页码:</span><InputNumber onChange={this.startChage.bind(this)}/></span>
                 <span className='subsection'><span>结束页码:</span><InputNumber onChange={this.endChange.bind(this)}/></span>

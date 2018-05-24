@@ -27,7 +27,10 @@ class Navigation extends Component {
     userName : '',
     phone:'',
     gender:'',
-    hideMenu : false
+    hideMenu : false,
+    schools : [],
+    schoolID_name :{},
+    name_schoolID : {}
   };
   toggle = () => {
     this.setState({
@@ -92,7 +95,7 @@ class Navigation extends Component {
      })
   }
   render() {
-    const {userMsg,userName,phone,gender,school,classId,grade,hideMenu} = this.state;
+    const {userMsg,userName,phone,gender,schoolID,classId,grade,hideMenu,schoolID_name,name_schoolID,schools} = this.state;
     console.log('xxxxxxx',hideMenu)
     return (
       <Layout>
@@ -187,14 +190,7 @@ class Navigation extends Component {
                 this.state.key === '2' ? <ErrorSumLoadable /> : null
             }
             {
-                 this.state.key === '3' ? <UserMsgForm userMsg={userMsg}
-                                                       school={school}
-                                                       classId={classId}
-                                                       grade={grade}
-                                                       name={userName}
-                                                       phone={phone}
-                                                       gender={gender}
-                                                       modifyUserMsg={this.modifyUserMsg.bind(this)}/> : null
+                 this.state.key === '3' ? <UserMsgForm modifyUserMsg={this.modifyUserMsg.bind(this)}/> : null
             }
             {
                  this.state.key === '4' ? <PassWordFormLoadable/> : null
@@ -228,14 +224,9 @@ class Navigation extends Component {
       </Layout>
     );
   }
-  modifyUserMsg(name,phone,gender,school,classId,grade){
+  modifyUserMsg(name){
     this.setState({
       userName : name,
-      phone:phone,
-      gender:gender,
-      school : school,
-      classId : classId,
-      grade: grade
     })
   }
   componentDidMount(){
@@ -255,13 +246,7 @@ class Navigation extends Component {
     msg.then((response)=>{
       if(response.status ===200){
         this.setState({
-            userMsg : response.data,
             userName : response.data.realName,
-            phone : response.data.telephone,
-            gender:response.data.gender,
-            school :response.data.school,
-            classId :response.data.classId,
-            grade : response.data.grade
         })
       }else if(response.status ===401){
         this.props.history.push('/');

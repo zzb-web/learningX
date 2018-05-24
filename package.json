@@ -2,7 +2,7 @@
   "name": "work",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://learningx.cn",
+  "proxy":"http://test.learningx.cn",
   "dependencies": {
     "antd": "^2.13.6",
     "axios": "^0.17.0",

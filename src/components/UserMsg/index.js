@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,Radio } from 'antd';
 import { Form, Input, Row, Col, Button, Radio,message,Select , InputNumber } from 'antd';
-import {Patch} from '../../fetch/data.js'; 
+import {Patch ,Get} from '../../fetch/data.js'; 
 import './style.css';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -13,14 +13,19 @@ class RegistrationForm extends Component {
     state = {
         confirmDirty: false,
         autoCompleteResult: [],
+        userMsg : {},
+        schools : [],
+        name_schoolID : {},
     };
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                const {name_schoolID} = this.state;
+                console.log(name_schoolID , values.schoolID)
                 var params = {
-                    school:values.school,
+                    schoolID:name_schoolID[values.schoolID],
                     grade:values.grade,
                     classId:values.class,
                     realName: values.name,
@@ -31,7 +36,7 @@ class RegistrationForm extends Component {
                 var result = Patch('/api/v3/students/me/profile/',params)
                 result.then((response)=>{
                     if(response.status ===200){
-                     this.props.modifyUserMsg(values.name,values.phone,values.gender,values.school,values.class,values.grade);
+                     this.props.modifyUserMsg(values.name);
                      message.success('操作成功',1.5);
                     }else{
                         message.error('操作失败',1.5);
@@ -44,22 +49,58 @@ class RegistrationForm extends Component {
         const value = e.target.value;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     }
-    componentDidMount(){
-        const {learnId} = this.props.userMsg;
-        const {name,phone,gender,school, grade,classId} = this.props;
-            this.props.form.setFieldsValue({
-                studyNum: this.props.userMsg.learnId,
-                school:school,
-                grade :grade,
-                class: classId,
-                phone: phone,
-                name:name,
-                gender : gender
-            });
+    componentWillMount(){
+        Get('/api/v3/students/me/schools/').then(resp=>{
+            if(resp.status === 200){
+            const {name_schoolID} = this.state;
+            resp.data.map((item,index)=>{
+                name_schoolID[item.name] = item.schoolID;
+            })
+           this.setState({
+               schools : resp.data,
+               name_schoolID : name_schoolID
+           })
+           var msg =Get('/api/v3/students/me/profile/');
+           msg.then((response)=>{
+             if(response.status ===200){
+               this.setState({
+                   userMsg : response.data,
+               },()=>{
+                   const {userMsg,name_schoolID} = this.state;
+                   console.log('??')
+                   let schoolName;
+                   for(var key in name_schoolID){
+                       if(name_schoolID[key] === userMsg.schoolID){
+                           schoolName = key;
+                           break;
+                       }
+                   }
+                   this.props.form.setFieldsValue({
+                       studyNum: userMsg.learnId,
+                       schoolID:schoolName,
+                       grade :userMsg.grade,
+                       class: userMsg.classId,
+                       phone: userMsg.telephone,
+                       name:userMsg.realName,
+                       gender : userMsg.gender
+                   });
+               })
+             }else if(response.status ===401){
+               this.props.history.push('/');
+           }
+           })
+            }
+        }).catch(err=>{
+      
+        }) 
     }
+    componentWillReceiveProps(nextProps){
+
+    }
+
+    
     render() {
         const { getFieldDecorator } = this.props.form;
-        // const { autoCompleteResult } = this.state;
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -82,6 +123,13 @@ class RegistrationForm extends Component {
                 },
             },
         };
+        const {schools} = this.state;
+        let children = [];
+        schools.map((item,index)=>{
+            children.push(
+                <Option key={index} value={item.name}>{item.name}</Option>
+            )
+        })
         return (
             <div className='userMsg'>
                 <Row>
@@ -111,10 +159,18 @@ class RegistrationForm extends Component {
                                 )}
                                 hasFeedback
                             >
-                                {getFieldDecorator('school', {
+                                {getFieldDecorator('schoolID', {
                                     rules: [{ required: true, message: '请输入您的学校!', whitespace: true }],
                                 })(
-                                    <Input/>
+                                    // <Input/>
+                                    <Select
+                                            combobox
+                                            placeholder="填写学校的规范全称"
+                                            tabIndex={0}
+                                        >
+                                            {children}
+                                    </Select>
+                                    
                                     )}
                             </FormItem>
 
@@ -178,8 +234,8 @@ class RegistrationForm extends Component {
                                      rules: [{ required: true, message: '请选择性别', whitespace: true }],
                                 })(
                                     <RadioGroup>
-                                        <Radio value="male">男</Radio>
-                                        <Radio value="female">女</Radio>
+                                        <Radio value="男">男</Radio>
+                                        <Radio value="女">女</Radio>
                                     </RadioGroup>
                                 )}
                             </FormItem>
