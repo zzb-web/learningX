@@ -159,7 +159,7 @@ class InfoInput extends Component {
                                 <div className='select-category'>
                                     <span>学习资料名称&nbsp;&nbsp;:</span>
                                     <Select placeholder='作业在哪一本书上？' style={{ width: 240, marginLeft:'10px'}} onChange={this.bookChange.bind(this)}>
-                                        {books.map((item,index)=><Option value={item} key={index}>{item}</Option>)}
+                                        {books.map((item,index)=><Option value={item.bookID} key={index}>{item.name}</Option>)}
                                     </Select>
                                 </div>
                                 <div className='select-category'>
