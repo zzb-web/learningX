@@ -107,13 +107,19 @@ class InfoInput extends Component {
         }
     }
     handleDetail(){
-        // let hasSave = this.state.hasSave;
-        // hasSave.push(this.state.current+' '+this.state.page+'页');
+        const {current , books} = this.state;
+        let bookName = '';
+        for(var i=0 ; i<books.length;i++){
+            if(books[i].bookID === current){
+                bookName = books[i].name;
+                break;
+            }
+        }
         this.setState({
             showDetail : false,
             showSaveSuc : true,
             showNone:false,
-            hasSave : this.state.current+' '+this.state.page+'页'
+            hasSave : bookName+' '+this.state.page+'页'
         })
     }
     handleCancel(){
