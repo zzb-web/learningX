@@ -3,11 +3,12 @@ import {Table, Switch, Button} from 'antd';
 import {Post} from '../../../fetch/data.js';
 import './style.css';
 class TopicResult extends Component{
-   constructor(){
+   constructor(props){
      super();
      this.state={
        data : [],
-       showSure: true
+       showSure: true,
+       bookType : props.bookType
      }
    }
     saveBtnHandle(){
@@ -15,6 +16,7 @@ class TopicResult extends Component{
       setTimeout(()=>{
           this.setState({showSure:true})
       },500)
+      const {bookType} = this.state;
         let msg = [];
         // console.log(this.state.data)
         this.state.data.map((item,index)=>{
@@ -41,6 +43,7 @@ class TopicResult extends Component{
         const url = '/api/v3/students/me/problems/';
         var params = {
           time : this.props.date,
+          type : bookType,
           problems : msg
         }
         var response = Post(url,params);
@@ -147,7 +150,8 @@ class TopicResult extends Component{
         item.isCorrect = true
       })
       this.setState({
-        data : data
+        data : data,
+        bookType : nextProps.bookType
       })
     }
     render(){

@@ -21,6 +21,7 @@ class InfoInput extends Component {
            page : 0,
            date : '',
            topicAll : [],
+           bookType : 0
         }
     }
 
@@ -128,8 +129,17 @@ class InfoInput extends Component {
       })
     }
     bookChange(value){
+        const {books} = this.state;
+        let bookType;
+        for(var i=0;i<books.length;i++){
+            if(books[i].bookID === value){
+                bookType = books[i].type;
+                break;
+            }
+        }
         this.setState({
-            current : value
+            current : value,
+            bookType : bookType
         })
     }
     pageChange(value){
@@ -146,7 +156,7 @@ class InfoInput extends Component {
         })
     }
     render(){
-        const {topicAll, page, date} = this.state;
+        const {topicAll, page, date,bookType} = this.state;
         var books = this.state.books;
         if(books === null){
             books = []
@@ -204,6 +214,7 @@ class InfoInput extends Component {
                                                             handleCancel={this.handleCancel.bind(this)} 
                                                             topicAll={topicAll}
                                                             page={page}
+                                                            bookType={bookType}
                                                             date={date}/> : null
                             }
                         </div>

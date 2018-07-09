@@ -47,6 +47,7 @@ class TopicResult extends Component{
         const url = '/api/v3/students/me/problems/';
         var params = {
           time : this.props.date,
+          type : 4,
           problems : msg
         }
         var response = Post(url,params);

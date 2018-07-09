@@ -136,11 +136,12 @@ class ResultMark extends Component{
       saveMsg={
         taskTime : taskTime,
         time : timestamp,
+        type : 5,
         problems : newData
       }
       console.log(saveMsg)
       if(newData.length !== 0){
-        var result = Post('/api/v3/students/me/problemsChecked/',saveMsg);
+        var result = Post('/api/v3/students/me/problems/',saveMsg);
         result.then((response)=>{
           if(response.status ===200){
             this.props.saveHandle(false);
