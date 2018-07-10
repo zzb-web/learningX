@@ -304,7 +304,7 @@ class ErrorDetection extends Component {
                             </div>
                         </div>
                         {
-                            showMaterials ? null : <Result data={detailData} returnData={returnData} saveHandle={this.saveHandle.bind(this)} paper={paper}/>
+                            showMaterials ? null : <Result data={detailData} type={5} returnData={returnData} saveHandle={this.saveHandle.bind(this)} paper={paper}/>
                         }
                     </Col>
                     <Col span={1}></Col>

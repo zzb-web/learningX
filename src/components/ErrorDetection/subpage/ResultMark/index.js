@@ -9,7 +9,8 @@ class ResultMark extends Component{
      super();
      this.state={
        data : [],
-       showSave : true
+       showSave : true,
+       type : props.type
      }
    }
      resultClick(index,e){
@@ -60,6 +61,11 @@ class ResultMark extends Component{
       })
     }
     componentWillReceiveProps(nextProps){
+      if(this.props.type !== nextProps.type){
+        this.setState({
+          type : nextProps.type
+        })
+      }
       const {detailData} = nextProps;
       let data = [];
       if(detailData !==undefined){
@@ -106,6 +112,7 @@ class ResultMark extends Component{
       }).catch(err=>{
 
       })
+      const {type} = this.state;
       var timestamp = Date.parse(new Date())/1000; 
       var data = JSON.parse(JSON.stringify(this.state.data));
       var newData = [];
@@ -120,7 +127,7 @@ class ResultMark extends Component{
       })
       saveMsg={
         time : timestamp,
-        type : 5,
+        type : type,
         problems : newData
       }
       if(newData.length !== 0){
