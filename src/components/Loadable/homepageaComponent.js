@@ -124,6 +124,16 @@ const TestErrorDetectionComponent = Loadable({
   }
 }
 
+const ErrorCorrectionBuildComponent = Loadable({
+  loader: () => import('../ErrorCorrectionBuild/index.js'),
+  loading: MyLoadingComponent,
+});
+ class ErrorCorrectionBuildLoadable extends React.Component {
+  render() {
+    return <ErrorCorrectionBuildComponent/>;
+  }
+}
+
 export {HomepageLoadable,
         ErrorSumLoadable , 
         InfoInputLoadable ,
@@ -134,4 +144,5 @@ export {HomepageLoadable,
         TestDetectionLoadable,
         StudentMsgLoadable,
         TestErrorMarkerLoadable,
-        TestErrorDetectionLoadable}
+        TestErrorDetectionLoadable,
+        ErrorCorrectionBuildLoadable}

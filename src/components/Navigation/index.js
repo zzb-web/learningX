@@ -13,14 +13,15 @@ import {HomepageLoadable ,
         TestDetectionLoadable,
         StudentMsgLoadable,
         TestErrorMarkerLoadable,
-        TestErrorDetectionLoadable} from '../Loadable/homepageaComponent.js';
+        TestErrorDetectionLoadable,
+        ErrorCorrectionBuildLoadable} from '../Loadable/homepageaComponent.js';
 import axios from 'axios';
 import './style.css';
 const { Header, Sider, Content,Footer} = Layout;
 class Navigation extends Component {
   state = {
     collapsed: false,
-    key: '0',
+    key: '11',
     showUser : 'none',
     contentHeight :　0,
     userMsg : {},
@@ -160,7 +161,10 @@ class Navigation extends Component {
               <Icon type="database" />
               <span>考题检验</span>
             </Menu.Item>
-            
+            <Menu.Item key="11" style={hideMenu?{display:'block'}:{display:'none'}}>
+              <Icon type="api" />
+              <span>纠错本生成</span>
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
@@ -207,15 +211,16 @@ class Navigation extends Component {
             {
                 this.state.key === '8' ? <TestDetectionLoadable/> : null
             }
-            {/* {
-              this.state.key === '9' ? <StudentMsgLoadable/> : null
-            } */}
             {
               this.state.key === '9' ? <TestErrorMarkerLoadable/> : null
             }
             {
               this.state.key === '10' ? <TestErrorDetectionLoadable/> : null
             }
+            {
+              this.state.key === '11' ? <ErrorCorrectionBuildLoadable/> : null
+            }
+            
           </Content>
           <Footer style={{ textAlign: 'center' }}>
             皖ICP备18007473号
