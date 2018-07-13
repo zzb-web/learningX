@@ -16,50 +16,108 @@ class ErrorCorrectionBuild extends Component {
             paperStatus: 0,
            },
            wrongProblems : {
-            totalNum : 0,
+            totalNum : '',
             wrongProblems : []
             },
             buildErrorData : {},
             tableData : [],
-            docurl : ''
+            docurl : '',
+            errorUrl : '',
+            answerUrl : '',
+            tableData : []
         }
     }
+    _handleTableData(data){
+        let returnData = []
+        data.map((item,index)=>{
+            item.problems.map((item2,index2)=>{
+                returnData.push({
+                    titleNumber : item2.subIdx === -1 ? `${item2.index}` : `${item2.index}(${item2.subIdx})`,
+                    titleSource : item2.subIdx === -1 ? `${item2.book}/P${item2.page}/T${item2.index}` : `${item2.book}/P${item2.page}/T${item2.index}/(${item2.subIdx})`,
+                    titleBasic : item2.reason
+                })
+            })
+        })
+        return returnData;
+    }
+
+    _handleData(data){
+        if(data !== undefined){
+            let dataHandle = JSON.parse(JSON.stringify(data));
+            dataHandle.map((item,index)=>{
+                item.problems.map((item2,index2)=>{
+                    delete item2.book;
+                    delete item2.column;
+                    delete item2.idx;
+                    delete item2.page;
+                    delete item2.reason;
+                    delete item2.type;
+                })
+            })
+            let data_1 = {
+                pageType: 'A4', 
+                problems: dataHandle,
+            }
+            return data_1;
+        }
+    }
+    
     btnHandle=()=>{
         const {current} = this.state;
         if(current === 0){
-            var url = `/api/v3/students/me/wrongProblems/?sort=1&max=10`;
-            Get(url).then(resp=>{
-                this.setState({
-                    wrongProblems : resp.data
-                })
-            })
+            Post('/api/v3/students/me/problemFileState/',{state:0})
         }else if(current ===1){
             const {buildErrorData} = this.state;
             console.log(buildErrorData)
             var url = '/api/v3/students/me/getProblemsFile/';
             Post(url,buildErrorData).then(resp=>{
                 this.setState({
-                    docurl : resp.data.docurl
+                    docurl : resp.data.docurl,
+                    errorUrl : resp.data.docurl
                 })
             })
+            Post('/api/v3/students/me/problemFileState/',{state:1})
+        }else if(current === 2){
+            this.setState({
+                docurl : ''
+            })
+            Post('/api/v3/students/me/problemFileState/',{state:1})
+        }else if(current === 3){
+            let answerData = this.state.wrongProblems.wrongProblems;
+            let data = {};
+            answerData.map((item,index)=>{
+                item.problems.map((item2,index2)=>{
+                    data[`${item2.index}_${item2.problemId}`] = `${item2.problemId}_${item2.book}/P${item2.page}/${item2.idx}`
+                })
+            })
+            console.log(data)
+            let data_1=[];
+            for(var key in data){
+                data_1.push({
+                    problemId: key.split('_')[1],
+                    index: Number(key.split('_')[0]),
+                    location : data[key].split('_')[1]
+                })
+            }
+            let postData = {
+                pageType: 'A4',
+                problems : data_1
+            }
+            var url = '/api/v3/students/me/getAnswersFile/';
+            Post(url,postData).then(resp=>{
+                this.setState({
+                    docurl : resp.data.docurl,
+                    answerUrl : resp.data.docurl
+                })
+            })
+            Post('/api/v3/students/me/problemFileState/',{state:3})
+        }else if(current === 4){
+            Post('/api/v3/students/me/problemFileState/',{state:3})
+        }else if(current >4){
+            this.props.setKey('0')
         }
         this.setState({
             current : current+1
-        })
-    }
-    getBuildErrorData(data){
-        let data_1 = {
-            pageType: 'A4', 
-            problems: data,
-        }
-        this.setState({
-            buildErrorData : data_1
-        })
-    }
-    getTableData(data){
-        console.log(data)
-        this.setState({
-            tableData : data
         })
     }
     componentWillMount(){
@@ -69,9 +127,24 @@ class ErrorCorrectionBuild extends Component {
                 problemRecords : resp.data
             })
         })
+
+        var url = `/api/v3/students/me/wrongProblems/?sort=1&max=10`;
+        Get(url).then(resp=>{
+            this.setState({
+                wrongProblems : resp.data,
+                tableData : this._handleTableData(resp.data.wrongProblems),
+                buildErrorData : this._handleData(resp.data.wrongProblems)
+            })
+        })
+    
+        Get('/api/v3/students/me/problemFileState/').then(resp=>{
+            this.setState({
+                current : resp.data.state
+            })
+        })
     }
     render(){
-        const { current,problemRecords,wrongProblems,tableData,docurl} = this.state;
+        const { current,problemRecords,wrongProblems,tableData,docurl,errorUrl,answerUrl} = this.state;
         let btnContent='';
         switch(current){
             case 0 : 
@@ -89,8 +162,11 @@ class ErrorCorrectionBuild extends Component {
             case 4 :
                 btnContent = '下载答案';
                 break;
+            case 5 :
+                btnContent = '标记纠错本';
+                break;
             default : 
-                btnContent = '';
+                btnContent = '标记纠错本';
                 break;
 
         }
@@ -100,23 +176,20 @@ class ErrorCorrectionBuild extends Component {
             content: <ErrorContent problemRecords={problemRecords}/>,
           }, {
             title: '生成纠错本',
-            content: <BuildError wrongProblems={wrongProblems} 
-                                 sourceData={wrongProblems}
-                                 getTableData={this.getTableData.bind(this)}
-                                 getBuildErrorData={this.getBuildErrorData.bind(this)}/>,
+            content: <BuildError tableData={tableData} />,
           }, {
             title: '下载纠错本',
             content: <DownloadError tableData={tableData}/>,
           },{
             title: '生成答案',
-            content: <BuildAnswer tableData={tableData}/>,
+            content: <BuildAnswer tableData={tableData} errorUrl={errorUrl}/>,
           },{
             title: '下载答案',
-            content: 'Last-content',
+            content: <DownloadAnswer tableData={tableData} errorUrl={errorUrl}/>,
           }];
-        const btn = <Button type='primary' style={{width:160,height:34}}
+        const btn = <Button type='primary' style={current <=4 ? {width:160,height:34}:{width:160,height:34,background:'red',border:'none'}}
                             onClick={this.btnHandle}
-                            disabled={current !== 2 ? nextStep : docurl === '' ? true: false}>
+                            disabled={current !== 2 && current !==4 ? nextStep : docurl === '' ? true: false}>
                             {btnContent}
                     </Button>
         return(
@@ -129,11 +202,12 @@ class ErrorCorrectionBuild extends Component {
                                 {steps.map(item => <Step key={item.title} title={item.title} />)}
                             </Steps>
                             <div className='stepContent'>
-                               {steps[current].content}
+                                {current <=4 ? steps[current <=4 ? current : 4].content : <ErrorMark tableData={tableData} answerUrl={answerUrl}/>
+                                }
                             </div>
                             <div className='nextBtn'>
                                 {
-                                    current !==2 ? btn
+                                    current !==2 && current !== 4? btn
                                                     :  <a download={docurl} href={docurl} target="blank">
                                                             {btn}
                                                         </a>
@@ -210,49 +284,13 @@ class BuildError extends Component{
     constructor(props){
         super();
         this.state={
-            tableData : [],
+            tableData : props.tableData,
         }
-    }
-    componentWillMount(){
-        this._handleData(this.props.wrongProblems.wrongProblems)
     }
     componentWillReceiveProps(nextProps){
-        if(nextProps.wrongProblems.totalNum !== this.props.wrongProblems.totalNum){
-            this.setState({
-                tableData : this._handleTableData(nextProps.sourceData.wrongProblems),
-            })
-            this._handleData(nextProps.wrongProblems.wrongProblems)
-        }
-    }
-    _handleData(data){
-        if(data !== undefined){
-            let dataHandle = JSON.parse(JSON.stringify(data));
-            dataHandle.map((item,index)=>{
-                item.problems.map((item2,index2)=>{
-                    delete item2.book;
-                    delete item2.column;
-                    delete item2.idx;
-                    delete item2.page;
-                    delete item2.reason;
-                    delete item2.type;
-                })
-            })
-            this.props.getBuildErrorData(dataHandle)
-        }
-    }
-    _handleTableData(data){
-        let returnData = []
-        data.map((item,index)=>{
-            item.problems.map((item2,index2)=>{
-                returnData.push({
-                    titleNumber : item2.subIdx === -1 ? `${item2.index}` : `${item2.index}(${item2.subIdx})`,
-                    titleSource : item2.subIdx === -1 ? `${item2.book}/P${item2.page}/T${item2.index}` : `${item2.book}/P${item2.page}/T${item2.index}/(${item2.subIdx})`,
-                    titleBasic : item2.reason
-                })
-            })
+        this.setState({
+            tableData : nextProps.tableData
         })
-        this.props.getTableData(returnData)
-        return returnData;
     }
     render(){ 
         const {tableData} = this.state;
@@ -264,8 +302,19 @@ class BuildError extends Component{
     }
 }
 class DownloadError extends Component{
+    constructor(props){
+        super();
+        this.state={
+            tableData : props.tableData,
+        }
+    }
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            tableData : nextProps.tableData
+        })
+    }
     render(){
-        const {tableData} = this.props;
+        const {tableData} = this.state;
         return(
             <div className='buildErrorTable'>
                 <TableHandle tableData={tableData}/>
@@ -274,11 +323,79 @@ class DownloadError extends Component{
     }
 }
 class BuildAnswer extends Component{
+    constructor(props){
+        super();
+        this.state={
+            tableData : props.tableData,
+            errorUrl : props.errorUrl
+        }
+    }
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            tableData : nextProps.tableData,
+            errorUrl : nextProps.errorUrl
+        })
+    }
     render(){
-        const {tableData} = this.props;
+        const {tableData,errorUrl} = this.state;
         return(
             <div className='buildErrorTable'>
                 <TableHandle tableData={tableData}/>
+                <a download={errorUrl} href={errorUrl} target="blank">
+                    <Button style={{position:'relative',top:58,left:500}}>下载纠错本</Button>
+                </a>
+            </div>
+        )
+    }
+}
+class DownloadAnswer extends Component{
+    constructor(props){
+        super();
+        this.state={
+            tableData : props.tableData,
+            errorUrl : props.errorUrl
+        }
+    }
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            tableData : nextProps.tableData,
+            errorUrl : nextProps.errorUrl
+        })
+    }
+    render(){
+        const {tableData,errorUrl} = this.state;
+        return(
+            <div className='buildErrorTable'>
+                <TableHandle tableData={tableData}/>
+                <a download={errorUrl} href={errorUrl} target="blank">
+                    <Button style={{position:'relative',top:58,left:500}}>下载纠错本</Button>
+                </a>
+            </div>
+        )
+    }
+}
+class ErrorMark extends Component{
+    constructor(props){
+        super();
+        this.state={
+            tableData : props.tableData,
+            answerUrl : props.answerUrl
+        }
+    }
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            tableData : nextProps.tableData,
+            answerUrl : nextProps.answerUrl
+        })
+    }
+    render(){
+        const {tableData,answerUrl} = this.state;
+        return(
+            <div className='buildErrorTable'>
+                <TableHandle tableData={tableData}/>
+                <a download={answerUrl} href={answerUrl} target="blank">
+                    <Button style={{position:'relative',top:58,left:500}}>下载答案</Button>
+                </a>
             </div>
         )
     }

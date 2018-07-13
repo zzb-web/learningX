@@ -3,6 +3,7 @@ import { Layout, Menu, Icon } from 'antd';
 import {Get, Post} from '../../fetch/data.js';
 import { withRouter } from 'react-router';
 import UserMsgForm from '../UserMsg/index.js';
+import ErrorCorrectionBuild from '../ErrorCorrectionBuild/index.js'
 import {HomepageLoadable , 
         ErrorSumLoadable ,
         InfoInputLoadable ,
@@ -14,7 +15,8 @@ import {HomepageLoadable ,
         StudentMsgLoadable,
         TestErrorMarkerLoadable,
         TestErrorDetectionLoadable,
-        ErrorCorrectionBuildLoadable} from '../Loadable/homepageaComponent.js';
+        // ErrorCorrectionBuildLoadable
+      } from '../Loadable/homepageaComponent.js';
 import axios from 'axios';
 import './style.css';
 const { Header, Sider, Content,Footer} = Layout;
@@ -94,6 +96,12 @@ class Navigation extends Component {
      this.setState({
        hideMenu : flag
      })
+  }
+  setKey(value){
+    console.log(value)
+    this.setState({
+      key : value
+    })
   }
   render() {
     const {userMsg,userName,phone,gender,schoolID,classId,grade,hideMenu,schoolID_name,name_schoolID,schools} = this.state;
@@ -218,7 +226,8 @@ class Navigation extends Component {
               this.state.key === '10' ? <TestErrorDetectionLoadable/> : null
             }
             {
-              this.state.key === '11' ? <ErrorCorrectionBuildLoadable/> : null
+              // this.state.key === '11' ? <ErrorCorrectionBuildLoadable setKey={this.setKey.bind(this)}/> : null
+              this.state.key === '11' ? < ErrorCorrectionBuild setKey={this.setKey.bind(this)}/> : null
             }
             
           </Content>
