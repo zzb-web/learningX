@@ -128,7 +128,7 @@ class ErrorCorrectionBuild extends Component {
             },()=>{
                 const {current} = this.state;
                 if(current>0){
-                    Get('/api/v3/students/me/problemFileState/').then(resp=>{
+                    Get('/api/v3/students/me/lastWrongProblems/').then(resp=>{
                         this.setState({
                             // wrongProblems : resp.data,
                             tableData : this._handleTableData(resp.data.wrongProblems),
