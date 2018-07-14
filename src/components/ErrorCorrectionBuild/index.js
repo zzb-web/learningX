@@ -28,17 +28,19 @@ class ErrorCorrectionBuild extends Component {
         }
     }
     _handleTableData(data){
-        let returnData = []
-        data.map((item,index)=>{
-            item.problems.map((item2,index2)=>{
-                returnData.push({
-                    titleNumber : item2.subIdx === -1 ? `${item2.index}` : `${item2.index}(${item2.subIdx})`,
-                    titleSource : item2.subIdx === -1 ? `${item2.book}/P${item2.page}/T${item2.index}` : `${item2.book}/P${item2.page}/T${item2.index}/(${item2.subIdx})`,
-                    titleBasic : item2.reason
+        if(data !== undefined){
+            let returnData = []
+            data.map((item,index)=>{
+                item.problems.map((item2,index2)=>{
+                    returnData.push({
+                        titleNumber : item2.subIdx === -1 ? `${item2.index}` : `${item2.index}(${item2.subIdx})`,
+                        titleSource : item2.subIdx === -1 ? `${item2.book}/P${item2.page}/T${item2.index}` : `${item2.book}/P${item2.page}/T${item2.index}/(${item2.subIdx})`,
+                        titleBasic : item2.reason
+                    })
                 })
             })
-        })
-        return returnData;
+            return returnData;
+        }
     }
 
     _handleData(data){
@@ -72,16 +74,16 @@ class ErrorCorrectionBuild extends Component {
             var url = '/api/v3/students/me/getProblemsFile/';
             Post(url,buildErrorData).then(resp=>{
                 this.setState({
-                    docurl : resp.data.docurl,
-                    errorUrl : resp.data.docurl
+                    docurl : resp.data.pdfurl,
+                    errorUrl : resp.data.pdfurl
                 })
             })
-            Post('/api/v3/students/me/problemFileState/',{state:1})
+            Post('/api/v3/students/me/problemFileState/',{state:2})
         }else if(current === 2){
             this.setState({
                 docurl : ''
             })
-            Post('/api/v3/students/me/problemFileState/',{state:1})
+            Post('/api/v3/students/me/problemFileState/',{state:3})
         }else if(current === 3){
             let answerData = this.state.wrongProblems.wrongProblems;
             let data = {};
@@ -90,7 +92,6 @@ class ErrorCorrectionBuild extends Component {
                     data[`${item2.index}_${item2.problemId}`] = `${item2.problemId}_${item2.book}/P${item2.page}/${item2.idx}`
                 })
             })
-            console.log(data)
             let data_1=[];
             for(var key in data){
                 data_1.push({
@@ -106,13 +107,13 @@ class ErrorCorrectionBuild extends Component {
             var url = '/api/v3/students/me/getAnswersFile/';
             Post(url,postData).then(resp=>{
                 this.setState({
-                    docurl : resp.data.docurl,
-                    answerUrl : resp.data.docurl
+                    docurl : resp.data.pdfurl,
+                    answerUrl : resp.data.pdfurl
                 })
             })
-            Post('/api/v3/students/me/problemFileState/',{state:3})
+            Post('/api/v3/students/me/problemFileState/',{state:4})
         }else if(current === 4){
-            Post('/api/v3/students/me/problemFileState/',{state:3})
+            Post('/api/v3/students/me/problemFileState/',{state:5})
         }else if(current >4){
             this.props.setKey('0')
         }
@@ -121,6 +122,37 @@ class ErrorCorrectionBuild extends Component {
         })
     }
     componentWillMount(){
+        Get('/api/v3/students/me/problemFileState/').then(resp=>{
+            this.setState({
+                current : resp.data.state
+            },()=>{
+                const {current} = this.state;
+                if(current>0){
+                    Get('/api/v3/students/me/problemFileState/').then(resp=>{
+                        this.setState({
+                            // wrongProblems : resp.data,
+                            tableData : this._handleTableData(resp.data.wrongProblems),
+                        })
+                    })
+                    Get('/api/v3/students/me/lastFileURLs/').then(resp=>{
+                       if(current === 2){
+                           this.setState({
+                               docurl : resp.data.problemFileURL
+                           })
+                       }else if(current === 4){
+                           this.setState({
+                               docurl : resp.data.answerFileURL
+                           })
+                       }
+                           this.setState({
+                               errorUrl : resp.data.problemFileURL,
+                               answerUrl : resp.data.answerFileURL
+                           })
+                    })
+                } 
+            })
+        })
+
         var url = `/api/v3/students/me/problemRecords/`;
         Get(url).then(resp=>{
             this.setState({
@@ -135,13 +167,7 @@ class ErrorCorrectionBuild extends Component {
                 tableData : this._handleTableData(resp.data.wrongProblems),
                 buildErrorData : this._handleData(resp.data.wrongProblems)
             })
-        })
-    
-        Get('/api/v3/students/me/problemFileState/').then(resp=>{
-            this.setState({
-                current : resp.data.state
-            })
-        })
+        })       
     }
     render(){
         const { current,problemRecords,wrongProblems,tableData,docurl,errorUrl,answerUrl} = this.state;
@@ -170,22 +196,22 @@ class ErrorCorrectionBuild extends Component {
                 break;
 
         }
-        let nextStep = problemRecords.wrongProblemStatus === 0 ? false : false;
+        let nextStep = problemRecords.wrongProblemStatus === 0 ? true : false;
         const steps = [{
             title: '错题标记',
             content: <ErrorContent problemRecords={problemRecords}/>,
           }, {
             title: '生成纠错本',
-            content: <BuildError tableData={tableData} />,
+            content : <TableContent tableData={tableData} current={current} errorUrl={errorUrl} answerUrl={answerUrl}/>,
           }, {
             title: '下载纠错本',
-            content: <DownloadError tableData={tableData}/>,
+            content: <TableContent tableData={tableData} current={current} errorUrl={errorUrl} answerUrl={answerUrl}/>,
           },{
             title: '生成答案',
-            content: <BuildAnswer tableData={tableData} errorUrl={errorUrl}/>,
+            content: <TableContent tableData={tableData} current={current} errorUrl={errorUrl} answerUrl={answerUrl}/>,
           },{
             title: '下载答案',
-            content: <DownloadAnswer tableData={tableData} errorUrl={errorUrl}/>,
+            content: <TableContent tableData={tableData} current={current} errorUrl={errorUrl} answerUrl={answerUrl}/>,
           }];
         const btn = <Button type='primary' style={current <=4 ? {width:160,height:34}:{width:160,height:34,background:'red',border:'none'}}
                             onClick={this.btnHandle}
@@ -202,7 +228,7 @@ class ErrorCorrectionBuild extends Component {
                                 {steps.map(item => <Step key={item.title} title={item.title} />)}
                             </Steps>
                             <div className='stepContent'>
-                                {current <=4 ? steps[current <=4 ? current : 4].content : <ErrorMark tableData={tableData} answerUrl={answerUrl}/>
+                                {current <=4 ? steps[current <=4 ? current : 4].content : <TableContent tableData={tableData} current={current} errorUrl={errorUrl} answerUrl={answerUrl}/>
                                 }
                             </div>
                             <div className='nextBtn'>
@@ -280,7 +306,7 @@ class ErrorContent extends Component{
         )
     }
 }
-class BuildError extends Component{
+/*class BuildError extends Component{
     constructor(props){
         super();
         this.state={
@@ -399,7 +425,58 @@ class ErrorMark extends Component{
             </div>
         )
     }
+}*/
+
+class TableContent extends Component{
+    constructor(props){
+        super();
+        this.state={
+            tableData : props.tableData,
+            answerUrl : props.answerUrl,
+            errorUrl : props.errorUrl,
+            current : props.current,
+        }
+    }
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            tableData : nextProps.tableData,
+            answerUrl : nextProps.answerUrl,
+            errorUrl : nextProps.errorUrl,
+            current : nextProps.current,
+        })
+    }
+    downloadHandle(){
+        const {current ,answerUrl ,errorUrl} = this.state;
+        let URL = ''
+        if(current <=4){
+            URL = errorUrl;
+        }else {
+            URL = answerUrl;
+        }
+        // 创建隐藏的可下载链接                   
+        var eleLink = document.createElement('a');
+        eleLink.download = URL;
+        eleLink.href = URL;
+        eleLink.target = 'blank';
+        eleLink.style.display = 'none';  
+        document.body.appendChild(eleLink);
+        eleLink.click();
+        // 然后移除
+        document.body.removeChild(eleLink);
+    }
+    render(){
+        const {tableData,answerUrl,current} = this.state;
+        return(
+            <div className='buildErrorTable'>
+                <TableHandle tableData={tableData}/>
+                {current>2 ? <Button style={{position:'relative',top:55,left:500}} onClick={this.downloadHandle.bind(this)}>
+                                    {current<=4 ?'下载纠错本':'下载答案'}
+                            </Button> : null}
+            </div>
+        )
+    }
 }
+
 class TableHandle extends Component{
     render(){
         const {tableData} = this.props;
@@ -420,19 +497,21 @@ class TableHandle extends Component{
             width:'50%'
           }];
         let dataSource = []
-        tableData.map((item,index)=>{
-            dataSource.push({
-                key : index,
-                titleNumber : item.titleNumber,
-                titleSource : item.titleSource,
-                titleBasic : item.titleBasic
+        if(tableData !== undefined){
+            tableData.map((item,index)=>{
+                dataSource.push({
+                    key : index,
+                    titleNumber : item.titleNumber,
+                    titleSource : item.titleSource,
+                    titleBasic : item.titleBasic
+                })
             })
-        })
+        }
         return(
             <Table  columns={columns}
                         dataSource={dataSource}
                         bordered
-                        scroll={{ y: 255 }}
+                        scroll={{ y: 300 }}
                         pagination={false}/>
         )
     }

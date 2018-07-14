@@ -104,7 +104,7 @@ class Navigation extends Component {
     })
   }
   render() {
-    const {userMsg,userName,phone,gender,schoolID,classId,grade,hideMenu,schoolID_name,name_schoolID,schools} = this.state;
+    const {userMsg,userName,phone,gender,schoolID,classId,grade,hideMenu,schoolID_name,name_schoolID,schools,key} = this.state;
     console.log('xxxxxxx',hideMenu)
     return (
       <Layout>
@@ -128,7 +128,7 @@ class Navigation extends Component {
             type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
             onClick={this.toggle}
           />
-          <Menu theme="dark" mode="inline" onClick={this.clickHandle.bind(this)}>
+          <Menu theme="dark" mode="inline" onClick={this.clickHandle.bind(this)} selectedKeys={[key]}>
             <Menu.Item key="0">
                 <Icon type="rocket" />
                 <span>纠错本</span>
