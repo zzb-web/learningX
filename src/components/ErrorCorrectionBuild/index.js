@@ -124,7 +124,7 @@ class ErrorCorrectionBuild extends Component {
     componentWillMount(){
         Get('/api/v3/students/me/problemFileState/').then(resp=>{
             this.setState({
-                current : 0
+                current : resp.data.state
             },()=>{
                 const {current} = this.state;
                 if(current>0){
