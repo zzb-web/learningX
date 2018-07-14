@@ -10,7 +10,7 @@ class ErrorCorrectionBuild extends Component {
         this.state = {
            current : 0,
            problemRecords : {
-            wrongProblemStatus: 0,
+            wrongProblemStatus: 1,
             textbookStatus: 0,
             referenceBookStatus: 0,
             paperStatus: 0,
@@ -124,7 +124,7 @@ class ErrorCorrectionBuild extends Component {
     componentWillMount(){
         Get('/api/v3/students/me/problemFileState/').then(resp=>{
             this.setState({
-                current : resp.data.state
+                current : 0
             },()=>{
                 const {current} = this.state;
                 if(current>0){
@@ -196,7 +196,7 @@ class ErrorCorrectionBuild extends Component {
                 break;
 
         }
-        let nextStep = problemRecords.wrongProblemStatus === 0 ? true : false;
+        let nextStep = problemRecords.wrongProblemStatus === 0 ? false : true;
         const steps = [{
             title: '错题标记',
             content: <ErrorContent problemRecords={problemRecords}/>,
@@ -213,11 +213,47 @@ class ErrorCorrectionBuild extends Component {
             title: '下载答案',
             content: <TableContent tableData={tableData} current={current} errorUrl={errorUrl} answerUrl={answerUrl}/>,
           }];
-        const btn = <Button type='primary' style={current <=4 ? {width:160,height:34}:{width:160,height:34,background:'red',border:'none'}}
-                            onClick={this.btnHandle}
-                            disabled={current !== 2 && current !==4 ? nextStep : docurl === '' ? true: false}>
+
+        let btn;
+        if(current === 0){
+            btn = <Button type='primary' style={{width:160,height:34}}
+                        onClick={this.btnHandle}
+                        disabled={nextStep}>
+                        {btnContent}
+                    </Button>
+        }else if(current === 1){
+            btn = <Button type='primary' style={{width:160,height:34}}
+                            onClick={this.btnHandle}>
+                            {btnContent}
+                  </Button>
+        }else if(current === 2){
+            btn = <Button type='primary' style={{width:160,height:34}}
+                        onClick={this.btnHandle}
+                        disabled={docurl === '' ? true: false}>
+                        {btnContent}
+                    </Button>
+        }else if(current === 3){
+            btn = <Button type='primary' style={{width:160,height:34}}
+                            onClick={this.btnHandle}>
+                            {btnContent}
+                  </Button>
+        }else if(current === 4){
+            btn = <Button type='primary' style={{width:160,height:34}}
+                        onClick={this.btnHandle}
+                        disabled={docurl === '' ? true: false}>
+                        {btnContent}
+                    </Button>
+        }else{
+            btn = <Button type='primary' style={{width:160,height:34,background:'red',border:'none'}}
+                            onClick={this.btnHandle}>
                             {btnContent}
                     </Button>
+        }
+        // const btn = <Button type='primary' style={current <=4 ? {width:160,height:34}:{width:160,height:34,background:'red',border:'none'}}
+        //                     onClick={this.btnHandle}
+        //                     disabled={current !== 2 && current !==4 ? nextStep : docurl === '' ? true: false}>
+        //                     {btnContent}
+        //             </Button>
         return(
             <div>
                 <Row>
@@ -255,9 +291,14 @@ class ErrorContent extends Component{
            problemRecords : props.problemRecords
        }
    }
+   componentWillReceiveProps(nextProps){
+       this.setState({
+        problemRecords : nextProps.problemRecords
+       })
+   }
     render(){
         const {problemRecords} = this.state;
-        let error = problemRecords.wrongProblemStatus === 0 ? false : true;
+        let error = problemRecords.wrongProblemStatus === 0 ? true : false;
         let paper = problemRecords.paperStatus === 0 ? false : true;
         let referenceBook = problemRecords.referenceBookStatus === 0 ? false : true;
         let textBook = problemRecords.paperStatus === 0 ? false : true;
