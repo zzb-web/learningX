@@ -47,6 +47,8 @@ class ErrorCorrectionBuild extends Component {
         if(data !== undefined){
             let dataHandle = JSON.parse(JSON.stringify(data));
             dataHandle.map((item,index)=>{
+                let itemP = item.problems[0];
+                item.type = `${itemP.book}/P${itemP.page}/${itemP.idx}`;
                 item.problems.map((item2,index2)=>{
                     delete item2.book;
                     delete item2.column;
@@ -114,17 +116,19 @@ class ErrorCorrectionBuild extends Component {
             Post('/api/v3/students/me/problemFileState/',{state:4})
         }else if(current === 4){
             Post('/api/v3/students/me/problemFileState/',{state:5})
-        }else if(current >4){
+        }else if(current  === 5){
             this.props.setKey('0')
         }
-        this.setState({
-            current : current+1
-        })
+        if(current<=4){
+            this.setState({
+                current : current+1
+            })
+        }
     }
     componentWillMount(){
         Get('/api/v3/students/me/problemFileState/').then(resp=>{
             this.setState({
-                current : resp.data.state
+                current : 0
             },()=>{
                 const {current} = this.state;
                 if(current>0){
@@ -212,6 +216,10 @@ class ErrorCorrectionBuild extends Component {
           },{
             title: '下载答案',
             content: <TableContent tableData={tableData} current={current} errorUrl={errorUrl} answerUrl={answerUrl}/>,
+          },
+          {
+            title: '标记错题本',
+            content: <TableContent tableData={tableData} current={current} errorUrl={errorUrl} answerUrl={answerUrl}/>,
           }];
 
         let btn;
@@ -264,7 +272,10 @@ class ErrorCorrectionBuild extends Component {
                                 {steps.map(item => <Step key={item.title} title={item.title} />)}
                             </Steps>
                             <div className='stepContent'>
-                                {current <=4 ? steps[current <=4 ? current : 4].content : <TableContent tableData={tableData} current={current} errorUrl={errorUrl} answerUrl={answerUrl}/>
+                                {/* {current <=4 ? steps[current <=4 ? current : 4].content : <TableContent tableData={tableData} current={current} errorUrl={errorUrl} answerUrl={answerUrl}/>
+                                } */}
+                                {
+                                    steps[current].content
                                 }
                             </div>
                             <div className='nextBtn'>
