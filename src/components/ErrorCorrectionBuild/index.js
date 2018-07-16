@@ -90,10 +90,26 @@ class ErrorCorrectionBuild extends Component {
             })
             Post('/api/v3/students/me/problemFileState/',{state:2})
         }else if(current === 2){
+            const {wrongProblems} = this.state;
             this.setState({
                 docurl : ''
             })
+
+            let timestamp = Date.parse(new Date())/1000;
+            let detail = JSON.stringify(wrongProblems);
+            var url = '/api/v3/students/me/uploadTasks/';
+            var postMsg ={
+                time : timestamp,
+                type : 1,
+                detail : detail
+            }
+            Post(url,postMsg).then(resp=>{
+                
+            }).catch(err=>{
+                
+            })
             Post('/api/v3/students/me/problemFileState/',{state:3})
+            
         }else if(current === 3){
             let answerData = this.state.wrongProblems.wrongProblems;
             let data = {};
@@ -136,12 +152,13 @@ class ErrorCorrectionBuild extends Component {
     componentWillMount(){
         Get('/api/v3/students/me/problemFileState/').then(resp=>{
             this.setState({
-                current : resp.data.state
+                current : this.data.state
             },()=>{
                 const {current} = this.state;
                 if(current>0){
                     Get('/api/v3/students/me/lastWrongProblems/').then(resp=>{
                         this.setState({
+                            wrongProblems : resp.data,
                             tableData : this._handleTableData(resp.data.wrongProblems),
                         })
                     })
@@ -330,8 +347,8 @@ class ErrorContent extends Component{
             { 
                 key: '2',
                 number: '试卷',
-                errorMark:<span style={paper?{color:'#49a9ee'}:{color:'#c0c0c0'}}>
-                                在近一周内{paper?'有':'无'}标记</span>
+                errorMark:<span style={paper?{color:'#49a9ee'}:{color:'red'}}>
+                                {paper?'已':'未'}标记</span>
             },
             { 
                 key: '3',
