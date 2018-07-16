@@ -34,7 +34,7 @@ class ErrorCorrectionBuild extends Component {
                 item.problems.map((item2,index2)=>{
                     returnData.push({
                         titleNumber : item2.subIdx === -1 ? `${item2.index}` : `${item2.index}(${item2.subIdx})`,
-                        titleSource : item2.subIdx === -1 ? `${item2.book}/P${item2.page}/T${item2.index}` : `${item2.book}/P${item2.page}/T${item2.index}/(${item2.subIdx})`,
+                        titleSource : item2.subIdx === -1 ? `${item2.book}/P${item2.page}/T${item2.idx}` : `${item2.book}/P${item2.page}/T${item2.idx}/(${item2.subIdx})`,
                         titleBasic : item2.reason
                     })
                 })
@@ -70,6 +70,14 @@ class ErrorCorrectionBuild extends Component {
         const {current} = this.state;
         if(current === 0){
             Post('/api/v3/students/me/problemFileState/',{state:0})
+            var url = `/api/v3/students/me/wrongProblems/?sort=1&max=10`;
+            Get(url).then(resp=>{
+                this.setState({
+                    wrongProblems : resp.data,
+                    tableData : this._handleTableData(resp.data.wrongProblems),
+                    buildErrorData : this._handleData(resp.data.wrongProblems)
+                })
+            })
         }else if(current ===1){
             const {buildErrorData} = this.state;
             console.log(buildErrorData)
@@ -134,7 +142,6 @@ class ErrorCorrectionBuild extends Component {
                 if(current>0){
                     Get('/api/v3/students/me/lastWrongProblems/').then(resp=>{
                         this.setState({
-                            // wrongProblems : resp.data,
                             tableData : this._handleTableData(resp.data.wrongProblems),
                         })
                     })
@@ -161,15 +168,6 @@ class ErrorCorrectionBuild extends Component {
         Get(url).then(resp=>{
             this.setState({
                 problemRecords : resp.data
-            })
-        })
-
-        var url = `/api/v3/students/me/wrongProblems/?sort=1&max=10`;
-        Get(url).then(resp=>{
-            this.setState({
-                wrongProblems : resp.data,
-                tableData : this._handleTableData(resp.data.wrongProblems),
-                buildErrorData : this._handleData(resp.data.wrongProblems)
             })
         })       
     }
@@ -202,7 +200,7 @@ class ErrorCorrectionBuild extends Component {
         }
         let nextStep = problemRecords.wrongProblemStatus === 0 ? false : true;
         const steps = [{
-            title: '错题标记',
+            title: '标记情况',
             content: <ErrorContent problemRecords={problemRecords}/>,
           }, {
             title: '生成纠错本',
@@ -314,7 +312,7 @@ class ErrorContent extends Component{
         let referenceBook = problemRecords.referenceBookStatus === 0 ? false : true;
         let textBook = problemRecords.paperStatus === 0 ? false : true;
         const columns = [{
-            title: '题目序号',
+            title: '学习资料',
             dataIndex: 'number',
             key: 'number',
           }, {
