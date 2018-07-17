@@ -343,10 +343,12 @@ class ErrorContent extends Component{
             title: '学习资料',
             dataIndex: 'number',
             key: 'number',
+            width:'30%'
           }, {
             title: '错题标记情况',
             dataIndex: 'errorMark',
             key: 'errorMark',
+            width:'70%'
           }];
         let dataSource = [
             { 
