@@ -152,7 +152,7 @@ class ErrorCorrectionBuild extends Component {
     componentWillMount(){
         Get('/api/v3/students/me/problemFileState/').then(resp=>{
             this.setState({
-                current : this.data.state
+                current : resp.data.state
             },()=>{
                 const {current} = this.state;
                 if(current>0){
@@ -177,16 +177,18 @@ class ErrorCorrectionBuild extends Component {
                                answerUrl : resp.data.answerFileURL
                            })
                     })
-                } 
+                }else{
+                    var url = `/api/v3/students/me/problemRecords/`;
+                    Get(url).then(resp=>{
+                        this.setState({
+                            problemRecords : resp.data
+                        })
+                    }) 
+                }
             })
         })
 
-        var url = `/api/v3/students/me/problemRecords/`;
-        Get(url).then(resp=>{
-            this.setState({
-                problemRecords : resp.data
-            })
-        })       
+             
     }
     render(){
         const { current,problemRecords,wrongProblems,tableData,docurl,errorUrl,answerUrl} = this.state;
@@ -324,10 +326,19 @@ class ErrorContent extends Component{
    }
     render(){
         const {problemRecords} = this.state;
+        console.log(problemRecords.bookStatus)
         let error = problemRecords.wrongProblemStatus === 0 ? true : false;
-        let paper = problemRecords.paperStatus === 0 ? false : true;
-        let referenceBook = problemRecords.referenceBookStatus === 0 ? false : true;
-        let textBook = problemRecords.paperStatus === 0 ? false : true;
+        let paper = problemRecords.paperStatus === 0 ? true : false;
+        const booksArr = problemRecords.bookStatus || [];
+        let booksStatus = [];
+        booksArr.map((item,index)=>{
+            booksStatus.push({
+                key : index+2,
+                number : item.book,
+                errorMark : <span style={item.status === 0 ?{color:'#49a9ee'}:{color:'#c0c0c0'}}>
+                                     在近一周内{item.status === 0?'有':'无'}错题标记</span>
+            })
+        })
         const columns = [{
             title: '学习资料',
             dataIndex: 'number',
@@ -337,7 +348,7 @@ class ErrorContent extends Component{
             dataIndex: 'errorMark',
             key: 'errorMark',
           }];
-        const dataSource = [
+        let dataSource = [
             { 
                 key: '1',
                 number: '纠错本',
@@ -350,24 +361,14 @@ class ErrorContent extends Component{
                 errorMark:<span style={paper?{color:'#49a9ee'}:{color:'red'}}>
                                 {paper?'已':'未'}标记</span>
             },
-            { 
-                key: '3',
-                number: '教辅书',
-                errorMark:<span style={referenceBook?{color:'#49a9ee'}:{color:'#c0c0c0'}}>
-                                在近一周内{referenceBook?'有':'无'}错题标记</span>
-            },
-            { 
-                key: '4',
-                number: '课本',
-                errorMark:<span style={textBook?{color:'#49a9ee'}:{color:'#c0c0c0'}}>
-                        在近一周内{textBook?'有':'无'}错题标记</span>
-            },
         ]
+        dataSource = dataSource.concat(booksStatus);
         return(
             <div className='errorTable'>
                 <Table  columns={columns}
                         dataSource={dataSource}
                         bordered
+                        scroll={{ y: 300 }}
                         pagination={false}/>
             </div>
         )
