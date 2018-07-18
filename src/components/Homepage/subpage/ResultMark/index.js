@@ -155,6 +155,7 @@ class ResultMark extends Component{
             }).catch(err=>{
       
             })
+            Post('/api/v3/students/me/problemFileState/',{state:0})
           }else{
             message.error('结果标记失败',1.5);
           }

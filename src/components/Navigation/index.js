@@ -23,7 +23,7 @@ const { Header, Sider, Content,Footer} = Layout;
 class Navigation extends Component {
   state = {
     collapsed: false,
-    key: '11',
+    key: '0',
     showUser : 'none',
     contentHeight :　0,
     userMsg : {},

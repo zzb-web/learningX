@@ -42,11 +42,9 @@ class Homepage extends Component{
                     }
                 })
             })
-            console.log(data1);
             for(var key in data1){
                 detailData.push(data1[key])
             }
-            console.log(detailData)
             this.setState({
                 showDetail : true,
                 detailData : detailData,
