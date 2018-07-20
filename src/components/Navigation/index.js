@@ -25,6 +25,7 @@ class Navigation extends Component {
   state = {
     collapsed: false,
     key: '12',
+    subKey : ['sub1'],
     showUser : 'none',
     contentHeight :　0,
     userMsg : {},
@@ -99,13 +100,22 @@ class Navigation extends Component {
      })
   }
   setKey(value){
-    console.log(value)
+    const {subKey} = this.state;
+    if(subKey.indexOf('sub2') === -1){
+      subKey.push('sub2')
+    }
     this.setState({
-      key : value
+      key : value,
+      subKey
+    })
+  }
+  onOpenChange(e){
+    this.setState({
+      subKey : e
     })
   }
   render() {
-    const {userMsg,userName,phone,gender,schoolID,classId,grade,hideMenu,schoolID_name,name_schoolID,schools,key} = this.state;
+    const {userMsg,userName,subKey,phone,gender,schoolID,classId,grade,hideMenu,schoolID_name,name_schoolID,schools,key} = this.state;
     console.log('xxxxxxx',hideMenu)
     return (
       <Layout>
@@ -133,7 +143,10 @@ class Navigation extends Component {
                 mode="inline" 
                 onClick={this.clickHandle.bind(this)} 
                 selectedKeys={[key]}
-                defaultOpenKeys={['sub1']}>
+                openKeys={subKey}
+                onOpenChange={this.onOpenChange.bind(this)}
+                // defaultOpenKeys={['sub1']}
+                >
             <SubMenu key="sub1" title={<span><Icon type="shopping-cart"/><span>选择学习包</span></span>}>
               <Menu.Item key="12">
                  <span>选择学习包</span>
