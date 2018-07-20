@@ -18,25 +18,26 @@ class TopicResult extends Component{
       },500)
       const {bookType} = this.state;
         let msg = [];
-        // console.log(this.state.data)
         this.state.data.map((item,index)=>{
           if(item.status){
-            // console.log(item.position)
             let position = item.position.split('/');
-            // console.log(position.length)
             if(position.length !== 3){
-              msg.push({
+              if(!item.isCorrect){
+                msg.push({
                   isCorrect : item.isCorrect,
                   problemId: item.problemId,
                   subIdx : -1
                 })
+              }
             }else{
               var subIdx = Number(position[2].split('')[1]);
-              msg.push({
-                isCorrect : item.isCorrect,
-                problemId: item.problemId,
-                subIdx : subIdx
-              })
+              if(!item.isCorrect){
+                msg.push({
+                  isCorrect : item.isCorrect,
+                  problemId: item.problemId,
+                  subIdx : subIdx
+                })
+              }
             }
           }
         })
@@ -190,9 +191,9 @@ class TopicResult extends Component{
         } else{
           a.status = <Switch checkedChildren="布置了" unCheckedChildren="没布置" checked/>
           if(!data.isCorrect){
-            a.isCorrect = <Switch checkedChildren="做对了" unCheckedChildren="做错了" checked={false}/>
+            a.isCorrect = <Switch style={{width:60}} checkedChildren="" unCheckedChildren="×" checked={false}/>
           } else{
-            a.isCorrect = <Switch checkedChildren="做对了" unCheckedChildren="做错了" checked/>
+            a.isCorrect = <Switch style={{width:60}} checkedChildren="" unCheckedChildren="×" checked/>
           }
         }
         data1.push(a)

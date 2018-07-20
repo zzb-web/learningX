@@ -130,6 +130,7 @@ class RegistrationForm extends Component {
                 <Option key={index} value={item.name}>{item.name}</Option>
             )
         })
+        const grade = ['一','二','三','四','五','六','七','八','九','高一','高二','高三','高复']
         return (
             <div className='userMsg'>
                 <Row>
@@ -187,9 +188,9 @@ class RegistrationForm extends Component {
                                     rules: [{ required: true, message: '请输入您的年级!', whitespace: true }],
                                 })(
                                     <Select>
-                                        <Option value='七'>七</Option>
-                                        <Option value='八'>八</Option>
-                                        <Option value='九'>九</Option>
+                                        {
+                                            grade.map((item,index)=><Option value={item}>{item}</Option>)
+                                        }
                                     </Select>
                                     )}
                             </FormItem>

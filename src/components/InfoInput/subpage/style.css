@@ -4,7 +4,12 @@
     width: 100%;
     margin-left: 0;
 }
-
+.topic-result .ant-switch-checked{
+    background-color: #c9c9c9 !important;
+  }
+.topic-result .ant-switch{
+    background-color: red;
+  }
 th.column-position, td.column-position, td.column-status, td.column-result,td.column-status, th.column-result{
     text-align: center !important;
 }

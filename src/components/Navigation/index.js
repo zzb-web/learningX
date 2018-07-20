@@ -20,10 +20,11 @@ import {HomepageLoadable ,
 import axios from 'axios';
 import './style.css';
 const { Header, Sider, Content,Footer} = Layout;
+const {SubMenu} = Menu;
 class Navigation extends Component {
   state = {
     collapsed: false,
-    key: '0',
+    key: '12',
     showUser : 'none',
     contentHeight :　0,
     userMsg : {},
@@ -109,7 +110,7 @@ class Navigation extends Component {
     return (
       <Layout>
         <Sider
-          trigger={null}
+          trigger={null}  
           collapsible
           collapsed={this.state.collapsed}
           width={135}
@@ -128,67 +129,81 @@ class Navigation extends Component {
             type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
             onClick={this.toggle}
           />
-          <Menu theme="dark" mode="inline" onClick={this.clickHandle.bind(this)} selectedKeys={[key]}>
-            <Menu.Item key="0">
-                <Icon type="rocket" />
-                <span>纠错本</span>
-            </Menu.Item>
-            {/* <Menu.Item key="9">
-                <Icon type="user-add" />
-                <span>学生信息录入</span>
-            </Menu.Item> */}
-            <Menu.Item key="1">
-              <Icon type="book" />
-              <span>平时作业</span>
-            </Menu.Item>
-            <Menu.Item key="9" style={hideMenu?{display:'block'}:{display:'none'}}>
-              <Icon type="line-chart" />
-              <span>试卷错题标记</span>
-            </Menu.Item>
-            <Menu.Item key="2"  style={hideMenu?{display:'block'}:{display:'none'}}>
-              <Icon type="appstore" />
-              <span>错题归类</span>
-            </Menu.Item>
-            <Menu.Item key="7" style={hideMenu?{display:'block'}:{display:'none'}}>
-              <Icon type="bar-chart" />
-              <span>错题测试</span>
-            </Menu.Item>
-            <Menu.Item key="10" style={hideMenu?{display:'block'}:{display:'none'}}>
-              <Icon type="exception" />
-              <span>试卷错题测试</span>
-            </Menu.Item>
-            <Menu.Item key="8" style={hideMenu?{display:'block'}:{display:'none'}}>
-              <Icon type="link" />
-              <span>检验题测试</span>
-            </Menu.Item>
-            <Menu.Item key="5" style={hideMenu?{display:'block'}:{display:'none'}}>
-              <Icon type="scan" />
-              <span>错题复习</span>
-            </Menu.Item>
-            <Menu.Item key="6" style={hideMenu?{display:'block'}:{display:'none'}}>
-              <Icon type="database" />
-              <span>考题检验</span>
-            </Menu.Item>
-            <Menu.Item key="11" style={hideMenu?{display:'block'}:{display:'none'}}>
-              <Icon type="api" />
-              <span>纠错本生成</span>
-            </Menu.Item>
+          <Menu theme="dark"
+                mode="inline" 
+                onClick={this.clickHandle.bind(this)} 
+                selectedKeys={[key]}
+                defaultOpenKeys={['sub1']}>
+            <SubMenu key="sub1" title={<span><Icon type="shopping-cart"/><span>选择学习包</span></span>}>
+              <Menu.Item key="12">
+                 <span>选择学习包</span>
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu key="sub2" title={<span><Icon type="pushpin"/><span>标记错题</span></span>}>
+              <Menu.Item key="0">
+                  <span>纠错本</span>
+              </Menu.Item>
+              <Menu.Item key="1">
+                <span>平时作业</span>
+              </Menu.Item>
+              <Menu.Item key="9">
+                <span>试卷</span>
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu key="sub3" title={<span><Icon type="file-add"/><span>生成纠错本</span></span>}>
+              <Menu.Item key="7">
+                 <span>EPU1</span>
+              </Menu.Item>
+              <Menu.Item key="11">
+                 <span>EPU2</span>
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu key="sub4" title={<span><Icon type="user"/><span>用户信息</span></span>}>
+              <Menu.Item key="3">
+                 <span>个人信息</span>
+              </Menu.Item>
+              <Menu.Item key="4">
+                 <span>修改密码</span>
+              </Menu.Item>
+            </SubMenu>
+            {hideMenu ?
+            <SubMenu key="sub5" title={<span><Icon type="lock"/><span>隐藏</span></span>}>
+                <Menu.Item key="2"  style={hideMenu?{display:'block'}:{display:'none'}}>
+                  <span>错题归类</span>
+                </Menu.Item>
+                <Menu.Item key="10" style={hideMenu?{display:'block'}:{display:'none'}}>
+                  <span>试卷错题测试</span>
+                </Menu.Item>
+                <Menu.Item key="8" style={hideMenu?{display:'block'}:{display:'none'}}>
+                  <span>检验题测试</span>
+                </Menu.Item>
+                <Menu.Item key="5" style={hideMenu?{display:'block'}:{display:'none'}}>
+                  <span>错题复习</span>
+                </Menu.Item>
+                <Menu.Item key="6" style={hideMenu?{display:'block'}:{display:'none'}}>
+                  <span>考题检验</span>
+                </Menu.Item>
+            </SubMenu> : null
+            }
+           
           </Menu>
         </Sider>
         <Layout>
           <Header style={{ /*position: 'fixed',*/ width: '100%', padding: 0 }}>
-           <div className='user-main' onMouseLeave={this.userMouseLeave.bind(this)}>
-            <div className='user-msg' onMouseEnter={this.userMouseEnter.bind(this)}>
+           <div className='user-main'>
+            <div className='user-msg'>
               <div className='user-icon-content'>
                 <Icon type="user" className='user-icon'/>
               </div>
               <div className='user-name'>{userName ||userMsg.learnId}</div>
+              <div className='logout' title='登出' onClick={this.logoutHandle.bind(this)}><Icon type="logout" /></div>
             </div>
-            <ul className='user-content' onMouseLeave={this.userMouseLeave.bind(this)} style={{display:this.state.showUser}}>
+            
+            {/* <ul className='user-content' onMouseLeave={this.userMouseLeave.bind(this)} style={{display:this.state.showUser}}>
               <li onClick={this.usermsgHandle.bind(this)}>个人信息</li>
               <li onClick={this.passwordHandle.bind(this)}>修改密码</li>
               <li onClick={this.logoutHandle.bind(this)}>退出登录</li>
-            </ul>
+            </ul> */}
           </div>
           </Header>
           <Content style={{ margin: '16px 16px 0px 16px', padding: '24px', background: '#fff', minHeight:this.state.contentHeight,/*marginTop:80 */ }}>
