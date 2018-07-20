@@ -15,7 +15,7 @@ import {HomepageLoadable ,
         StudentMsgLoadable,
         TestErrorMarkerLoadable,
         TestErrorDetectionLoadable,
-        // ErrorCorrectionBuildLoadable
+        LearningPackageLoadable 
       } from '../Loadable/homepageaComponent.js';
 import axios from 'axios';
 import './style.css';
@@ -84,7 +84,6 @@ class Navigation extends Component {
   }
   componentWillMount(){
     axios.defaults.withCredentials = true;
-    // console.log(sessionStorage.userId);
      if(sessionStorage.userId === undefined){
         this.props.history.push('/');
      }
@@ -116,7 +115,6 @@ class Navigation extends Component {
   }
   render() {
     const {userMsg,userName,subKey,phone,gender,schoolID,classId,grade,hideMenu,schoolID_name,name_schoolID,schools,key} = this.state;
-    console.log('xxxxxxx',hideMenu)
     return (
       <Layout>
         <Sider
@@ -145,7 +143,6 @@ class Navigation extends Component {
                 selectedKeys={[key]}
                 openKeys={subKey}
                 onOpenChange={this.onOpenChange.bind(this)}
-                // defaultOpenKeys={['sub1']}
                 >
             <SubMenu key="sub1" title={<span><Icon type="shopping-cart"/><span>选择学习包</span></span>}>
               <Menu.Item key="12">
@@ -256,6 +253,9 @@ class Navigation extends Component {
             {
               // this.state.key === '11' ? <ErrorCorrectionBuildLoadable setKey={this.setKey.bind(this)}/> : null
               this.state.key === '11' ? < ErrorCorrectionBuild setKey={this.setKey.bind(this)}/> : null
+            }
+            {
+              this.state.key === '12' ? <LearningPackageLoadable/> : null
             }
             
           </Content>

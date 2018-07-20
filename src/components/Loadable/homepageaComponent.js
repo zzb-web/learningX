@@ -124,15 +124,15 @@ const TestErrorDetectionComponent = Loadable({
   }
 }
 
-// const ErrorCorrectionBuildComponent = Loadable({
-//   loader: () => import('../ErrorCorrectionBuild/index.js'),
-//   loading: MyLoadingComponent,
-// });
-//  class ErrorCorrectionBuildLoadable extends React.Component {
-//   render() {
-//     return <ErrorCorrectionBuildComponent/>;
-//   }
-// }
+const LearningPackageComponent = Loadable({
+  loader: () => import('../LearningPackage/index.js'),
+  loading: MyLoadingComponent,
+});
+ class LearningPackageLoadable extends React.Component {
+  render() {
+    return <LearningPackageComponent/>;
+  }
+}
 
 export {HomepageLoadable,
         ErrorSumLoadable , 
@@ -145,5 +145,5 @@ export {HomepageLoadable,
         StudentMsgLoadable,
         TestErrorMarkerLoadable,
         TestErrorDetectionLoadable,
-        // ErrorCorrectionBuildLoadable
+        LearningPackageLoadable 
       }
