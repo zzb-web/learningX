@@ -539,7 +539,7 @@ class TableContent extends Component{
         return(
             <div className='buildErrorTable'>
                 <TableHandle tableData={tableData}/>
-                {current>2 ? <Button style={{position:'absolute',bottom:0,left:600}} onClick={this.downloadHandle.bind(this)}>
+                {current>2 ? <Button style={{position:'absolute',bottom:0,left:750}} onClick={this.downloadHandle.bind(this)}>
                                     {current<=4 ?'下载纠错本':'下载答案'}
                             </Button> : null}
             </div>

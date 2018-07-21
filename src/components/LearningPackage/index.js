@@ -95,7 +95,7 @@ class TabContent extends Component{
                     </div>
                 </div>
                 <div className='btn-box'>
-                    <Button style={{color:'#108ee9',border:'none',float:'right',marginRight:20,marginTop:10}}>立即选择</Button>
+                    <Button style={{color:'#108ee9',border:'none',float:'right',marginRight:20,marginTop:10,fontSize:13}}>立即选择</Button>
                 </div>
             </div>
         )

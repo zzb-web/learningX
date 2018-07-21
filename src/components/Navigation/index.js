@@ -23,7 +23,7 @@ const { Header, Sider, Content,Footer} = Layout;
 const {SubMenu} = Menu;
 class Navigation extends Component {
   state = {
-    collapsed: false,
+    collapsed: true,
     key: '12',
     subKey : ['sub1'],
     showUser : 'none',
@@ -182,7 +182,7 @@ class Navigation extends Component {
                   <span>错题归类</span>
                 </Menu.Item>
                 <Menu.Item key="10" style={hideMenu?{display:'block'}:{display:'none'}}>
-                  <span>试卷错题测试</span>
+                  <span>试卷纠错本</span>
                 </Menu.Item>
                 <Menu.Item key="8" style={hideMenu?{display:'block'}:{display:'none'}}>
                   <span>检验题测试</span>
@@ -206,7 +206,7 @@ class Navigation extends Component {
                 <Icon type="user" className='user-icon'/>
               </div>
               <div className='user-name'>{userName ||userMsg.learnId}</div>
-              <div className='logout' title='登出' onClick={this.logoutHandle.bind(this)}><Icon type="logout" /></div>
+              <div className='logout' title='退出' onClick={this.logoutHandle.bind(this)}><Icon type="logout" /></div>
             </div>
             
             {/* <ul className='user-content' onMouseLeave={this.userMouseLeave.bind(this)} style={{display:this.state.showUser}}>
