@@ -12,6 +12,9 @@ class LearningPackage extends Component{
    }
    componentWillReceiveProps(nextProps){
    }
+   selectPackage(value){
+       this.props.selectPackage(value)
+   }
     render(){
         const learns = [
             {
@@ -40,29 +43,12 @@ class LearningPackage extends Component{
                     <div className='learning-title'>多种规格学习包</div>
                     <div className='learning-content'>
                     <Row>
-                        {/* <Col span={8}>
-                            <div className='content-tab'>
-                                <div className='tab'>
-                                    <TabContent/>
-                                </div>
-                            </div>
-                        </Col>
-                        <Col span={8}>
-                            <div className='content-tab'>
-                                 <div className='tab'></div>
-                            </div>
-                        </Col>
-                        <Col span={8}>
-                            <div className='content-tab'>
-                                <div className='tab'></div>
-                            </div>
-                        </Col> */}
                         {
                             learns.map((item,index)=>
                                     <Col span={8}>
                                         <div className='content-tab'>
                                             <div className='tab'>
-                                                <TabContent data={item}/>
+                                                <TabContent data={item} index={index} selectPackage={this.selectPackage.bind(this)}/>
                                             </div>
                                         </div>
                                     </Col>
@@ -78,8 +64,16 @@ class LearningPackage extends Component{
 }
 
 class TabContent extends Component{
+    chooseHandle(index){
+        let postPackage = index+1;
+        Post('/api/v3/students/me/learningPackage/',{package : postPackage}).then(resp=>{
+            if(resp.status === 200){
+                this.props.selectPackage(postPackage);
+            }
+        })
+    }
     render(){
-        const {data} = this.props;
+        const {data,index} = this.props;
         return(
             <div className='tabs'>
                 <div className='tab-title'>{data.title}</div>
@@ -95,7 +89,11 @@ class TabContent extends Component{
                     </div>
                 </div>
                 <div className='btn-box'>
-                    <Button style={{color:'#108ee9',border:'none',float:'right',marginRight:20,marginTop:10,fontSize:13}}>立即选择</Button>
+                    <Button 
+                        style={{color:'#108ee9',border:'none',float:'right',marginRight:20,marginTop:10,fontSize:13}}
+                        onClick={this.chooseHandle.bind(this,index)}>
+                        立即选择
+                    </Button>
                 </div>
             </div>
         )

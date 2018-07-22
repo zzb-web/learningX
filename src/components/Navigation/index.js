@@ -4,6 +4,7 @@ import {Get, Post} from '../../fetch/data.js';
 import { withRouter } from 'react-router';
 import UserMsgForm from '../UserMsg/index.js';
 import ErrorCorrectionBuild from '../ErrorCorrectionBuild/index.js'
+import LearningPackage from '../LearningPackage/index.js';
 import {HomepageLoadable , 
         ErrorSumLoadable ,
         InfoInputLoadable ,
@@ -15,7 +16,9 @@ import {HomepageLoadable ,
         StudentMsgLoadable,
         TestErrorMarkerLoadable,
         TestErrorDetectionLoadable,
-        LearningPackageLoadable 
+        // LearningPackageLoadable,
+        EPU0Loadable,
+        EPU3Loadable 
       } from '../Loadable/homepageaComponent.js';
 import axios from 'axios';
 import './style.css';
@@ -30,12 +33,8 @@ class Navigation extends Component {
     contentHeight :　0,
     userMsg : {},
     userName : '',
-    phone:'',
-    gender:'',
     hideMenu : false,
-    schools : [],
-    schoolID_name :{},
-    name_schoolID : {}
+    learnPackage : 0
   };
   toggle = () => {
     this.setState({
@@ -97,6 +96,18 @@ class Navigation extends Component {
      this.setState({
        hideMenu : flag
      })
+
+     Get('/api/v3/students/me/learningPackage/').then(resp=>{
+      if(resp.status === 200){
+        this.setState({
+          learnPackage : resp.data.package
+        })
+      }else{
+        this.setState({
+          learnPackage : 0
+        })
+      }
+    })
   }
   setKey(value){
     const {subKey} = this.state;
@@ -113,8 +124,14 @@ class Navigation extends Component {
       subKey : e
     })
   }
+  selectPackage(value){
+    console.log(value)
+    this.setState({
+      learnPackage : value
+    })
+  }
   render() {
-    const {userMsg,userName,subKey,phone,gender,schoolID,classId,grade,hideMenu,schoolID_name,name_schoolID,schools,key} = this.state;
+    const {userMsg,userName,subKey,hideMenu,key,learnPackage} = this.state;
     return (
       <Layout>
         <Sider
@@ -161,12 +178,22 @@ class Navigation extends Component {
               </Menu.Item>
             </SubMenu>
             <SubMenu key="sub3" title={<span><Icon type="file-add"/><span>生成纠错本</span></span>}>
-              <Menu.Item key="7">
-                 <span>EPU1</span>
-              </Menu.Item>
-              <Menu.Item key="11">
-                 <span>EPU2</span>
-              </Menu.Item>
+            {learnPackage === 0 ? <Menu.Item key="13">
+                                  <span>EPU0</span>
+                                  </Menu.Item> 
+                              : null}
+              {learnPackage === 1 ? <Menu.Item key="7">
+                                  <span>EPU1</span>
+                                  </Menu.Item> 
+                              : null}
+             {learnPackage === 2 ? <Menu.Item key="11">
+                                  <span>EPU2</span>
+                                  </Menu.Item> 
+                              : null}
+              {learnPackage === 3 ? <Menu.Item key="14">
+                                  <span>EPU3</span>
+                                  </Menu.Item> 
+                              : null}
             </SubMenu>
             <SubMenu key="sub4" title={<span><Icon type="user"/><span>用户信息</span></span>}>
               <Menu.Item key="3">
@@ -195,7 +222,6 @@ class Navigation extends Component {
                 </Menu.Item>
             </SubMenu> : null
             }
-           
           </Menu>
         </Sider>
         <Layout>
@@ -255,7 +281,14 @@ class Navigation extends Component {
               this.state.key === '11' ? < ErrorCorrectionBuild setKey={this.setKey.bind(this)}/> : null
             }
             {
-              this.state.key === '12' ? <LearningPackageLoadable/> : null
+              // this.state.key === '12' ? <LearningPackageLoadable/> : null
+              this.state.key === '12' ? <LearningPackage selectPackage={this.selectPackage.bind(this)}/> : null
+            }
+            {
+              this.state.key === '13' ? <EPU0Loadable/> : null
+            }
+            {
+              this.state.key === '14' ? <EPU3Loadable/> : null
             }
             
           </Content>

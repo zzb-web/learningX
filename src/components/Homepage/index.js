@@ -128,9 +128,9 @@ class Homepage extends Component{
             desc: item.type === 1?"纠错本" : "检验题",
             operate : <div>
                         <span onClick={this.markHandle.bind(this,index)} style={{marginRight:10,cursor:"pointer",color:"#108ee9"}}>标记</span>
-                        <Popconfirm placement="right" title={text} onConfirm={this.confirm.bind(this,index)} okText="Yes" cancelText="No">
+                        {/* <Popconfirm placement="right" title={text} onConfirm={this.confirm.bind(this,index)} okText="Yes" cancelText="No">
                           <span style={{cursor:"pointer",color:"#108ee9"}}>忽略</span>
-                        </Popconfirm>
+                        </Popconfirm> */}
                       </div>
           }
         )

@@ -1,5 +1,6 @@
 import React from  'react';
 import Loadable from 'react-loadable';
+import LearningPackage from '../LearningPackage/index.js';
 function MyLoadingComponent({ error }) {
     if (error) {
       return <div>Error!</div>;
@@ -124,13 +125,33 @@ const TestErrorDetectionComponent = Loadable({
   }
 }
 
-const LearningPackageComponent = Loadable({
-  loader: () => import('../LearningPackage/index.js'),
+// const LearningPackageComponent = Loadable({
+//   loader: () => import('../LearningPackage/index.js'),
+//   loading: MyLoadingComponent,
+// });
+//  class LearningPackageLoadable extends React.Component {
+//   render() {
+//     return <LearningPackageComponent/>;
+//   }
+// }
+
+const EPU0Component = Loadable({
+  loader: () => import('../EPU0/index.js'),
   loading: MyLoadingComponent,
 });
- class LearningPackageLoadable extends React.Component {
+ class EPU0Loadable extends React.Component {
   render() {
-    return <LearningPackageComponent/>;
+    return <EPU0Component/>;
+  }
+}
+
+const EPU3Component = Loadable({
+  loader: () => import('../EPU3/index.js'),
+  loading: MyLoadingComponent,
+});
+ class EPU3Loadable extends React.Component {
+  render() {
+    return <EPU3Component/>;
   }
 }
 
@@ -145,5 +166,7 @@ export {HomepageLoadable,
         StudentMsgLoadable,
         TestErrorMarkerLoadable,
         TestErrorDetectionLoadable,
-        LearningPackageLoadable 
+        // LearningPackageLoadable,
+        EPU0Loadable,
+        EPU3Loadable
       }

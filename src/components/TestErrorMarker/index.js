@@ -24,7 +24,7 @@ class TestErrorMarker extends React.Component{
     }
     componentDidMount(){
         let that = this;
-        const data = Get('/api/v3/students/me/papers/');
+        const data = Get('/api/v3/students/me/notMarkedPapers/');
         data.then((response)=>{
             if(response.status === 200){
                 this.setState({books:response.data})

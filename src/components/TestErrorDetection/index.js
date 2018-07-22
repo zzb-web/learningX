@@ -181,7 +181,7 @@ class TestErrorDetection extends Component {
     }
     componentWillMount(){
         //设置数字，根据数字 ，截取返回数据数组
-        const data = Get('/api/v3/students/me/papers/');
+        const data = Get('/api/v3/students/me/markedPapers/');
         data.then((response)=>{
             if(response.status === 200){
                 var data1 = response.data.slice(0,2)
