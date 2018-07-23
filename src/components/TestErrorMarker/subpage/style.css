@@ -24,3 +24,9 @@ th.column-position, td.column-position, td.column-status, td.column-result,td.co
 /* .ant-table-row{
     height: 50px;
 } */
+.paper-work .ant-switch-checked{
+    background-color: #108ee9 !important;
+  }
+.paper-work .ant-switch{
+    background-color: red;
+  }

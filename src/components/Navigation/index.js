@@ -4,7 +4,7 @@ import {Get, Post} from '../../fetch/data.js';
 import { withRouter } from 'react-router';
 import UserMsgForm from '../UserMsg/index.js';
 import ErrorCorrectionBuild from '../ErrorCorrectionBuild/index.js'
-import LearningPackage from '../LearningPackage/index.js';
+// import LearningPackage from '../LearningPackage/index.js';
 import {HomepageLoadable , 
         ErrorSumLoadable ,
         InfoInputLoadable ,
@@ -13,10 +13,9 @@ import {HomepageLoadable ,
         QuestionTestLoadable,
         ErrorDetectionLoadable,
         TestDetectionLoadable,
-        StudentMsgLoadable,
         TestErrorMarkerLoadable,
         TestErrorDetectionLoadable,
-        // LearningPackageLoadable,
+        LearningPackageLoadable,
         EPU0Loadable,
         EPU3Loadable 
       } from '../Loadable/homepageaComponent.js';
@@ -281,14 +280,14 @@ class Navigation extends Component {
               this.state.key === '11' ? < ErrorCorrectionBuild setKey={this.setKey.bind(this)}/> : null
             }
             {
-              // this.state.key === '12' ? <LearningPackageLoadable/> : null
-              this.state.key === '12' ? <LearningPackage selectPackage={this.selectPackage.bind(this)}/> : null
+              this.state.key === '12' ? <LearningPackageLoadable selectPackage={this.selectPackage.bind(this)}/> : null
+              // this.state.key === '12' ? <LearningPackage selectPackage={this.selectPackage.bind(this)}/> : null
             }
             {
               this.state.key === '13' ? <EPU0Loadable/> : null
             }
             {
-              this.state.key === '14' ? <EPU3Loadable/> : null
+              this.state.key === '14' ? <EPU3Loadable test='1111'/> : null
             }
             
           </Content>

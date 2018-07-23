@@ -200,7 +200,7 @@ class TopicResult extends Component{
       })
       const {showSure} = this.state;
         return(
-                <div className='topic-result'>
+                <div className='topic-result daily-work'>
                     <h2 className='select-info-h2'>选择做题结果</h2>
                     <Table
                         columns={columns}

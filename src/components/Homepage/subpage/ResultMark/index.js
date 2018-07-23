@@ -14,18 +14,18 @@ class ResultMark extends Component{
        detailData : props.detailData
      }
    }
-     resultClick(index,e){
+     resultClick(index,value){
       let data = this.state.data;
-      data[index].isCorrect = e.target.value;
-      if(e.target.value){
+      data[index].isCorrect = value;
+      if(value){
         data[index].understood = -1
       }else{
         data[index].smooth = -1
       }
-      data[index].status =  e.target.value;
+      data[index].status =  value;
       this.setState({
         data : data,
-        checked:e.target.value
+        checked:value
       })
     }
     tdClick2(index){
@@ -89,7 +89,8 @@ class ResultMark extends Component{
               key : `${i1}${i2}`,
               position : item2.index,
               subIdx:item2.subIdx,
-              isCorrect : '',
+              // isCorrect : '',
+              isCorrect : true,
               status : '',
               problemId : item2.problemId,
               smooth:'',
@@ -100,7 +101,8 @@ class ResultMark extends Component{
               key : `${i1}${i2}`,
               position : `${item2.index}/(${item2.subIdx})`,
               subIdx:item2.subIdx,
-              isCorrect : '',
+              // isCorrect : '',
+              isCorrect : true,
               status : '',
               problemId : item2.problemId,
               smooth:'',
@@ -189,14 +191,15 @@ class ResultMark extends Component{
         var a ={};
         a.key = data.key;
         a.position = data.position;
-        a.isCorrect = <div>
-                        <RadioGroup onChange={this.resultClick.bind(this,i)} value={data.isCorrect}>
-                          <Radio value={true}>做对了</Radio>
-                          <Radio value={false}>做错了</Radio>
-                        </RadioGroup>
-                        <Switch checkedChildren="做对了" unCheckedChildren="做错了" checked={data.isCorrect===''?true : data.isCorrect} style={{display:'none'}}/>
-                    </div>
-        if(data.status ==='' || data.status === undefined){
+        // a.isCorrect = <div>
+        //                 <RadioGroup onChange={this.resultClick.bind(this,i)} value={data.isCorrect}>
+        //                   <Radio value={true}>做对了</Radio>
+        //                   <Radio value={false}>做错了</Radio>
+        //                 </RadioGroup>
+        //                 <Switch checkedChildren="做对了" unCheckedChildren="做错了" checked={data.isCorrect===''?true : data.isCorrect} style={{display:'none'}}/>
+        //             </div>
+        a.isCorrect = <Switch style={{width:60}} checkedChildren="√" unCheckedChildren="×" onChange={this.resultClick.bind(this,i)} checked={data.isCorrect}/>
+        /*if(data.status ==='' || data.status === undefined){
             a.status = null;
         }else if(!data.status){
             a.status =  <div>
@@ -214,12 +217,12 @@ class ResultMark extends Component{
                               <Radio value={false}>不顺利</Radio>
                             </RadioGroup>
                           </div>
-        }
+        }*/
         data1.push(a)
       })
         return(
           <div>
-                <div className='topic-result'>
+                <div className='topic-result error-work'>
                     <Table
                         columns={columns}
                         dataSource={data1}
@@ -228,17 +231,24 @@ class ResultMark extends Component{
                         scroll={{ y: 255 }}
                         style={{marginTop:20}}
                         rowClassName={(record, index)=>{
-                            //可以用switch来做替换，switch 隐藏
-                          if(record.isCorrect){
-                            if(record.isCorrect.props.children[1].props.checked){
-                              return ''
-                            }else{
-                              return 'wrong-row'
-                            }
+                          if(record.isCorrect.props.checked){
+                          return ''
                           }else{
-                            return ''
+                          return 'wrong-row'
                           }
                         }}
+                        // rowClassName={(record, index)=>{
+                        //     //可以用switch来做替换，switch 隐藏
+                        //   if(record.isCorrect){
+                        //     if(record.isCorrect.props.children[1].props.checked){
+                        //       return ''
+                        //     }else{
+                        //       return 'wrong-row'
+                        //     }
+                        //   }else{
+                        //     return ''
+                        //   }
+                        // }}
                     />
                 </div>
                 <div className='save_btn'>

@@ -1,6 +1,7 @@
 import React from  'react';
 import Loadable from 'react-loadable';
 import LearningPackage from '../LearningPackage/index.js';
+import EPU3 from '../EPU3/index.js';
 function MyLoadingComponent({ error }) {
     if (error) {
       return <div>Error!</div>;
@@ -125,15 +126,18 @@ const TestErrorDetectionComponent = Loadable({
   }
 }
 
-// const LearningPackageComponent = Loadable({
-//   loader: () => import('../LearningPackage/index.js'),
-//   loading: MyLoadingComponent,
-// });
-//  class LearningPackageLoadable extends React.Component {
-//   render() {
-//     return <LearningPackageComponent/>;
-//   }
-// }
+const LearningPackageComponent = Loadable({
+  loader: () => import('../LearningPackage/index.js'),
+  loading: MyLoadingComponent,
+  render(loaded,props){
+    return <LearningPackage selectPackage={props.selectPackage}/>
+  }
+});
+ class LearningPackageLoadable extends React.Component {
+  render() {
+    return <LearningPackageComponent selectPackage={this.props.selectPackage}/>;
+  }
+}
 
 const EPU0Component = Loadable({
   loader: () => import('../EPU0/index.js'),
@@ -148,10 +152,15 @@ const EPU0Component = Loadable({
 const EPU3Component = Loadable({
   loader: () => import('../EPU3/index.js'),
   loading: MyLoadingComponent,
+  render(loaded,props){
+    return <EPU3 test={props.test}/>
+  }
 });
  class EPU3Loadable extends React.Component {
+   
   render() {
-    return <EPU3Component/>;
+    console.log(this.props.test)
+    return <EPU3Component test={this.props.test}/>;
   }
 }
 
@@ -166,7 +175,7 @@ export {HomepageLoadable,
         StudentMsgLoadable,
         TestErrorMarkerLoadable,
         TestErrorDetectionLoadable,
-        // LearningPackageLoadable,
+        LearningPackageLoadable,
         EPU0Loadable,
         EPU3Loadable
       }
