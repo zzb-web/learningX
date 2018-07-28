@@ -181,9 +181,9 @@ class TopicResult extends Component{
         } else{
           a.status = <Switch checkedChildren="布置了" unCheckedChildren="没布置" checked/>
           if(!data.isCorrect){
-            a.isCorrect = <Switch checkedChildren="√" unCheckedChildren="×" checked={false}/>
+            a.isCorrect = <Switch style={{width:60}} checkedChildren="√" unCheckedChildren="×" checked={false}/>
           } else{
-            a.isCorrect = <Switch checkedChildren="√" unCheckedChildren="×" checked/>
+            a.isCorrect = <Switch style={{width:60}} checkedChildren="√" unCheckedChildren="×" checked/>
           }
         }
         data1.push(a)
